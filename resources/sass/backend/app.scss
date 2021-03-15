@@ -1,0 +1,30 @@
+@import 'variables';
+
+// Import Bootstrap
+@import "../../../node_modules/startbootstrap-sb-admin-2/vendor/bootstrap/scss/bootstrap";
+
+// Import Custom SB Admin 2 Mixins and Components
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/mixins";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/global";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/utilities";
+
+// Custom Components
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/dropdowns";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/navs";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/buttons";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/cards";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/charts";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/login";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/error";
+@import "../../../node_modules/startbootstrap-sb-admin-2/scss/footer";
+// FontAwesome 5
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "../../../node_modules/@fortawesome/fontawesome-free/scss/solid";
+//End FontAwesome 5
+
+@import '../../../node_modules/sweetalert2/src/sweetalert2';
+@import "~bootstrap4-toggle/css/bootstrap4-toggle.min.css";
+
+@import "custom";

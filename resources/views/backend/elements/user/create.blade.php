@@ -1,0 +1,74 @@
+@extends('backend.layouts.app')
+
+@section('title', __('labels.pages.backend.users.title.create'))
+
+@section('content')
+    <div class="card">
+        <form action="{{ route('backend.users.store') }}" method="POST">
+            @csrf
+            <div class="card-body">
+                <h4 class="card-title mb-0">
+                    @lang('labels.pages.backend.users.title.management')
+                    <small class="text-muted">@lang('labels.pages.backend.users.title.create')</small>
+                </h4>
+                <hr>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="first_name">@lang('First name')</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" placeholder="{{ __('First name') }}" maxlength="191" required="" autofocus="">
+                    </div><!--col-->
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="last_name">@lang('Last name')</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="last_name" id="last_name" value="{{ old('last_name') }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
+                    </div><!--col-->
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="username">Username</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="username" id="name" value="{{ old('username') }}" placeholder="{{ __('User name') }}" maxlength="191" required="">
+                    </div><!--col-->
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="email">@lang('labels.pages.backend.users.form.email')</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="email" name="email" id="email" value="{{ old('email') }}" placeholder="{{ __('labels.pages.backend.users.form.placeholder.email') }}" maxlength="191" required="" autofocus="">
+                    </div><!--col-->
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="password">@lang('labels.pages.backend.users.form.password')</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" name="password" id="password" placeholder="{{ __('labels.pages.backend.users.form.placeholder.password') }}" maxlength="191" required="" autofocus="">
+                    </div><!--col-->
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="password-confirmation">@lang('labels.pages.backend.users.form.password_confirmation')</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="password" name="password_confirmation" id="password-confirmation" placeholder="{{ __('labels.pages.backend.users.form.placeholder.password_confirmation') }}" maxlength="191" required="" autofocus="">
+                    </div><!--col-->
+                </div>
+
+            </div>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col">
+                        <a href="{{ route('backend.users.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                    </div>
+
+                    <div class="col text-right">
+                        <button type="submit" class="btn btn-success btn-sm">@lang('labels.pages.backend.users.form.create_submit')</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+@endsection

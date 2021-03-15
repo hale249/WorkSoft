@@ -1,0 +1,25 @@
+<?php
+
+namespace App\Models;
+
+use App\Models\Traits\Attributes\MeetingAttribute;
+use Illuminate\Database\Eloquent\Model;
+
+class Meeting extends Model
+{
+    use MeetingAttribute;
+
+    protected $table = 'meetings';
+
+    protected $guarded = [];
+
+    public function users()
+    {
+        return $this->hasMany(MeetingUser::class, 'user_id', 'id');
+    }
+
+    public function getTimeStartEndAttribute()
+    {
+        return $this->start_meeting . ' - ' . $this->end_meeting;
+    }
+}

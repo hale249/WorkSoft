@@ -1,0 +1,45 @@
+body {
+    font-size: $tms-font-size;
+    color: $tms-font-color;
+}
+
+#content {
+    background-color: $content-bg;
+}
+
+footer.sticky-footer {
+    padding: 1rem 0;
+}
+
+.breadcrumb {
+    background-color: $white;
+    border-radius: 0;
+    border-top: 1px solid #c8ced3;
+}
+
+.card {
+    border-radius: 0;
+}
+
+.table {
+    color: $tms-font-color;
+}
+
+.form-control {
+    font-size: $tms-font-size;
+}
+
+.ck-editor__editable_inline {
+    min-height: 400px;
+}
+
+.toggle-off.btn {
+    padding-left: 1.3rem;
+}
+
+.btn-same-select {
+    padding: 0.35rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
