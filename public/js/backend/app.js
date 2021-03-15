@@ -88491,8 +88491,8 @@ window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /var/www/html/workspace/shop-master/resources/js/backend/app.js */"./resources/js/backend/app.js");
-module.exports = __webpack_require__(/*! /var/www/html/workspace/shop-master/resources/sass/backend/app.scss */"./resources/sass/backend/app.scss");
+__webpack_require__(/*! /var/www/html/workspace/WorkSoft/resources/js/backend/app.js */"./resources/js/backend/app.js");
+module.exports = __webpack_require__(/*! /var/www/html/workspace/WorkSoft/resources/sass/backend/app.scss */"./resources/sass/backend/app.scss");
 
 
 /***/ })
