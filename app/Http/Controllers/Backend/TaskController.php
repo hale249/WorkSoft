@@ -10,14 +10,14 @@ use App\Http\Requests\TaskRequest;
 use App\Models\Project;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class TaskController extends Controller
 {
     public function index(Request $request, int $projectId)
     {
-        $data = $request->get('name');
+        $data = $request->input('name');
         $project = Project::query()->findOrFail($projectId);
         $tasks = Task::query()
             ->where('project_id', $projectId);

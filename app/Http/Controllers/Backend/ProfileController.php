@@ -16,9 +16,8 @@ class ProfileController extends Controller
     /**
      * Show form update profile
      *
-     * @return View
      */
-    public function index(): View
+    public function index()
     {
         $user = auth()->user();
 
@@ -49,9 +48,8 @@ class ProfileController extends Controller
     /**
      * Show form change password
      *
-     * @return View
      */
-    public function showFormChangePassword(): View
+    public function showFormChangePassword()
     {
         $user = auth()->user();
 

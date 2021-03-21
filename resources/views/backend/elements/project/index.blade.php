@@ -18,7 +18,7 @@
 
             <form action="{{ route('backend.projects.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
-                    <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm lập lịch">
+                    <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
@@ -41,11 +41,11 @@
                                 <td>{{ $project->name }}</td>
                                 <td>
                                     @if(!empty($project->category))
-                                        <a href="{{ route('backend.category.show', $project->category_id) }}" target="_blank">{{ $product->category->name }}</a>
+                                        <a href="{{ route('backend.category.show', $project->category_id) }}" target="_blank">{{ $project->category->name }}</a>
                                     @endif
                                 </td>
+                                <td>{{ $project->user->full_name }}</td>
                                 <td></td>
-                                <td>{{ $project->created_by }}</td>
                                 <td>{!! $project->action_buttons !!}</td>
                             </tr>
                         @endforeach

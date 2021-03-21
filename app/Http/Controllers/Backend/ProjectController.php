@@ -25,13 +25,14 @@ class ProjectController extends Controller
         }
         $projects = $projects->orderBy('created_at', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
+
         return view('backend.elements.project.index', compact('projects'));
     }
 
     public function create()
     {
-        $categories = Category::query()->get();
-        $users = User::query()->get();
+        $categories = Category::all();
+        $users = User::all();
 
         return view('backend.elements.project.create', compact('categories', 'users'));
     }
@@ -54,20 +55,24 @@ class ProjectController extends Controller
          Project::create($data);
         /*$emailJob = new SendEmailMeetingJob($users, $project);
         dispatch($emailJob);*/
+
         return redirect()->route('backend.projects.index')->with('flash_success', __('Tạo cuộc họp thành công'));
     }
 
     public function show(int $id)
     {
-        $meeting = Project::find($id);
+        $project =Project::query()->where('id', $id)->with(['user', 'category'])->first();
 
-        return view('backend.elements.meeting.show', compact('meeting'));
+        return view('backend.elements.project.show', compact('project'));
     }
 
-    public function edit(MeetingRequest $request, int $id)
+    public function edit(int $id)
     {
-        $meeting = Meeting::find($id);
+        $project = Project::find($id);
+        $categories = Category::all();
+        $users = User::all();
 
+        return view('backend.elements.project.edit', compact('project', 'categories', 'users'));
     }
 
     public function update(int $id)

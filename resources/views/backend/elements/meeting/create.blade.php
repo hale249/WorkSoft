@@ -3,9 +3,7 @@
 @section('title', __('Tạo lập lịch'))
 
 @section('css')
-{{--
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
---}}
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" rel="stylesheet" />
 @endsection
 
 @section('content')
@@ -49,20 +47,19 @@
                         <input class="form-control" type="time" name="end_meeting" value="{{ old('end_meeting') }}" id="end_meeting" placeholder="Thời gian kết thúc ..." required="">
                     </div><!--col-->
                 </div>
-
-                {{--<div class="form-group row">
+                <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="description">Thành viên tham gia</label>
 
                     <div class="col-md-10">
-                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="select_project">
-                            <option value="all">All</option>
-                            <option value="Option A">Option A</option>
-                            <option value="Option B">Option B</option>
-                            <option value="Option C">Option C</option>
-                            <option value="Option D">Option D</option>
+                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">
+{{--                            <option value="all">All</option>--}}
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}">{!! $user->full_name !!}</option>
+                            @endforeach
                         </select>
+
                     </div><!--col-->
-                </div>--}}
+                </div>
 
                 <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="description">Nội dung cuộc họp</label>
@@ -97,29 +94,32 @@
 @endsection
 
 @section('script')
-   {{-- <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-    <script type="text/javascript">
-        $('#parent_filter_select2').select2({
-            placeholder: 'Thành viên nhân thông báo'
-        });
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
 
-        $('#parent_filter_select2').change(function () {
-            var val = $(this).val();
-            var values = [];
-            $('#parent_filter_select2').find('option').each(function () {
-                var opt= $(this);
-                var opvalue= opt.attr('value');
-                if(opvalue !== 'all') {
-                    values.push(opvalue);
-                }
+    <<script type="text/javascript">
+       $('#parent_filter_select2').select2({
+           placeholder: 'Thành viên nhân thông báo'
+       });
 
-            });
-            if(val.indexOf('all') !== -1){
-                $('#parent_filter_select2').select2('val', values);
-            }
-            else{
-                $('#parent_filter_select2').select2('val', val);
-            }
-        });
-    </script>--}}
+       let values = [];
+       $('#parent_filter_select2').change(function (e) {
+           e.preventDefault();
+           var val = $(this).val();
+
+           $('#parent_filter_select2').find('option').click(function () {
+               var opt= $(this);
+               var opvalue= opt.attr('value');
+               if(opvalue !== 'all') {
+                   values.push(opvalue);
+               }
+
+           });
+           if(val.indexOf('all') !== -1){
+               $('#parent_filter_select2').select2('val', values);
+           }
+           else{
+               $('#parent_filter_select2').select2('val', val);
+           }
+       });
+   </script>
 @endsection

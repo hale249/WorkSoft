@@ -17,7 +17,7 @@
             </div>
             <form action="{{ route('backend.meetings.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
-                    <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm lập lịch">
+                    <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
@@ -39,7 +39,7 @@
                                 <td>{{ $meeting->name }}</td>
                                 <td>{{ $meeting->date_meeting }}</td>
                                 <td>{!! $meeting->time_start_end !!}</td>
-                                <td>{{ $meeting->created_by }}</td>
+                                <td>{{ $meeting->auth ? $meeting->auth->full_name : '' }}</td>
                                 <td>{!! $meeting->action_buttons !!}</td>
                             </tr>
                         @endforeach

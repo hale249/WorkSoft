@@ -22,4 +22,9 @@ class Meeting extends Model
     {
         return $this->start_meeting . ' - ' . $this->end_meeting;
     }
+
+    public function auth()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
+    }
 }

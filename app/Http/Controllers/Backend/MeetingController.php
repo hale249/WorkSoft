@@ -11,6 +11,8 @@ use App\Models\Meeting;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class MeetingController extends Controller
 {
@@ -18,7 +20,7 @@ class MeetingController extends Controller
 
     public function index(Request $request)
     {
-        $data = $request->get('name');
+        $data = $request->input('name');
         $meetings = Meeting::query();
         if (!empty($data)) {
             $meetings = $meetings->where('name','like', '%' . $data . '%');
@@ -26,12 +28,15 @@ class MeetingController extends Controller
         $meetings = $meetings->orderBy('created_at', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
+
         return view('backend.elements.meeting.index', compact('meetings'));
     }
 
     public function create()
     {
-        return view('backend.elements.meeting.create');
+        $userId = Auth::id();
+        $users = User::query()->where('id', '!=', $userId)->get();
+        return view('backend.elements.meeting.create', compact('users'));
     }
 
     public function store(MeetingRequest $request)
@@ -45,8 +50,12 @@ class MeetingController extends Controller
             'end_meeting',
         ]);
         if ($request->hasFile('document_file')) {
-            $data['document_file'] = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+            $file = $request->file('document_file');
+            $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
+            $filePath = $request->file('document_file')->storeAs('public/meetings/' . auth()->id(), $fileNameHash);
+            $data['document_file'] = Storage::url($filePath);
         }
+
         $users = User::query()->where('id', '!=', $userId)->get();
         $data['created_by'] = $userId;
         $meeting = Meeting::create($data);

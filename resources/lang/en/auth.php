@@ -15,7 +15,7 @@ return [
 
     'failed' => 'These credentials do not match our records.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'login_success' => 'Success',
-    'logout_success' => 'Success',
-    'register_success' => 'Success',
+    'login_success' => 'Đăng nhập thành công',
+    'logout_success' => 'Đăng xuất thành công',
+    'register_success' => 'Tạo tài khoản thành công',
 ];

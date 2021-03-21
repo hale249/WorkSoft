@@ -16,7 +16,7 @@
                 </div>
             </div>
 
-            <form action="{{ route('backend.tasks.index', ['id', $project->id]) }}" method="GET" class="form-inline mt-2">
+            <form action="{{ route('backend.project_task.index', ['id', $project->id]) }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
                     <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>

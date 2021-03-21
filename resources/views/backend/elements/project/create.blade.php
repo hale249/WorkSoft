@@ -37,10 +37,10 @@
                     <label class="col-md-2 form-control-label" for="user_id">Người thực hiện</label>
 
                     <div class="col-md-10">
-                        <select name="user_id" class="form-control" id="user_id" required>
+                        <select name="user_id" class="form-control" id="user_id">
                             <option value="">Người thực hiện</option>
                             @foreach($users as $user)
-                                <option @if(!empty(old('user_id')) && old('user_id') === $user->id) selected @endif value="{{ $user->id }}">{{ $user->name }}</option>
+                                <option @if(!empty(old('user_id')) && old('user_id') === $user->id) selected @endif value="{{ $user->id }}">{{ $user->full_name }}</option>
                             @endforeach
                         </select>
                     </div><!--col-->
