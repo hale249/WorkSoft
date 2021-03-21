@@ -25,7 +25,7 @@ composer update nothing
 
 ```brash
 # create file .env
-cp .env.example .
+cp .env.example .env
 ```
 ```brash
 php artisan key:generate
