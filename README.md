@@ -56,6 +56,12 @@ Laravel uses storage folder for some caching, run these commands for fixing stor
 sudo chown -R $USER:www-data storage
 sudo chmod -R 775 storage
 ```
+### Run seed
+```bash
+php artisan db:seed --class=RoleSeed
+php artisan db:seed --class=UserAdminSeed
+php artisan permissions:refresh
+```
 
 ### Run project
 ```bash
