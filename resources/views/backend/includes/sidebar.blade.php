@@ -46,10 +46,10 @@
             <i class="fas fa-fw fa-users"></i>
             <span>Danh mục</span>
         </a>
-        <div id="menu-category-management" class="collapse @if(\Request::is('categories') || \Request::is('categories/*')) show @endif" data-parent="#accordionSidebar">
+        <div id="menu-category-management" class="collapse @if(\Request::is('category') || \Request::is('category/*')) show @endif" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('categories')) active @endif" href="{{ route('backend.category.index') }}">Danh mục</a>
-                <a class="collapse-item @if(\Request::is('categories/create')) active @endif" href="{{ route('backend.category.create') }}">Tạo danh mục</a>
+                <a class="collapse-item @if(\Request::is('category')) active @endif" href="{{ route('backend.category.index') }}">Danh mục</a>
+                <a class="collapse-item @if(\Request::is('category/create')) active @endif" href="{{ route('backend.category.create') }}">Tạo danh mục</a>
             </div>
         </div>
     </li>

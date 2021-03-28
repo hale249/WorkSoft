@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
-use App\Helpers\PermissionConstant;
 use App\Models\Permission;
 use App\Models\Role;
+use App\Helpers\PermissionConstant;
 use Carbon\Carbon;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;

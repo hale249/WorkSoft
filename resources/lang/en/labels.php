@@ -3,20 +3,20 @@
 return [
     'general' => [
         'buttons' => [
-            'login' => 'Login'
+            'login' => 'Đăng nhập'
         ],
         'titles' => [
-            'login' => 'Login'
+            'login' => 'Đăng nhập'
         ],
         'created_at' => 'Created at',
         'action' => 'Action',
-        'cancel' => 'Cancel',
-        'delete' => 'Delete',
-        'update' => 'Update',
-        'confirm_delete' => 'Are you sure?',
-        'logout' => 'Logout',
-        'back' => 'Back',
-        'edit' => 'Edit',
+        'cancel' => 'Hủy bỏ',
+        'delete' => 'Xóa',
+        'update' => 'Cập nhật',
+        'confirm_delete' => 'Chắc chắn bạn muốn xóa?',
+        'logout' => 'Đăng xuất',
+        'back' => 'Trở lại',
+        'edit' => 'Chỉnh sửa',
         'status' => 'Status',
         'show' => 'Show',
         'hidden' => 'Hidden',

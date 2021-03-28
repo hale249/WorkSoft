@@ -18,13 +18,7 @@ class CategoryController extends Controller
 {
     use FileHelperTrait;
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @param Request $request
-     * @return View
-     */
-    public function index(Request $request): View
+    public function index(Request $request)
     {
         $data = $request->all();
         $categories = Category::query();
@@ -71,7 +65,7 @@ class CategoryController extends Controller
             $data['image'] = $this->uploadFile($request->file('image'), 'categories');
         }
 
-        $data['user_id'] = auth()->id();
+            $data['user_id'] = auth()->id();
         Category::query()
             ->create($data);
 

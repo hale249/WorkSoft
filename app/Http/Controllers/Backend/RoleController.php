@@ -22,7 +22,7 @@ class RoleController extends Controller
     {
         $role = Role::find($id);
 
-        return view('backend.role.edit', compact('role'));
+        return view('backend.elements.role.edit', compact('role'));
     }
 
     public function update(Request $request,int $id)

@@ -12,14 +12,14 @@ trait FileHelperTrait
      * Handle upload file
      *
      * @param UploadedFile $file
-     * @param null $path
+     * @param string $path
      * @return string
      */
-    public function uploadFile(UploadedFile $file, $path = null, $folder = 'images'): string
+    public function uploadFile(UploadedFile $file, $path = 'images'): string
     {
-        $path = $path ? '/' . $folder . '/' . $path : '/' . $folder;
-        Storage::disk('local')->put($path, $file);
+        $filename = $path  . '-'. time() . '.' . $file->getClientOriginalExtension();
 
-        return rtrim($path, ' /') . '/' . $file->hashName();
+        // save to storage/app/photos as the new $filename
+        return $file->storeAs($path, $filename);
     }
 }
