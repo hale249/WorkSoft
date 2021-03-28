@@ -15,9 +15,10 @@ class AddPointToProjects extends Migration
     {
         Schema::table('projects', function (Blueprint $table) {
             $table->integer('job_ranting');
-            $table->integer('point_of_work')->nullable();
+            $table->integer('point_of_work')->default('0');
             $table->unsignedInteger('person_support')->nullable();
             $table->unsignedInteger('person_mission')->nullable();
+            $table->integer('point_of_work_sp')->default('0');
 
         });
     }
@@ -34,6 +35,7 @@ class AddPointToProjects extends Migration
             $table->integer('point_of_work');
             $table->unsignedInteger('person_support');
             $table->unsignedInteger('person_mission');
+            $table->integer('point_of_work_sp');
         });
     }
 }

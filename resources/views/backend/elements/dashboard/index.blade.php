@@ -14,7 +14,7 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                       Số lượng thành viên
+                                        Số lượng thành viên
                                     </div>
                                     <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->user }}</div>
                                 </div>
@@ -35,7 +35,8 @@
                                     <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                         Cuộc họp sắp diễn ra
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->meeting }}</div>
+                                    <div
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->meeting }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -54,7 +55,8 @@
                                     <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                         Công việc
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->project }}</div>
+                                    <div
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->project }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -74,7 +76,8 @@
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
-                                            <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical->task }}</div>
+                                            <div
+                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical->task }}</div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm mr-2">
@@ -99,7 +102,7 @@
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Tiến độ công việc</h6>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -138,20 +141,20 @@
                     <div class="card shadow mb-4">
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Revenue Sources</h6>
+                            <h6 class="m-0 font-weight-bold text-primary">Trạng thái công việc</h6>
                             <div class="dropdown no-arrow">
                                 <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                               {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
                                      aria-labelledby="dropdownMenuLink">
                                     <div class="dropdown-header">Dropdown Header:</div>
                                     <a class="dropdown-item" href="#">Action</a>
                                     <a class="dropdown-item" href="#">Another action</a>
                                     <div class="dropdown-divider"></div>
                                     <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
+                                </div>--}}
                             </div>
                         </div>
                         <!-- Card Body -->
@@ -168,17 +171,6 @@
                                 <canvas id="myPieChart" width="486" height="245" class="chartjs-render-monitor"
                                         style="display: block; width: 486px; height: 245px;"></canvas>
                             </div>
-                            <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-primary"></i> Direct
-                                        </span>
-                                <span class="mr-2">
-                                            <i class="fas fa-circle text-success"></i> Social
-                                        </span>
-                                <span class="mr-2">
-                                            <i class="fas fa-circle text-info"></i> Referral
-                                        </span>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -188,5 +180,22 @@
 @endsection
 @section('script')
     <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
-    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-pie-demo.js"></script>
+    <script type="text/javascript">
+        var labelStatus = {!! json_encode($statusJob->label) !!};
+        var dataStatus = {!! json_encode($statusJob->data) !!};
+        var colorStatus = {!! json_encode($statusJob->color) !!};
+
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: labelStatus,
+                datasets: [{
+                    data: dataStatus,
+                    backgroundColor: colorStatus,
+                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                }],
+            },
+        });
+    </script>
 @endsection

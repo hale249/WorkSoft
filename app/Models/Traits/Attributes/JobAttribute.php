@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Attributes;
 
-trait ProjectAttribute
+trait JobAttribute
 {
 /*    use StatusLabelAttribute;*/
 
@@ -24,7 +24,7 @@ trait ProjectAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('backend.projects.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="'.route('backend.jobs.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
     }
 
     /**
@@ -32,7 +32,7 @@ trait ProjectAttribute
      */
     public function getShowButtonAttribute(): string
     {
-        return '<a href="'.route('backend.projects.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+        return '<a href="'.route('backend.jobs.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
     }
 
     /**
@@ -40,6 +40,6 @@ trait ProjectAttribute
      */
     public function getShowItemButtonAttribute(): string
     {
-        return '<a href="'.route('backend.project_task.index', $this->id).'" class="btn btn-info btn-sm">' . __('labels.pages.backend.product.table.view_item') . '</a>';
+        return '<a href="'.route('backend.job_task.index', $this->id).'" class="btn btn-info btn-sm">' . __('labels.pages.backend.product.table.view_item') . '</a>';
     }
 }

@@ -7,7 +7,7 @@ namespace App\Http\Controllers\Backend;
 use App\Helpers\Constant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
-use App\Models\Project;
+use App\Models\Job;
 use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -16,30 +16,30 @@ use Illuminate\Support\Str;
 
 class TaskController extends Controller
 {
-    public function index(Request $request, int $projectId)
+    public function index(Request $request, int $jobId)
     {
         $data = $request->input('name');
-        $project = Project::query()->findOrFail($projectId);
+        $job = Job::query()->findOrFail($jobId);
         $tasks = Task::query()
-            ->where('project_id', $projectId);
+            ->where('project_id', $jobId);
         if (!empty($data)) {
             $tasks = $tasks->where('name','like', '%' . $data . '%');
         }
         $tasks = $tasks->orderBy('created_at', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
-        return view('backend.elements.task.index', compact('tasks', 'project'));
+        return view('backend.elements.task.index', compact('tasks', 'job'));
     }
 
-    public function create(int $projectId)
+    public function create(int $jobId)
     {
-        $project = Project::query()->findOrFail($projectId);
+        $job = Job::query()->findOrFail($jobId);
         $statuses = Status::all();
 
-        return view('backend.elements.task.create', compact('project', 'statuses'));
+        return view('backend.elements.task.create', compact('job', 'statuses'));
     }
 
-    public function store(TaskRequest $request, int $projectId)
+    public function store(TaskRequest $request, int $jobId)
     {
         $userId = Auth::id();
         $data = $request->only([
@@ -48,32 +48,32 @@ class TaskController extends Controller
             'status_id',
             'deadline',
         ]);
-        $data['project_id'] = $projectId;
+        $data['project_id'] = $jobId;
         $data['created_by'] = $userId;
         $data['slug'] = Str::slug($request->get('name'));
         Task::create($data);
 
-        return redirect()->route('backend.project_task.index', ['id' => $projectId])->with('flash_success', __('Tạo nhiệm thành công'));
+        return redirect()->route('backend.job_task.index', ['id' => $jobId])->with('flash_success', __('Tạo nhiệm thành công'));
     }
 
-    public function show(int $projectId, $taskId)
+    public function show(int $jobId, $taskId)
     {
-        $project = Project::query()->findOrFail($projectId);
+        $job = Job::query()->findOrFail($jobId);
         $task = Task::query()->where('id', $taskId)->with('status')->first();
 
-        return view('backend.elements.task.show', compact('project', 'task'));
+        return view('backend.elements.task.show', compact('job', 'task'));
     }
 
-    public function edit(int $projectId, $taskId)
+    public function edit(int $jobId, $taskId)
     {
-        $project = Project::query()->findOrFail($projectId);
+        $job = Job::query()->findOrFail($jobId);
         $task = Task::query()->where('id', $taskId)->with('status')->first();
         $statuses = Status::all();
 
-        return view('backend.elements.task.edit', compact('project', 'task', 'statuses'));
+        return view('backend.elements.task.edit', compact('job', 'task', 'statuses'));
     }
 
-    public function update(TaskRequest $request, int $projectId, int $taskId)
+    public function update(TaskRequest $request, int $jobId, int $taskId)
     {
         $task = Task::query()->findOrFail($taskId);
         $userId = Auth::id();
@@ -83,21 +83,21 @@ class TaskController extends Controller
             'status_id',
             'deadline',
         ]);
-        $data['project_id'] = $projectId;
+        $data['project_id'] = $jobId;
         $data['created_by'] = $userId;
         $data['slug'] = Str::slug($request->get('name'));
 
         $task->update($data);
 
-        return redirect()->route('backend.project_task.index', ['id' => $projectId])->with('flash_success', __('Chỉnh sửa nhiệm thành công'));
+        return redirect()->route('backend.job_task.index', ['id' => $jobId])->with('flash_success', __('Chỉnh sửa nhiệm thành công'));
     }
 
-    public function destroy(int $projectId, int $taskId)
+    public function destroy(int $jobId, int $taskId)
     {
-        $project = Project::query()->findOrFail($projectId);
+        $job = Job::query()->findOrFail($jobId);
         $category = Task::query()->findOrFail($taskId);
         $category->delete();
 
-        return redirect()->route('backend.project_task.index', ['id' => $projectId])->with('flash_success', __('Xoá nhiệm vụ thành công'));
+        return redirect()->route('backend.job_task.index', ['id' => $jobId])->with('flash_success', __('Xoá nhiệm vụ thành công'));
     }
 }

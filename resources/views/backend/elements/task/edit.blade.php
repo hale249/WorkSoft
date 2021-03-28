@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('backend.project_task.update', ['id' => $project->id, 'taskId' => $task->id]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('backend.job_task.update', ['id' => $job->id, 'taskId' => $task->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card-body">
@@ -69,7 +69,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ route('backend.project_task.index', ['id' => $project->id]) }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                        <a href="{{ route('backend.job_task.index', ['id' => $job->id]) }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
                     </div>
 
                     <div class="col text-right">

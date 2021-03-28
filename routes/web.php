@@ -47,7 +47,7 @@ Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'middleware' => 'aut
     require __DIR__ . '/backend/profile.php';
     require __DIR__ . '/backend/category.php';
     require __DIR__ . '/backend/meeting.php';
-    require __DIR__ . '/backend/project.php';
+    require __DIR__ . '/backend/job.php';
     require __DIR__ . '/backend/role.php';
     require __DIR__ . '/backend/permission.php';
     require __DIR__ . '/backend/status.php';

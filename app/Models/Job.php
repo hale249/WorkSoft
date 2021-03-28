@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Traits\Attributes\ProjectAttribute;
+use App\Models\Traits\Attributes\JobAttribute;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Project extends Model
+class Job extends Model
 {
-    use ProjectAttribute;
+    use JobAttribute;
     use SoftDeletes;
 
     protected $table = 'projects';
@@ -28,5 +28,20 @@ class Project extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function personSupport()
+    {
+        return $this->belongsTo(User::class, 'person_support', 'id');
+    }
+
+    public function personMission()
+    {
+        return $this->belongsTo(User::class, 'person_mission', 'id');
+    }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

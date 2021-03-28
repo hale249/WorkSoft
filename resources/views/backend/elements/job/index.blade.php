@@ -12,11 +12,11 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.projects.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo công việc')</a>
+                    <a href="{{ route('backend.jobs.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo công việc')</a>
                 </div>
             </div>
 
-            <form action="{{ route('backend.projects.index') }}" method="GET" class="form-inline mt-2">
+            <form action="{{ route('backend.jobs.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
                     <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
@@ -36,24 +36,24 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach($projects as $project)
+                        @foreach($jobs as $job)
                             <tr>
                                 <td>
-                                    @if(!empty($project->category))
-                                        <a href="{{ route('backend.category.show', $project->category_id) }}" target="_blank">{{ $project->category->name }}</a>
+                                    @if(!empty($job->category))
+                                        <a href="{{ route('backend.category.show', $job->category_id) }}" target="_blank">{{ $job->category->name }}</a>
                                     @endif
                                 </td>
-                                <td>{{ $project->name }}</td>
-                                <td>{{ $project->user->full_name }}</td>
+                                <td>{{ $job->name }}</td>
+                                <td>{{ $job->user->full_name }}</td>
                                 <td></td>
-                                <td>{!! $project->action_buttons !!}</td>
+                                <td>{!! $job->action_buttons !!}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
                 <div class="text-right">
-                    {{ $projects->links() }}
+                    {{ $jobs->links() }}
                 </div>
             </div>
         </div>

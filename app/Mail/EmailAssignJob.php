@@ -2,7 +2,7 @@
 
 namespace App\Mail;
 
-use App\Models\Project;
+use App\Models\Job;
 use App\Models\User;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -21,7 +21,7 @@ class EmailAssignJob extends Mailable
      *
      * @return void
      */
-    public function __construct(User $user, Project $job)
+    public function __construct(User $user, Job $job)
     {
         $this->user = $user;
         $this->job = $job;

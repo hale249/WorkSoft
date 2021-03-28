@@ -30,7 +30,7 @@
     },
     "roles": {
         "view": "Có thể xem tất cả quyền",
-        "edit": "Cho phép gán vai trò",
+        "edit": "Cho phép gán vai trò"
     },
     "permissions": {
         "view": "Có thể xem tất cả vai trò",

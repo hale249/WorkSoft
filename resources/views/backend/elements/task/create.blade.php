@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('backend.project_task.store', ['id' => $project->id]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('backend.job_task.store', ['id' => $job->id]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <h4 class="card-title mb-0">
@@ -25,7 +25,7 @@
                     <label class="col-md-2 form-control-label" for="deadline">Ngày hết hạn</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="date" name="deadline" value="{{ old('deadline') }}" id="deadline" placeholder="Nhập ngày họp ..."  required="">
+                        <input class="form-control" type="date" name="deadline" value="{{ date('Y-m-d') ?? old('deadline') }}" id="deadline" placeholder="Nhập ngày họp ..."  required="">
                     </div><!--col-->
                 </div>
 
@@ -67,7 +67,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ route('backend.project_task.index', ['id' => $project->id]) }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                        <a href="{{ route('backend.job_task.index', ['id' => $job->id]) }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
                     </div>
 
                     <div class="col text-right">

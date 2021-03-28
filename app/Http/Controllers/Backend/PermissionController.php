@@ -19,7 +19,7 @@ class PermissionController extends Controller
         }
 
         $permissions = $query->orderBy('created_at', 'desc')
-            ->paginate(Constant::DEFAULT_PER_PAGE);
+            ->paginate(30);
 
         return view('backend.elements.permission.index', compact('permissions'));
     }
@@ -44,7 +44,7 @@ class PermissionController extends Controller
     {
         $permission = Permission::find($id);
 
-        return view('backend.permission.edit', compact('permission'));
+        return view('backend.elements.permission.edit', compact('permission'));
     }
 
     public function update(Request $request,int $id)

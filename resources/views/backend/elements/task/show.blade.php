@@ -61,7 +61,7 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('backend.project_task.index', ['id' => $project->id]) }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
+                    <a href="{{ route('backend.job_task.index', ['id' => $job->id]) }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
                 </div>
             </div>
         </div>

@@ -7,60 +7,16 @@
         <div class="card-body">
             <h4 class="card-title mb-0">
                 Công việc
-                <small class="text-muted">Chi tiết công việc - {{ $project->name }}</small>
+                <small class="text-muted">Chi tiết công việc - {{ $job->name }}</small>
             </h4>
             <hr>
 
             <div class="row">
                 <div class="col-6">
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="name">Tên công việc</label>
-
-                        <div class="col-md-10">
-                            {{ $project->name }}
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="name">Người làm</label>
-
-                        <div class="col-md-10">
-                            {{ $project->user->full_name }}
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="name">Làm đến</label>
-
-                        <div class="col-md-10">
-                            {{ $project->deadline }}
-                        </div><!--col-->
-                    </div>
-
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="description">Nội dung</label>
-
-                        <div class="col-md-10">
-                            @if($project->description)
-                                {{ $project->description }}
-                            @else
-                                @lang('labels.general.empty')
-                            @endif
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="description">Content</label>
-
-                        <div class="col-md-10">
-                            @if($project->content)
-                                {!! $project->content !!}
-                            @else
-                                @lang('labels.general.empty')
-                            @endif
-                        </div><!--col-->
-                    </div>
+                    @include('backend.elements.task.includes.show_job')
                 </div>
                 <div class="col-6">
-                    @include('backend.elements.project.include.file_upload')
+                    @include('backend.elements.task.includes.upload')
                 </div>
             </div>
             <hr>
@@ -71,11 +27,11 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.project_task.create', ['id' => $project->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo nhiệm vụ')</a>
+                    <a href="{{ route('backend.job_task.create', ['id' => $job->id]) }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo nhiệm vụ')</a>
                 </div>
             </div>
 
-            <form action="{{ route('backend.project_task.index', ['id', $project->id]) }}" method="GET" class="form-inline mt-2">
+            <form action="{{ route('backend.job_task.index', ['id', $job->id]) }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
                     <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
@@ -99,7 +55,7 @@
                                 <td>{{ $task->name }}</td>
                                 <td>{{ $task->deadline }}</td>
                                 <td><span class="badge badge-pill" style="background-color: {{ $task->status->color }}; color: #000000">{{ $task->status->name }}</span></td>
-                                <td>{!! $task->getActionButtonsAttribute($project->id) !!}</td>
+                                <td>{!! $task->getActionButtonsAttribute($job->id) !!}</td>
                             </tr>
                         @endforeach
                         </tbody>

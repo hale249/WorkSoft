@@ -29,6 +29,9 @@ class ProjectRequest extends FormRequest
             'description' => 'required',
             'deadline' => 'required',
             'user_id' => 'required',
+            'person_mission' => 'required',
+            'status_id' => 'required',
+            'job_ranting' => 'required'
         ];
     }
 }
