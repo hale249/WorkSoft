@@ -1,0 +1,40 @@
+{
+    "users": {
+        "view": "Có thể xem tất cả người dùng trong danh sách",
+        "edit": "Cho phép chỉnh sửa người dùng",
+        "change_password": "Cho phép thay đổi mật khẩu người dùng",
+        "delete": "Cho phép xóa người dùng"
+    },
+    "meetings": {
+        "view": "Có thể xem tất cả lập lịch",
+        "edit": "Cho phép chỉnh sửa lập lịch",
+        "show": "Cho phép hiển thị chi tiết lập lịch",
+        "delete": "Cho phép xóa lập lịch"
+    },
+    "categories": {
+        "view": "Có thể xem tất cả danh mục",
+        "edit": "Cho phép chỉnh sửa danh mục",
+        "show": "Cho phép hiển thị chi tiết danh mục",
+        "delete": "Cho phép xóa danh mục"
+    },
+    "cong_viec": {
+        "view": "Có thể xem tất cả công việc",
+        "edit": "Cho phép chỉnh sửa công việc",
+        "show": "Cho phép hiển thị chi tiết công việc",
+        "view_item": "Cho phép hiển thị danh sách công việc"
+    },
+    "status": {
+        "view": "Có thể xem tất cả xem trạng thái",
+        "edit": "Cho phép chỉnh sửa trạng thái",
+        "show": "Cho phép hiển thị chi tiết trạng thái"
+    },
+    "roles": {
+        "view": "Có thể xem tất cả quyền",
+        "edit": "Cho phép gán vai trò",
+    },
+    "permissions": {
+        "view": "Có thể xem tất cả vai trò",
+        "edit": "Cho phép sửa vai trò",
+        "delete": "Cho phép xóa vai trò"
+    }
+}

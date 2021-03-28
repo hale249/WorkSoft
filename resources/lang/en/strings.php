@@ -1,8 +1,8 @@
 <?php
 
 return [
-    'logout_modal_title' => 'Logout',
-    'logout_modal_text' => 'Logout',
-    'confirm_delete' => 'Are you sure?',
+    'logout_modal_title' => 'Đăng xuất',
+    'logout_modal_text' => 'Đăng xuất',
+    'confirm_delete' => 'Chắc chắn bạn xóa ?',
 ];
 

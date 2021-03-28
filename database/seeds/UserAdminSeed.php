@@ -3,6 +3,10 @@
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
+use App\Models\UserRole;
+use App\Models\Role;
+use App\Helpers\PermissionConstant;
+use \App\Helpers\Helper;
 
 class UserAdminSeed extends Seeder
 {
@@ -17,10 +21,18 @@ class UserAdminSeed extends Seeder
             ->create([
                 'first_name' => 'Lê văn',
                 'last_name' => 'Hà',
-                'username' => 'levanha',
-                'email' => 'lehatybg1@gmail.com',
+                'email' => 'halet2@gmail.com',
                 'password' => Hash::make('123456')
             ]);
+
+        if (!empty($user)) {
+            UserRole::query()->create([
+                'role_id' => Role::query()->where(['name', PermissionConstant::ROLE_ADMIN])->first()->id,
+                'model_type' => User::class,
+                'model_id' => $user->id
+            ]);
+            Helper::clearCache();
+        }
 
     }
 }

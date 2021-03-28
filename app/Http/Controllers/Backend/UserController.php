@@ -53,7 +53,6 @@ class UserController extends Controller
             'last_name',
             'email',
             'password',
-            'username',
         ]);
         User::query()
             ->create($data);

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.pages.backend.users.title.management'))
+@section('title', __('Danh sách người dùng'))
 
 @section('content')
     <div class="card">
@@ -8,11 +8,11 @@
             <div class="row">
                 <div class="col-8">
                     <h4 class="card-title mb-0">
-                        @lang('labels.pages.backend.users.title.management')
+                        @lang('Danh sách người dùng')
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.users.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('labels.pages.backend.users.create_new_user')</a>
+                    <a href="{{ route('backend.users.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo mới')</a>
                 </div>
             </div>
 

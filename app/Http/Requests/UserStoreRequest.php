@@ -33,10 +33,6 @@ class UserStoreRequest extends FormRequest
                 'email',
                 Rule::unique('users')->whereNull('deleted_at')
             ],
-            'username' => [
-                'required',
-                Rule::unique('users')->whereNull('deleted_at')
-            ],
             'password' => 'required|confirmed|min:6',
         ];
     }

@@ -30,12 +30,12 @@
     <li class="nav-item @if(\Request::is('users') || \Request::is('users/*')) active @endif">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-user-management" aria-expanded="true" aria-controls="menu-user-management">
             <i class="fas fa-fw fa-users"></i>
-            <span>@lang('menus.backend.main_menu.users.title')</span>
+            <span>@lang('Người dùng')</span>
         </a>
         <div id="menu-user-management" class="collapse @if(\Request::is('users') || \Request::is('admin/users/*')) show @endif" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('users')) active @endif" href="{{ route('backend.users.index') }}">@lang('menus.backend.main_menu.users.list_all')</a>
-                <a class="collapse-item @if(\Request::is('users/create')) active @endif" href="{{ route('backend.users.create') }}">@lang('menus.backend.main_menu.users.create')</a>
+                <a class="collapse-item @if(\Request::is('users')) active @endif" href="{{ route('backend.users.index') }}">@lang('Người dùng')</a>
+                <a class="collapse-item @if(\Request::is('users/create')) active @endif" href="{{ route('backend.users.create') }}">@lang('Tạo mới người dùng')</a>
             </div>
         </div>
     </li>
@@ -53,21 +53,6 @@
             </div>
         </div>
     </li>
-
-{{--
-    <li class="nav-item @if(\Request::is('admin/products') || \Request::is('admin/products/*')) active @endif">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-product-management" aria-expanded="true" aria-controls="menu-product-management">
-            <i class="fas fa-fw fa-users"></i>
-            <span>@lang('menus.backend.main_menu.product.title')</span>
-        </a>
-        <div id="menu-product-management" class="collapse @if(\Request::is('admin/products') || \Request::is('admin/products/*')) show @endif" data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('admin/products')) active @endif" href="{{ route('backend.product.index') }}">@lang('menus.backend.main_menu.product.list_all')</a>
-                <a class="collapse-item @if(\Request::is('admin/products/create')) active @endif" href="{{ route('backend.product.create') }}">@lang('menus.backend.main_menu.product.create')</a>
-            </div>
-        </div>
-    </li>
---}}
 
     <li class="nav-item">
         <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-meeting-management" aria-expanded="true" aria-controls="menu-meeting-management">
@@ -91,6 +76,44 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item @if(\Request::is('project')) active @endif" href="{{ route('backend.projects.index') }}">@lang('Danh sách công việc')</a>
                 <a class="collapse-item @if(\Request::is('project/create')) active @endif" href="{{ route('backend.projects.create') }}">@lang('Tạo công việc')</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-role-management" aria-expanded="true" aria-controls="menu-role-management">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Quản lý quyền')</span>
+        </a>
+        <div id="menu-role-management" class="collapse @if(\Request::is('roles') || \Request::is('roles/*')) show @endif" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item @if(\Request::is('roles')) active @endif" href="{{ route('backend.roles.index') }}">@lang('Danh sách quyền')</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-permission-management" aria-expanded="true" aria-controls="menu-permission-management">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Quản lý vai trò')</span>
+        </a>
+        <div id="menu-permission-management" class="collapse @if(\Request::is('permissions') || \Request::is('permissions/*')) show @endif" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item @if(\Request::is('permissions')) active @endif" href="{{ route('backend.permissions.index') }}">@lang('Danh sách vai trò')</a>
+                <a class="collapse-item @if(\Request::is('permissions/create')) active @endif" href="{{ route('backend.permissions.create') }}">@lang('Tạo vai trò')</a>
+            </div>
+        </div>
+    </li>
+
+    <li class="nav-item">
+        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-status-management" aria-expanded="true" aria-controls="menu-permission-management">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Quản lý trạng thái')</span>
+        </a>
+        <div id="menu-status-management" class="collapse @if(\Request::is('status') || \Request::is('status/*')) show @endif" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item @if(\Request::is('status')) active @endif" href="{{ route('backend.status.index') }}">@lang('Danh sách trạng thái')</a>
+                <a class="collapse-item @if(\Request::is('status/create')) active @endif" href="{{ route('backend.status.create') }}">@lang('Tạo trạng thái')</a>
             </div>
         </div>
     </li>

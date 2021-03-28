@@ -33,7 +33,7 @@
                                         @csrf
                                         @include('share.alerts.messages')
                                         <div class="form-group">
-                                            <input type="text" name="username" value="{{ old('username') }}" class="form-control form-control-user" id="username" aria-describedby="emailHelp" placeholder="Nhập tài khoản">
+                                            <input type="email" name="email" value="{{ old('email') }}" class="form-control form-control-user" id="email" aria-describedby="emailHelp" placeholder="Nhập tài khoản">
                                         </div>
                                         <div class="form-group">
                                             <input type="password" name="password" class="form-control form-control-user" id="password" placeholder="Nhập mật khẩu">

@@ -1,6 +1,6 @@
 @extends('backend.layouts.app')
 
-@section('title', __('labels.pages.backend.users.title.edit'))
+@section('title', __('Chỉnh sửa người dùng'))
 
 @section('content')
     <div class="card">
@@ -9,8 +9,8 @@
             @csrf
             <div class="card-body">
                 <h4 class="card-title mb-0">
-                    @lang('labels.pages.backend.users.title.management')
-                    <small class="text-muted">@lang('labels.pages.backend.users.title.edit')</small>
+                    @lang('Người dùng')
+                    <small class="text-muted">@lang('Chỉnh sửa')</small>
                 </h4>
                 <hr>
                 <div class="form-group row">
@@ -25,13 +25,6 @@
 
                     <div class="col-md-10">
                         <input class="form-control" type="text" name="last_name" id="name" value="{{$user->last_name ?? old('last_name') }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
-                    </div><!--col-->
-                </div>
-                <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="username">Username</label>
-
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="username" id="name" value="{{ $user->username ?? old('username') }}" placeholder="{{ __('User name') }}" maxlength="191" required="" disabled>
                     </div><!--col-->
                 </div>
 

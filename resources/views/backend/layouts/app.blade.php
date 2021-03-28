@@ -6,8 +6,7 @@
     <title>@yield('title')</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
+    <link rel="icon" href="{{ asset('favicon.ico') }}">
     <!-- Styles -->
     <link rel="stylesheet" href="/css/backend/app.css">
     @yield('css')

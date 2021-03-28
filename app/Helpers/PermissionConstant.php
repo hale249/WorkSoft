@@ -11,9 +11,11 @@ interface PermissionConstant
     */
     public const ROLE_ADMIN = 'ADMIN';
     public const ROLE_MANAGER = 'MANAGER';
+    public const ROLE_CUSTOMER = 'CUSTOMER';
 
     public const ROLES = [
         self::ROLE_ADMIN,
         self::ROLE_MANAGER,
+        self::ROLE_CUSTOMER
     ];
  }

@@ -34,7 +34,7 @@ class AuthController extends Controller
     public function login(AuthLoginRequest $request): RedirectResponse
     {
         $credentials = $request->only([
-            'username',
+            'email',
             'password'
         ]);
         $remember = $request->input('remember_me');
