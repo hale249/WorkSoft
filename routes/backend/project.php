@@ -12,3 +12,4 @@ Route::post('projects/{id}/items/store', [TaskController::class, 'store'])->name
 Route::get('projects/{id}/items/{taskId}/show', [TaskController::class, 'show'])->name('project_task.show');
 Route::get('projects/{id}/items/{taskId}/edit', [TaskController::class, 'edit'])->name('project_task.edit');
 Route::put('projects/{id}/items/{taskId}', [TaskController::class, 'update'])->name('project_task.update');
+Route::delete('projects/{id}/items/{taskId}', [TaskController::class, 'destroy'])->name('project_task.destroy');

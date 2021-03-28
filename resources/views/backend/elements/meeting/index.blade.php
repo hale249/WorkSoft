@@ -12,10 +12,10 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.meetings.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo cuộc họp')</a>
+                    <a href="{{ route('backend.meeting.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo cuộc họp')</a>
                 </div>
             </div>
-            <form action="{{ route('backend.meetings.index') }}" method="GET" class="form-inline mt-2">
+            <form action="{{ route('backend.meeting.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
                     <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>

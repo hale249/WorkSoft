@@ -59,10 +59,10 @@
             <i class="fas fa-fw fa-users"></i>
             <span>@lang('Lập lịch')</span>
         </a>
-        <div id="menu-meeting-management" class="collapse @if(\Request::is('admin/meetings') || \Request::is('admin/meetings/*')) show @endif" data-parent="#accordionSidebar">
+        <div id="menu-meeting-management" class="collapse @if(\Request::is('meeting') || \Request::is('meeting/*')) show @endif" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('admin/meetings')) active @endif" href="{{ route('backend.meetings.index') }}">@lang('Danh sách lập lịch')</a>
-                <a class="collapse-item @if(\Request::is('admin/meetings/create')) active @endif" href="{{ route('backend.meetings.create') }}">@lang('Tạo lập lịch')</a>
+                <a class="collapse-item @if(\Request::is('meeting')) active @endif" href="{{ route('backend.meeting.index') }}">@lang('Danh sách lập lịch')</a>
+                <a class="collapse-item @if(\Request::is('meeting/create')) active @endif" href="{{ route('backend.meeting.create') }}">@lang('Tạo lập lịch')</a>
             </div>
         </div>
     </li>

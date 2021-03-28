@@ -6,12 +6,14 @@ use App\Helpers\Constant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeetingRequest;
 use App\Http\Requests\ProjectRequest;
+use App\Mail\EmailAssignJob;
 use App\Models\Category;
 use App\Models\Meeting;
 use App\Models\Project;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use \Illuminate\Support\Str;
 
 class ProjectController extends Controller
@@ -49,12 +51,12 @@ class ProjectController extends Controller
             'deadline',
             'content'
         ]);
-/*        $users = User::query()->where('id', '!=', $userId)->get();*/
         $data['created_by'] = $userId;
         $data['slug'] = Str::slug($request->get('name'));
-         Project::create($data);
-        /*$emailJob = new SendEmailMeetingJob($users, $project);
-        dispatch($emailJob);*/
+        $project = Project::create($data);
+        if ($project) {
+            Mail::to($project->user->email)->send(new EmailAssignJob($project->user, $project));
+        }
 
         return redirect()->route('backend.projects.index')->with('flash_success', __('Tạo cuộc họp thành công'));
     }

@@ -24,7 +24,7 @@ trait MeetingAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('backend.meetings.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="'.route('backend.meeting.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
     }
 
     /**
@@ -32,7 +32,7 @@ trait MeetingAttribute
      */
     public function getShowButtonAttribute(): string
     {
-        return '<a href="'.route('backend.meetings.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+        return '<a href="'.route('backend.meeting.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
     }
 
     /**
@@ -40,7 +40,7 @@ trait MeetingAttribute
      */
     public function getDeleteButtonAttribute(): string
     {
-        return '<a href="' . route('backend.meetings.destroy', $this->id) . '"
+        return '<a href="' . route('backend.meeting.destroy', $this->id) . '"
                  data-trans-button-cancel="' . __('labels.general.cancel') . '"
                  data-trans-button-confirm="' . __('labels.general.delete') . '"
                  data-trans-title="' . __('strings.confirm_delete') . '"

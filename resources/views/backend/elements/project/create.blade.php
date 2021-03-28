@@ -13,6 +13,19 @@
                 </h4>
                 <hr>
                 <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="category_id">Loại đầu việc</label>
+
+                    <div class="col-md-10">
+                        <select name="category_id" class="form-control" id="category_id" required>
+                            <option value="">Loại đầu việc</option>
+                            <option value="1">1</option>
+                            <option value="1">2</option>
+                            <option value="1">3</option>
+                        </select>
+                    </div><!--col-->
+                </div>
+
+                <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="category_id">Danh mục</label>
 
                     <div class="col-md-10">
@@ -39,6 +52,19 @@
                     <div class="col-md-10">
                         <select name="user_id" class="form-control" id="user_id">
                             <option value="">Người thực hiện</option>
+                            @foreach($users as $user)
+                                <option @if(!empty(old('user_id')) && old('user_id') === $user->id) selected @endif value="{{ $user->id }}">{{ $user->full_name }}</option>
+                            @endforeach
+                        </select>
+                    </div><!--col-->
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="user_id">Người phụ trách</label>
+
+                    <div class="col-md-10">
+                        <select name="user_id" class="form-control" id="user_id">
+                            <option value="">Người phụ trách</option>
                             @foreach($users as $user)
                                 <option @if(!empty(old('user_id')) && old('user_id') === $user->id) selected @endif value="{{ $user->id }}">{{ $user->full_name }}</option>
                             @endforeach

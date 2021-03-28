@@ -25,7 +25,7 @@ class CategoryStoreRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'image' => 'nullable|image|dimensions:ratio=4/3|max:1024'
+            'image' => 'nullable'
         ];
     }
 }

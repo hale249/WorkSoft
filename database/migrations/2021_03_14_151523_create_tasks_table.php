@@ -20,7 +20,7 @@ class CreateTasksTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
             $table->date('deadline');
-            $table->integer('status')->default('1');
+            $table->unsignedInteger('status_id');
             $table->integer('created_by');
             $table->softDeletes();
             $table->timestamps();

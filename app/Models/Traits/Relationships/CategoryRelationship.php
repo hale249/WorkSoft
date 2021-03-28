@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Relationships;
 
-use App\Models\Product;
+use App\Models\Project;
 use App\Models\User;
 
 trait CategoryRelationship
@@ -12,8 +12,8 @@ trait CategoryRelationship
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function products()
+    public function project()
     {
-        return $this->hasMany(Product::class, 'category_id', 'id');
+        return $this->belongsTo(Project::class, 'category_id', 'id');
     }
 }

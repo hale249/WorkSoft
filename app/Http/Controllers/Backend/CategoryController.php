@@ -21,7 +21,7 @@ class CategoryController extends Controller
     public function index(Request $request)
     {
         $data = $request->all();
-        $categories = Category::query();
+        $categories = Category::query()->with('user');
         if (!empty($data['name'])) {
             $categories = $categories->where('name', 'like', '%' . $data['name'] . '%');
         }
@@ -65,7 +65,7 @@ class CategoryController extends Controller
             $data['image'] = $this->uploadFile($request->file('image'), 'categories');
         }
 
-            $data['user_id'] = auth()->id();
+        $data['user_id'] = auth()->id();
         Category::query()
             ->create($data);
 

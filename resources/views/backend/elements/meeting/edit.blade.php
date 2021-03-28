@@ -4,7 +4,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('backend.meetings.update', $meeting->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('backend.meeting.update', $meeting->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="card-body">
@@ -80,7 +80,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ route('backend.meetings.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                        <a href="{{ route('backend.meeting.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
                     </div>
 
                     <div class="col text-right">

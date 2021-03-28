@@ -15,6 +15,7 @@ trait TaskAttribute
         <div class="btn-group btn-group-sm" role="group" aria-label="Meeting Actions">
           '.$this->getShowButtonAttribute($projectId).'
           '.$this->getEditButtonAttribute($projectId).'
+          '.$this->getDeleteButtonAttribute($projectId).'
         </div>';
     }
 
@@ -32,5 +33,17 @@ trait TaskAttribute
     public function getShowButtonAttribute(int $projectId): string
     {
         return '<a href="'.route('backend.project_task.show', ['id' => $projectId, 'taskId' => $this->id]).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getDeleteButtonAttribute(int $projectId): string
+    {
+        return '<a href="' . route('backend.project_task.destroy', ['id' => $projectId, 'taskId' => $this->id]) . '"
+                 data-trans-button-cancel="' . __('labels.general.cancel') . '"
+                 data-trans-button-confirm="' . __('labels.general.delete') . '"
+                 data-trans-title="' . __('strings.confirm_delete') . '"
+                 class="btn btn-danger js-confirm-delete btn-sm"><i class="fas fa-trash"></i></a>';
     }
 }

@@ -27,6 +27,14 @@
             </div>
 
             <div class="form-group row">
+                <label class="col-md-2 form-control-label" for="name">Trạng thái</label>
+
+                <div class="col-md-10">
+                    <span class="badge badge-pill" style="background-color: {{ $task->status->color }}; color: #000000">{{ $task->status->name }}</span>
+                </div><!--col-->
+            </div>
+
+            <div class="form-group row">
                 <label class="col-md-2 form-control-label" for="name">Nội dung</label>
 
                 <div class="col-md-10">
@@ -54,10 +62,6 @@
             <div class="row">
                 <div class="col">
                     <a href="{{ route('backend.project_task.index', ['id' => $project->id]) }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
-                </div>
-
-                <div class="col text-right">
-                    <a href="{{ route('backend.project_task.edit', ['id' => $project->id, 'taskId' => $task->id]) }}" class="btn btn-primary btn-sm">@lang('labels.general.edit')</a>
                 </div>
             </div>
         </div>

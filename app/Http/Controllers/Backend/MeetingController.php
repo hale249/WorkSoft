@@ -25,7 +25,7 @@ class MeetingController extends Controller
         if (!empty($data)) {
             $meetings = $meetings->where('name','like', '%' . $data . '%');
         }
-        $meetings = $meetings->orderBy('created_at', 'desc')
+        $meetings = $meetings->orderBy('date_meeting', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
 
@@ -51,9 +51,7 @@ class MeetingController extends Controller
         ]);
         if ($request->hasFile('document_file')) {
             $file = $request->file('document_file');
-            $fileNameHash = Str::random(20) . '.' . $file->getClientOriginalExtension();
-            $filePath = $request->file('document_file')->storeAs('public/meetings/' . auth()->id(), $fileNameHash);
-            $data['document_file'] = Storage::url($filePath);
+            $data['document_file'] = $this->uploadFile($file, 'meetings');
         }
 
         $users = User::query()->where('id', '!=', $userId)->get();
@@ -61,7 +59,8 @@ class MeetingController extends Controller
         $meeting = Meeting::create($data);
         $emailJob = new SendEmailMeetingJob($users, $meeting);
         dispatch($emailJob);
-        return redirect()->route('backend.meetings.index')->with('flash_success', __('Tạo cuộc họp thành công'));
+
+        return redirect()->route('backend.meeting.index')->with('flash_success', __('Tạo cuộc họp thành công'));
     }
 
     public function show(int $id)
@@ -101,7 +100,7 @@ class MeetingController extends Controller
 
         $meeting->update($data);
 
-        return redirect()->route('backend.meetings.index')->with('flash_success', __('Chỉnh sửa lập lịch'));
+        return redirect()->route('backend.meeting.index')->with('flash_success', __('Chỉnh sửa lập lịch'));
     }
 
     public function destroy(int $id)
@@ -109,6 +108,6 @@ class MeetingController extends Controller
         $category = Meeting::query()->findOrFail($id);
         $category->delete();
 
-        return redirect()->route('backend.meetings.index')->with('flash_success', __('Xóa lập lịch thành công'));
+        return redirect()->route('backend.meeting.index')->with('flash_success', __('Xóa lập lịch thành công'));
     }
 }

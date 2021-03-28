@@ -61,12 +61,9 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('backend.meetings.index') }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
+                    <a href="{{ route('backend.meeting.index') }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
                 </div>
 
-                <div class="col text-right">
-                    <a href="{{ route('backend.meetings.edit', $meeting->id) }}" class="btn btn-primary btn-sm">@lang('labels.general.edit')</a>
-                </div>
             </div>
         </div>
     </div>

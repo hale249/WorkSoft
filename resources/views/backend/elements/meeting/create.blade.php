@@ -8,7 +8,7 @@
 
 @section('content')
     <div class="card">
-        <form action="{{ route('backend.meetings.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('backend.meeting.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="card-body">
                 <h4 class="card-title mb-0">
@@ -28,7 +28,7 @@
                     <label class="col-md-2 form-control-label" for="date_meeting">Ngày họp</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="date" name="date_meeting" value="{{ old('date_meeting') }}" id="date_meeting" placeholder="Nhập ngày họp ..."  required="">
+                        <input class="form-control" type="date" name="date_meeting" value="{{ date('Y-m-d') ?? old('date_meeting') }}" id="date_meeting" placeholder="Nhập ngày họp ..."  required="">
                     </div><!--col-->
                 </div>
 
@@ -36,7 +36,7 @@
                     <label class="col-md-2 form-control-label" for="start_meeting">Thời gian bắt đầu</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="time" name="start_meeting" value="{{ old('start_meeting') }}" id="start_meeting" placeholder="Thời gian bắt đầu ..." required="">
+                        <input class="form-control" type="time" name="start_meeting" value="{{ time() ?? old('start_meeting') }}" id="start_meeting" placeholder="Thời gian bắt đầu ..." required="">
                     </div><!--col-->
                 </div>
 
@@ -44,22 +44,22 @@
                     <label class="col-md-2 form-control-label" for="end_meeting">Thời gian kết thúc</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="time" name="end_meeting" value="{{ old('end_meeting') }}" id="end_meeting" placeholder="Thời gian kết thúc ..." required="">
+                        <input class="form-control" type="time" name="end_meeting" value="{{ time() ?? old('end_meeting') }}" id="end_meeting" placeholder="Thời gian kết thúc ..." required="">
                     </div><!--col-->
                 </div>
-                <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="description">Thành viên tham gia</label>
+{{--                <div class="form-group row">--}}
+{{--                    <label class="col-md-2 form-control-label" for="description">Thành viên tham gia</label>--}}
 
-                    <div class="col-md-10">
-                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">
+{{--                    <div class="col-md-10">--}}
+{{--                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">--}}
 {{--                            <option value="all">All</option>--}}
-                            @foreach($users as $user)
-                            <option value="{{ $user->id }}">{!! $user->full_name !!}</option>
-                            @endforeach
-                        </select>
+{{--                            @foreach($users as $user)--}}
+{{--                            <option value="{{ $user->id }}">{!! $user->full_name !!}</option>--}}
+{{--                            @endforeach--}}
+{{--                        </select>--}}
 
-                    </div><!--col-->
-                </div>
+{{--                    </div><!--col-->--}}
+{{--                </div>--}}
 
                 <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="description">Nội dung cuộc họp</label>
@@ -81,7 +81,7 @@
             <div class="card-footer">
                 <div class="row">
                     <div class="col">
-                        <a href="{{ route('backend.meetings.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                        <a href="{{ route('backend.meeting.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
                     </div>
 
                     <div class="col text-right">

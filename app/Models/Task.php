@@ -14,4 +14,9 @@ class Task extends Model
 
     protected $table = 'tasks';
     protected $guarded = [];
+
+    public function status()
+    {
+        return $this->belongsTo(Status::class, 'status_id', 'id');
+    }
 }

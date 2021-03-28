@@ -36,7 +36,7 @@
                                 <td>
                                     <img src="{{ $category->image }}" width="100">
                                 </td>
-                                <td>{{ $category->user->name }}</td>
+                                <td>{{ $category->user->full_name }}</td>
                                 <td>{!! $category->status_label !!}</td>
                                 <td>{{ $category->created_at }}</td>
                                 <td>{!! $category->action_buttons !!}</td>

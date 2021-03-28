@@ -4,6 +4,8 @@ require('startbootstrap-sb-admin-2/vendor/chart.js/Chart');
 require('startbootstrap-sb-admin-2/vendor/bootstrap/js/bootstrap.bundle');
 require('startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.easing');
 require('bootstrap4-toggle');
+require('dropzone')
+
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 import Swal from 'sweetalert2/src/sweetalert2'

@@ -28,8 +28,8 @@
                     <table class="table">
                         <thead>
                         <tr>
-                            <td><strong>Tên công việc</strong></td>
                             <td><strong>Danh mục</strong></td>
+                            <td><strong>Tên công việc</strong></td>
                             <td><strong>Người làm</strong></td>
                             <td><strong>Trạng thái</strong></td>
                             <td><strong>Hành động</strong></td>
@@ -38,12 +38,12 @@
                         <tbody>
                         @foreach($projects as $project)
                             <tr>
-                                <td>{{ $project->name }}</td>
                                 <td>
                                     @if(!empty($project->category))
                                         <a href="{{ route('backend.category.show', $project->category_id) }}" target="_blank">{{ $project->category->name }}</a>
                                     @endif
                                 </td>
+                                <td>{{ $project->name }}</td>
                                 <td>{{ $project->user->full_name }}</td>
                                 <td></td>
                                 <td>{!! $project->action_buttons !!}</td>

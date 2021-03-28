@@ -34,7 +34,7 @@
 
                     <div class="col-md-10">
                         <input type="file" name="image" id="image">
-                        <p class="mt-3"><img src="{{ $category->image }}" width="100" alt=""></p>
+                        <p class="mt-3"><img src="{{ \Request::root() . '/' . $category->image }}" width="100" alt=""></p>
                     </div><!--col-->
                 </div>
             </div>

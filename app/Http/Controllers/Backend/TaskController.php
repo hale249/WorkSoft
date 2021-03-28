@@ -8,6 +8,7 @@ use App\Helpers\Constant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Models\Project;
+use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -33,8 +34,9 @@ class TaskController extends Controller
     public function create(int $projectId)
     {
         $project = Project::query()->findOrFail($projectId);
+        $statuses = Status::all();
 
-        return view('backend.elements.task.create', compact('project'));
+        return view('backend.elements.task.create', compact('project', 'statuses'));
     }
 
     public function store(TaskRequest $request, int $projectId)
@@ -43,6 +45,7 @@ class TaskController extends Controller
         $data = $request->only([
             'name',
             'description',
+            'status_id',
             'deadline',
         ]);
         $data['project_id'] = $projectId;
@@ -56,7 +59,7 @@ class TaskController extends Controller
     public function show(int $projectId, $taskId)
     {
         $project = Project::query()->findOrFail($projectId);
-        $task = Task::query()->findOrFail($taskId);
+        $task = Task::query()->where('id', $taskId)->with('status')->first();
 
         return view('backend.elements.task.show', compact('project', 'task'));
     }
@@ -64,18 +67,20 @@ class TaskController extends Controller
     public function edit(int $projectId, $taskId)
     {
         $project = Project::query()->findOrFail($projectId);
-        $task = Task::query()->findOrFail($taskId);
+        $task = Task::query()->where('id', $taskId)->with('status')->first();
+        $statuses = Status::all();
 
-        return view('backend.elements.task.edit', compact('project', 'task'));
+        return view('backend.elements.task.edit', compact('project', 'task', 'statuses'));
     }
 
-    public function update(TaskRequest $request, int $projectId, $taskId)
+    public function update(TaskRequest $request, int $projectId, int $taskId)
     {
         $task = Task::query()->findOrFail($taskId);
         $userId = Auth::id();
         $data = $request->only([
             'name',
             'description',
+            'status_id',
             'deadline',
         ]);
         $data['project_id'] = $projectId;
@@ -87,8 +92,12 @@ class TaskController extends Controller
         return redirect()->route('backend.project_task.index', ['id' => $projectId])->with('flash_success', __('Chỉnh sửa nhiệm thành công'));
     }
 
-    public function destroy($id)
+    public function destroy(int $projectId, int $taskId)
     {
+        $project = Project::query()->findOrFail($projectId);
+        $category = Task::query()->findOrFail($taskId);
+        $category->delete();
 
+        return redirect()->route('backend.project_task.index', ['id' => $projectId])->with('flash_success', __('Xoá nhiệm vụ thành công'));
     }
 }

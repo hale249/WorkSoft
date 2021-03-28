@@ -57,26 +57,23 @@
                 </div><!--col-->
             </div>
 
-{{--            <div class="form-group row">--}}
-{{--                <label class="col-md-2 form-control-label" for="name">File dính kèm</label>--}}
+        {{--    <div class="form-group row">
+                <label class="col-md-2 form-control-label" for="name">File dính kèm</label>
 
-{{--                <div class="col-md-10">--}}
-{{--                    @if($meeting->document_file)--}}
-{{--                        <p class="mt-3"><img src="{{ $meeting->image }}" width="100" alt=""></p>--}}
-{{--                    @else--}}
-{{--                        @lang('labels.general.empty')--}}
-{{--                    @endif--}}
-{{--                </div><!--col-->--}}
-{{--            </div>--}}
+                <div class="col-md-10">
+                    @if($meeting->document_file)
+                        <p class="mt-3"><img src="{{ $meeting->image }}" width="100" alt=""></p>
+                    @else
+                        @lang('labels.general.empty')
+                    @endif
+                </div><!--col-->
+            </div>--}}
         </div>
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('backend.projects.index') }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
-                </div>
-
-                <div class="col text-right">
-                    <a href="{{ route('backend.projects.edit', $project->id) }}" class="btn btn-primary btn-sm">@lang('labels.general.edit')</a>
+                    <a href="{{ route('backend.projects.index') }}"
+                       class="btn btn-success btn-sm">@lang('labels.general.back')</a>
                 </div>
             </div>
         </div>

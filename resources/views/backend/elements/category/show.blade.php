@@ -22,7 +22,7 @@
                 <label class="col-md-2 form-control-label" for="description">@lang('labels.pages.backend.category.form.image')</label>
 
                 <div class="col-md-10">
-                    <img src="{{ $category->image }}" width="100" alt="">
+                    <img src="{{ \Request::root() . '/' . $category->image }}" width="100" alt="">
                 </div><!--col-->
             </div>
 
