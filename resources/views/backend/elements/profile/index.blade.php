@@ -43,6 +43,29 @@
                         <input class="form-control" type="text" name="last_name" id="last_name" value="{{ $user->last_name }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
                     </div><!--col-->
                 </div>
+
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="ma_can_bo">Mã cán bộ</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="ma_can_bo" id="ma_can_bo" value="{{ $user->ma_can_bo }}" placeholder="{{ __('Nhập ma can bo') }}">
+                    </div><!--col-->
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="chuc_vu">Chức vụ</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="chuc_vu" id="chuc_vu" value="{{ $user->chuc_vu }}" placeholder="{{ __('Nhập chức vụ') }}">
+                    </div><!--col-->
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="hoc_vi">Học vị</label>
+
+                    <div class="col-md-10">
+                        <input class="form-control" type="text" name="hoc_vi" id="hoc_vi" value="{{ $user->hoc_vi }}" placeholder="{{ __('Nhập học vị') }}">
+                    </div><!--col-->
+                </div>
+
                 <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="phone_number">Số điện thoại</label>
 

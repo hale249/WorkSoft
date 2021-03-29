@@ -18,17 +18,23 @@ class TaskController extends Controller
 {
     public function index(Request $request, int $jobId)
     {
-        $data = $request->input('name');
+        $name = $request->input('name');
+        $status = $request->input('status');
         $job = Job::query()->findOrFail($jobId);
         $tasks = Task::query()
             ->where('project_id', $jobId);
-        if (!empty($data)) {
-            $tasks = $tasks->where('name','like', '%' . $data . '%');
+        if (!empty($name)) {
+            $tasks = $tasks->where('name','like', '%' . $name . '%');
+        }
+        if (!empty($status)) {
+            $tasks = $tasks->where('status_id', $status);
         }
         $tasks = $tasks->orderBy('created_at', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
-        return view('backend.elements.task.index', compact('tasks', 'job'));
+        $statuses = Status::all();
+
+        return view('backend.elements.task.index', compact('tasks', 'job', 'statuses'));
     }
 
     public function create(int $jobId)

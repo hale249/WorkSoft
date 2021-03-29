@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <form action="{{ route('backend.users.update', $user->id) }}" method="POST">
-            @method('put')
+            @method('PUT')
             @csrf
             <div class="card-body">
                 <h4 class="card-title mb-0">
@@ -14,17 +14,17 @@
                 </h4>
                 <hr>
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="name">@lang('First name')</label>
+                    <label class="col-md-2 form-control-label" for="first_name">@lang('First name')</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="name" id="first_name" value="{{$user->first_name ?? old('first_name') }}" placeholder="{{ __('First name') }}" maxlength="191" required="" autofocus="">
+                        <input class="form-control" type="text" name="first_name" id="first_name" value="{{ $user->first_name ?? old('first_name') }}" placeholder="{{ __('First name') }}" maxlength="191" required="" autofocus="">
                     </div><!--col-->
                 </div>
                 <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="name">@lang('Last name')</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="last_name" id="name" value="{{$user->last_name ?? old('last_name') }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
+                        <input class="form-control" type="text" name="last_name" id="name" value="{{   $user->last_name ?? old('last_name') }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
                     </div><!--col-->
                 </div>
 
@@ -36,6 +36,17 @@
                     </div><!--col-->
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="role">Gán vai trò</label>
+                    <div class="col-md-10">
+                        <select name="role" class="form-control" id="role">
+                            <option value="">Gán vai trò</option>
+                            @foreach($roles as $role)
+                                <option {{ (!empty($user->roles()->first()) ? $user->roles()->first()->id : '')  === $role->id ? 'selected' : '' }} value="{{ $role->id }}">{{ trans('role.' . $role->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div><!--col-->
+                </div>
             </div>
             <div class="card-footer">
                 <div class="row">

@@ -7,8 +7,11 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\UserChangePasswordRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class UserController extends Controller
@@ -22,7 +25,8 @@ class UserController extends Controller
     public function index(Request $request): View
     {
         $data = $request->all();
-        $users = User::query();
+        $users = User::query()
+            ->with('roles');
 
         if (!empty($data['name'])) {
             $users = $users->where('name','like', '%' . $data['name'] . '%');
@@ -43,21 +47,32 @@ class UserController extends Controller
      */
     public function create(): View
     {
-        return view('backend.elements.user.create');
+        $roles = Role::all();
+        return view('backend.elements.user.create', compact('roles'));
     }
 
     public function store(UserStoreRequest $request)
     {
-        $data = $request->only([
-            'first_name',
-            'last_name',
-            'email',
-            'password',
-        ]);
-        User::query()
-            ->create($data);
+        try {
+            DB::beginTransaction();
+            $data = $request->only([
+                'first_name',
+                'last_name',
+                'email',
+                'password',
+            ]);
+            $user = User::query()->create($data);
+            if ($user) {
+                $user->assignRole($request->role);
+            }
+            DB::commit();
 
-        return redirect()->back()->with('flash_success', __('labels.pages.backend.users.messages.create_user_success'));
+            return redirect()->route('backend.users.index')->with('flash_success', __('labels.pages.backend.users.messages.create_user_success'));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());
+
+        }
     }
 
     /**
@@ -68,22 +83,34 @@ class UserController extends Controller
      */
     public function edit(int $id): View
     {
-        $user = User::query()->findOrFail($id);
+        $user = User::query()->where('id', $id)->with('roles')->first();
+        $roles = Role::all();
 
-        return view('backend.elements.user.edit', compact('user'));
+        return view('backend.elements.user.edit', compact('user', 'roles'));
     }
 
-    public function update(UserUpdateRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
-        $data = $request->only([
-            'first_name',
-            'last_name'
-        ]);
+        try {
+            DB::beginTransaction();
+            $data = $request->only([
+                'first_name',
+                'last_name',
+            ]);
 
-        $user = User::query()->findOrFail($id);
-        $user->update($data);
+            $user = User::query()
+                ->findOrFail($id);
 
-        return redirect()->back()->with('flash_success', __('labels.pages.backend.users.messages.update_user_success'));
+            $userUpdate = $user->update($data);
+
+            $userUpdate->roles->sync($request->role);
+            DB::commit();
+
+            return redirect()->route('backend.users.index')->with('flash_success', __('labels.pages.backend.users.messages.update_user_success'));
+        } catch (\Exception $exception) {
+            DB::rollBack();
+            Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());
+        }
     }
 
     public function destroy(int $id)

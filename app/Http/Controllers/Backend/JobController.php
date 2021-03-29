@@ -22,15 +22,21 @@ class JobController extends Controller
 {
     public function index(Request $request)
     {
-        $data = $request->get('name');
+        $name = $request->get('name');
+        $status = $request->get('status');
         $jobs = Job::query();
-        if (!empty($data)) {
-            $jobs = $jobs->where('name','like', '%' . $data . '%');
+        if (!empty($name)) {
+            $jobs = $jobs->where('name','like', '%' . $name . '%');
         }
-        $jobs = $jobs->orderBy('created_at', 'desc')
+        if (!empty($status)) {
+            $jobs = $jobs->where('status_id', $status);
+        }
+        $jobs = $jobs->orderBy('deadline', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
-        return view('backend.elements.job.index', compact('jobs'));
+        $statuses = Status::all();
+
+        return view('backend.elements.job.index', compact('jobs', 'statuses'));
     }
 
     public function create()

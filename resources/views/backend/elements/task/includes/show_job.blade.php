@@ -33,7 +33,7 @@
     <label class="col-md-2 form-control-label" for="name">Người hỗ trợ</label>
 
     <div class="col-md-10">
-        {{ $job->personSupport->full_name }}
+        {{ !empty($job->personSupport) ? $job->personSupport->full_name : '' }}
     </div><!--col-->
 </div>
 
@@ -48,7 +48,7 @@
     <label class="col-md-2 form-control-label" for="name">Nngười quản lý công việc</label>
 
     <div class="col-md-10">
-        {{ $job->personMission->full_name }}
+        {{ !empty($job->personMission) ? $job->personMission->full_name : '' }}
     </div><!--col-->
 </div>
 

@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Job;
 use App\Models\Meeting;
-use App\Models\Project;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -15,11 +15,11 @@ class DashboardController extends Controller
     public function index()
     {
         $countUser = User::query()->count();
-        $countProject = Project::query()->count();
+        $countProject = Job::query()->count();
         $countMeetingUpcoming = Meeting::query()->where('date_meeting', '>' ,date('Y-m-d'))->count();
         $countTask = Task::query()->count();
 
-        $statusPro = Project::query()
+        $statusPro = Job::query()
             ->select([
                 'statuses.name as name',
                 'statuses.color as color',

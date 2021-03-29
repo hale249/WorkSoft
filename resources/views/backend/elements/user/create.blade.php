@@ -51,6 +51,19 @@
                     </div><!--col-->
                 </div>
 
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="role">Gán vai trò</label>
+
+                    <div class="col-md-10">
+                        <select name="role" class="form-control" id="role">
+                            <option value="">Gán vai trò</option>
+                            @foreach($roles as $role)
+                                <option {{ old('$role') === $role->id ? 'selected' : '' }} value="{{ $role->id }}">{{ trans('role.' . $role->name) }}</option>
+                            @endforeach
+                        </select>
+                    </div><!--col-->
+                </div>
+
             </div>
             <div class="card-footer">
                 <div class="row">

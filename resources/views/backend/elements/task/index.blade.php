@@ -33,7 +33,15 @@
 
             <form action="{{ route('backend.job_task.index', ['id', $job->id]) }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
-                    <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm lập lịch">
+                    <input type="text" name="name" value="" class="form-control" placeholder="Tìm kiếm...">
+                </div>
+                <div class="form-group ml-2">
+                    <select name="status" class="form-control" id="status">
+                        <option value="">Trạng thái</option>
+                        @foreach($statuses as $status)
+                            <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>

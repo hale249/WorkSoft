@@ -37,7 +37,10 @@ class ProfileController extends Controller
             'last_name',
             'address',
             'phone_number',
-            'birthday'
+            'birthday',
+            'ma_can_bo',
+            'chuc_vu',
+            'hoc_vi',
         ]);
         $user = User::query()->findOrFail(auth()->id());
         $user->update($data);

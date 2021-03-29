@@ -20,6 +20,14 @@
                 <div class="form-group">
                     <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
+                <div class="form-group ml-2">
+                    <select name="status" class="form-control" id="status">
+                        <option value="">Trạng thái</option>
+                        @foreach($statuses as $status)
+                            <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
 
@@ -30,7 +38,9 @@
                         <tr>
                             <td><strong>Danh mục</strong></td>
                             <td><strong>Tên công việc</strong></td>
+                            <td><strong>Mức độ ưu tiên</strong></td>
                             <td><strong>Người làm</strong></td>
+                            <td><strong>Hạn</strong></td>
                             <td><strong>Trạng thái</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
@@ -44,8 +54,10 @@
                                     @endif
                                 </td>
                                 <td>{{ $job->name }}</td>
+                                <td>{{ $job->job_ranting }}</td>
                                 <td>{{ $job->user->full_name }}</td>
-                                <td></td>
+                                <td>{{ $job->deadline }}</td>
+                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
                                 <td>{!! $job->action_buttons !!}</td>
                             </tr>
                         @endforeach
