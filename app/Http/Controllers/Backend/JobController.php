@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Helpers\Constant;
+use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
 use App\Mail\EmailAssignJob;
@@ -17,16 +18,19 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use \Illuminate\Support\Str;
+use App\Helpers\FileType;
 
 class JobController extends Controller
 {
+    use ResponseTrait;
+
     public function index(Request $request)
     {
         $name = $request->get('name');
         $status = $request->get('status');
         $jobs = Job::query();
         if (!empty($name)) {
-            $jobs = $jobs->where('name','like', '%' . $name . '%');
+            $jobs = $jobs->where('name', 'like', '%' . $name . '%');
         }
         if (!empty($status)) {
             $jobs = $jobs->where('status_id', $status);
@@ -76,7 +80,7 @@ class JobController extends Controller
 
     public function show(int $id)
     {
-        $job =Job::query()->where('id', $id)->with(['user', 'category'])->first();
+        $job = Job::query()->where('id', $id)->with(['user', 'category'])->first();
 
         return view('backend.elements.job.show', compact('job'));
     }
@@ -114,8 +118,9 @@ class JobController extends Controller
         return redirect()->route('backend.jobs.index')->with('flash_success', __('Chỉnh sửa công việc thành công'));
     }
 
-    public function ajaxUploadAttachment(Request $request, int $jobId): JsonResponse
+    public function ajaxUploadAttachment(Request $request, int $jobId)
     {
+        $userId = Auth::id();
         $job = Job::find($jobId);
         if (empty($job)) {
             return $this->error('Job not found.');
@@ -132,10 +137,11 @@ class JobController extends Controller
 
         $now = Carbon::now();
         $attachment = JobAttachment::create([
-            'job_id' => $jobId,
-            'name' => $imageName,
-            'path_name' => $pathToFile,
+            'project_id' => $jobId,
+            'file_name' => $imageName,
+            'file_path' => $pathToFile,
             'url' => $url,
+            'upload_by' => $userId,
             'type' => JobAttachment::getFileType($extension),
             'created_at' => $now,
             'updated_at' => $now,
@@ -144,18 +150,53 @@ class JobController extends Controller
         return $this->success('Attachment has been uploaded successfully.', $attachment);
     }
 
-    public function ajaxDeleteAttachment(int $jobId, int $attachmentId): JsonResponse
+    public function ajaxDeleteAttachment(int $jobId, int $attachmentId)
     {
         $attachment = JobAttachment::query()
-            ->where('job_id', $jobId)
+            ->where('project_id', $jobId)
             ->where('id', $attachmentId)
             ->first();
-        if (empty($attachment)) {
-            return $this->error('Attachment is not found.');
-        }
 
         $attachment->delete();
 
-        return $this->success('Attachment has been deleted successfully.');
+        return redirect()->route('backend.jobs.index')->with('flash_success', __('Xoá tài liệu thành công'));
+    }
+
+    public static function getFileType(?string $extension): ?string
+    {
+        $extension = strtolower(trim($extension)) ?? '';
+
+        switch ($extension) {
+            case 'pdf':
+                return FileType::PDF;
+
+            case 'doc':
+            case 'docx':
+                return FileType::WORD;
+
+            case 'xls':
+            case 'xlsx':
+                return FileType::EXCEL;
+
+            case 'ppt':
+            case 'pptx':
+                return FileType::POWERPOINT;
+
+            case 'xml':
+                return FileType::XML;
+
+            case 'csv':
+                return FileType::CSV;
+
+            case 'png':
+            case 'jpg':
+            case 'jpeg':
+            case 'gif':
+            case 'svg':
+                return FileType::IMAGE;
+
+            default:
+                return null;
+        }
     }
 }

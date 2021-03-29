@@ -8,6 +8,7 @@ use App\Helpers\Constant;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\TaskRequest;
 use App\Models\Job;
+use App\Models\JobAttachment;
 use App\Models\Status;
 use App\Models\Task;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,9 @@ class TaskController extends Controller
     {
         $name = $request->input('name');
         $status = $request->input('status');
+
         $job = Job::query()->findOrFail($jobId);
+
         $tasks = Task::query()
             ->where('project_id', $jobId);
         if (!empty($name)) {
@@ -33,8 +36,13 @@ class TaskController extends Controller
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
         $statuses = Status::all();
+        // Select job attachments
+        $attachments = JobAttachment::query()
+            ->where('project_id', $jobId)
+            ->orderBy('created_at', 'desc')
+            ->get();
 
-        return view('backend.elements.task.index', compact('tasks', 'job', 'statuses'));
+        return view('backend.elements.task.index', compact('tasks', 'job', 'statuses', 'attachments'));
     }
 
     public function create(int $jobId)

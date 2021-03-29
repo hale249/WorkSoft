@@ -14,11 +14,13 @@ class CreateProjectDocumentsTable extends Migration
     public function up()
     {
         Schema::create('project_documents', function (Blueprint $table) {
+            $table->increments('id');
             $table->unsignedInteger('project_id');
-            $table->text('file_icon')->nullable();
+            $table->text('type')->nullable();
             $table->text('file_name')->nullable();
             $table->text('file_path')->nullable();
             $table->unsignedInteger('upload_by');
+            $table->text('url')->nullable();
             $table->timestamps();
         });
     }

@@ -95,5 +95,21 @@
 @endsection
 @section('script')
     <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script type="text/javascript">
+        $("#job-attachments").dropzone({
+            url: $('#job-attachments').attr('action'),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            init: function() {
+                this.on("queuecomplete", function (file) {
+                    showSuccessMessage('Attachments have been uploaded successfully.');
 
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 500);
+                });
+            }
+        });
+    </script>
 @endsection
