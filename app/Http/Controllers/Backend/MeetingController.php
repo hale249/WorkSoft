@@ -49,10 +49,12 @@ class MeetingController extends Controller
             'start_meeting',
             'end_meeting',
         ]);
-        $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
-        if ($request->hasFile('document_file') && !empty($dataFile)) {
-            $data['document_file'] = $dataFile['file_name'];
-            $data['document_file_url'] = $dataFile['url'];
+        if ($request->hasFile('document_file')) {
+            if (!empty($dataFile)) {
+                $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+                $data['document_file'] = $dataFile['file_name'];
+                $data['document_file_url'] = $dataFile['url'];
+            }
         }
 
         $users = User::query()->where('id', '!=', $userId)->get();
@@ -90,10 +92,12 @@ class MeetingController extends Controller
             'start_meeting',
             'end_meeting',
         ]);
-        $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
-        if ($request->hasFile('document_file') && !empty($dataFile)) {
-            $data['document_file'] = $dataFile['file_name'];
-            $data['document_file_url'] = $dataFile['url'];
+        if ($request->hasFile('document_file')) {
+            if (!empty($dataFile)) {
+                $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+                $data['document_file'] = $dataFile['file_name'];
+                $data['document_file_url'] = $dataFile['url'];
+            }
         }
         $users = User::query()->where('id', '!=', $userId)->get();
         $data['created_by'] = $userId;
