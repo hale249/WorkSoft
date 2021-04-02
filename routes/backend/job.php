@@ -4,7 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Backend\TaskController;
 use App\Http\Controllers\Backend\JobController;
 
-Route::resource('jobs', 'JobController');
+Route::resource('jobs', 'JobController')->except(['index', 'show']);
+Route::get('job', [JobController::class, 'index'])->name('jobs.index');
+Route::get('job/{id}', [JobController::class, 'show'])->name('jobs.show');
 
 Route::get('jobs/{id}/items', [TaskController::class, 'index'])->name('job_task.index');
 Route::get('jobs/{id}/items/create', [TaskController::class, 'create'])->name('job_task.create');

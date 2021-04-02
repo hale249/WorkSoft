@@ -8,7 +8,7 @@
             <h4 class="card-title mb-0">
                 Công việc
                 <small class="text-muted">Chi tiết công việc - {{ $job->name }}</small><br>
-                <small class="text-muted">Người tạo - {{ $job->createdBy->full_name }}</small>
+                <small class="text-muted">Người tạo - {{ !empty($job->createdBy) ? $job->createdBy->full_name : '' }}</small>
             </h4>
             <hr>
             <div class="form-group row">
@@ -31,7 +31,7 @@
                 <label class="col-md-2 form-control-label" for="name">Người phụ trách công việc</label>
 
                 <div class="col-md-10">
-                    {{ $job->user->full_name }}
+                    {{ !empty($job->user) ? $job->user->full_name : '' }}
                 </div><!--col-->
             </div>
             <div class="form-group row">
@@ -46,7 +46,7 @@
                 <label class="col-md-2 form-control-label" for="name">Người hỗ trợ</label>
 
                 <div class="col-md-10">
-                    {{ $job->personSupport->full_name }}
+                    {{ !empty($job->personSupport) ? $job->personSupport->full_name : '' }}
                 </div><!--col-->
             </div>
 
@@ -61,7 +61,7 @@
                 <label class="col-md-2 form-control-label" for="name">Nngười quản lý công việc</label>
 
                 <div class="col-md-10">
-                    {{ $job->personMission->full_name }}
+                    {{ !empty($job->personMission) ? $job->personMission->full_name : '' }}
                 </div><!--col-->
             </div>
 

@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -42,6 +43,15 @@ class ProfileController extends Controller
             'chuc_vu',
             'hoc_vi',
         ]);
+
+        $attachment = $request->file('file');
+        $imageName = time() . $attachment->getClientOriginalName();
+        $pathToFile = 'avatars/' . $imageName;
+        Storage::put($pathToFile, fopen($attachment, 'r+'), 'public');
+        $url = Storage::url($pathToFile);
+
+        $data['avatar'] = $url;
+
         $user = User::query()->findOrFail(auth()->id());
         $user->update($data);
 

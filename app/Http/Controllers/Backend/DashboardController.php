@@ -47,4 +47,9 @@ class DashboardController extends Controller
         ];
         return view('backend.elements.dashboard.index', compact('statistical', 'statusJob'));
     }
+
+    public function personRatings()
+    {
+        $jobs = Job::all();
+    }
 }

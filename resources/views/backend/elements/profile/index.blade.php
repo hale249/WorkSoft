@@ -95,6 +95,14 @@
                         <input type="file" name="avatar" id="avatar" placeholder="{{ __('Ảnh đại điện') }}">
                     </div><!--col-->
                 </div>
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label"></label>
+                    <div class="col-md-10">
+                        @if(!empty($user->avatar))
+                            <img src="{{ $user->avatar }}" width="100px" height="100px">
+                        @endif
+                    </div>
+                </div>
             </div>
             <div class="card-footer">
                 <div class="row">

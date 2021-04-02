@@ -23,6 +23,7 @@ class CreateMeetingsTable extends Migration
             $table->time('start_meeting')->nullable();
             $table->time('end_meeting')->nullable();
             $table->integer('created_by');
+            $table->text('document_file_url')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

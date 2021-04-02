@@ -51,9 +51,13 @@
 
                 <div class="col-md-10">
                     @if($meeting->document_file)
-                    <p class="mt-3"><img src="{{ $meeting->image }}" width="100" alt=""></p>
+                        <p class="mt-3">{{ $meeting->document_file }}</p>
+                        <a href="{{ $meeting->document_file_url }}" data-toggle="tooltip" data-placement="top"
+                           title="Show" class="btn btn-success btn-sm"><i
+                                class="fas fa-info-circle"></i>Xem chi tiết</a>
                     @else
                         @lang('labels.general.empty')
+
                     @endif
                 </div><!--col-->
             </div>
@@ -61,7 +65,8 @@
         <div class="card-footer">
             <div class="row">
                 <div class="col">
-                    <a href="{{ route('backend.meeting.index') }}" class="btn btn-success btn-sm">@lang('labels.general.back')</a>
+                    <a href="{{ route('backend.meeting.index') }}"
+                       class="btn btn-success btn-sm">@lang('labels.general.back')</a>
                 </div>
 
             </div>

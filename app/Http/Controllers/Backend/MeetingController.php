@@ -49,9 +49,10 @@ class MeetingController extends Controller
             'start_meeting',
             'end_meeting',
         ]);
-        if ($request->hasFile('document_file')) {
-            $file = $request->file('document_file');
-            $data['document_file'] = $this->uploadFile($file, 'meetings');
+        $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+        if ($request->hasFile('document_file') && !empty($dataFile)) {
+            $data['document_file'] = $dataFile['file_name'];
+            $data['document_file_url'] = $dataFile['url'];
         }
 
         $users = User::query()->where('id', '!=', $userId)->get();
@@ -89,8 +90,10 @@ class MeetingController extends Controller
             'start_meeting',
             'end_meeting',
         ]);
-        if ($request->hasFile('document_file')) {
-            $data['document_file'] = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+        $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
+        if ($request->hasFile('document_file') && !empty($dataFile)) {
+            $data['document_file'] = $dataFile['file_name'];
+            $data['document_file_url'] = $dataFile['url'];
         }
         $users = User::query()->where('id', '!=', $userId)->get();
         $data['created_by'] = $userId;

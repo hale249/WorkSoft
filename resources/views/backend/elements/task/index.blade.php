@@ -103,8 +103,6 @@
             },
             init: function() {
                 this.on("queuecomplete", function (file) {
-                    showSuccessMessage('Attachments have been uploaded successfully.');
-
                     setTimeout(function() {
                         window.location.reload();
                     }, 500);
