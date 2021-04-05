@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use App\Models\User;
@@ -27,7 +29,7 @@ class UserAdminSeed extends Seeder
 
         if (!empty($user)) {
             UserRole::query()->create([
-                'role_id' => Role::query()->where(['name', PermissionConstant::ROLE_ADMIN])->first()->id,
+                'role_id' => Role::query()->where('name', PermissionConstant::ROLE_ADMIN)->first()->id,
                 'model_type' => User::class,
                 'model_id' => $user->id
             ]);

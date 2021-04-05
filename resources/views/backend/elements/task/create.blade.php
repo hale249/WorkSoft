@@ -30,39 +30,12 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="status_id">Trạng thái</label>
-
-                    <div class="col-md-10">
-                        <select name="status_id" class="form-control" id="status_id">
-                            @foreach($statuses as $status)
-                                <option value="{{ $status->id }}">{{ $status->name }}</option>
-                            @endforeach
-                        </select>
-                    </div><!--col-->
-                </div>
-                <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="description">Nội dung</label>
 
                     <div class="col-md-10">
                         <textarea class="form-control" name="description" id="description" placeholder="Nhập nội dung" rows="5">{{ old('description') }}</textarea>
                     </div><!--col-->
                 </div>
-
-                {{--<div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="content-text">Mô tả</label>
-
-                    <div class="col-md-10">
-                        <textarea class="form-control" name="content" id="content-text" placeholder="Nhập mô tả công việc" rows="10">{!! old('content') !!}</textarea>
-                    </div><!--col-->
-                </div>--}}
-
-                {{--<div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="status">@lang('labels.pages.backend.product.form.status')</label>
-
-                    <div class="col-md-10">
-                        <input type="checkbox" data-on="Show" value="1" data-off="Hidden" name="status" id="status" checked data-toggle="toggle" data-onstyle="primary">
-                    </div><!--col-->
-                </div>--}}
             </div>
             <div class="card-footer">
                 <div class="row">
