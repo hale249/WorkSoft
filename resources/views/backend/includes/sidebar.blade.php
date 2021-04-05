@@ -40,8 +40,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item @if(\Request::is('meeting')) active @endif"
                    href="{{ route('backend.meeting.index') }}">@lang('Danh sách lập lịch')</a>
+                @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
                 <a class="collapse-item @if(\Request::is('meeting/create')) active @endif"
                    href="{{ route('backend.meeting.create') }}">@lang('Tạo lập lịch')</a>
+                    @endif
             </div>
         </div>
     </li>
@@ -58,8 +60,10 @@
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item @if(\Request::is('jobs')) active @endif"
                    href="{{ route('backend.jobs.index') }}">@lang('Danh sách công việc')</a>
+                @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
                 <a class="collapse-item @if(\Request::is('jobs/create')) active @endif"
                    href="{{ route('backend.jobs.create') }}">@lang('Tạo công việc')</a>
+                @endif
             </div>
         </div>
     </li>

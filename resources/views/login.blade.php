@@ -9,6 +9,29 @@
 
     <!-- Styles -->
     <link rel="stylesheet" href="/css/backend/app.css">
+    <style>
+        .bg-gradient-primary {
+            background-color: #357ee8 !important;
+            background-image: linear-gradient(
+                180deg, #357ee8 10%, #357ee8 100%);
+            background-size: cover !important;
+        }
+        .btn-primary {
+            color: #fff;
+            background-color: #357ee8!important;
+            border-color: #357ee8!important;
+        }
+        .btn-info {
+            color: #fff;
+            background-color: #357ee8!important;
+            border-color: #357ee8!important;
+        }
+        a {
+            color: #2b9c9d;
+            text-decoration: none;
+            background-color: transparent;
+        }
+    </style>
 </head>
 
 <body class="bg-gradient-primary">

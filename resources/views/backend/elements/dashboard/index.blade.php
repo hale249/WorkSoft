@@ -190,7 +190,7 @@
     </div>
 @endsection
 @section('script')
-    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
+{{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
     <script type="text/javascript">
         var labelStatus = {!! json_encode($statusJob->label) !!};
         var dataStatus = {!! json_encode($statusJob->data) !!};
@@ -206,6 +206,23 @@
                     backgroundColor: colorStatus,
                     hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
                 }],
+            },
+        });
+
+        var ctx1 = document.getElementById("myAreaChart");
+        var myPieChart = new Chart(ctx1, {
+            type: 'bar',
+            data: {
+                labels: ['Nguyen van A', 'Nguyen Van B', 'Nguyen Van C', 'Nguyen Van D', 'Lê Hiêu', 'Tien Dat', 'Minh Ngoc'],
+                datasets: [{
+                    label: "Hoàn thành",
+                    backgroundColor: "blue",
+                    data: [7, 8, 3,2, 0, 3, 1]
+                }, {
+                    label: "Chua hoàn thành",
+                    backgroundColor: "red",
+                    data: [0, 9, 7,2, 0, 0, 0]
+                }]
             },
         });
     </script>

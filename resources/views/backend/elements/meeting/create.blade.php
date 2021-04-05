@@ -54,7 +54,7 @@
                     </label>
 
                     <div class="col-md-10">
-                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">
+                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id[]" style="width: 100%">
                             @foreach($users as $user)
                             <option value="{{ $user->id }}">{!! $user->full_name !!}</option>
                             @endforeach

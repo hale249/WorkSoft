@@ -18,7 +18,7 @@ class DashboardController extends Controller
     {
         $queryJob = Job::query();
         $queryMeeting = Meeting::query();
-        if (Helper::checkRole(Auth::user())) {
+        if (Helper::checkRole(Auth::user()) === false) {
             $queryJob = $queryJob->where('user_id', Auth::id());
             $queryMeeting = $queryMeeting->whereHas('meetingUser', function ($q) {
                 $q->where('user_id', Auth::id());
