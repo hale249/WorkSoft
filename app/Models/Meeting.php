@@ -27,4 +27,9 @@ class Meeting extends Model
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
     }
+
+    public function meetingUser()
+    {
+        return $this->hasMany(MeetingUser::class, 'meeting_id', 'id');
+    }
 }

@@ -48,9 +48,8 @@ class TaskController extends Controller
     public function create(int $jobId)
     {
         $job = Job::query()->findOrFail($jobId);
-        $statuses = Status::all();
 
-        return view('backend.elements.task.create', compact('job', 'statuses'));
+        return view('backend.elements.task.create', compact('job'));
     }
 
     public function store(TaskRequest $request, int $jobId)
@@ -59,9 +58,9 @@ class TaskController extends Controller
         $data = $request->only([
             'name',
             'description',
-            'status_id',
             'deadline',
         ]);
+        $data['status_id'] = Status::query()->first()->id ?? 1;
         $data['project_id'] = $jobId;
         $data['created_by'] = $userId;
         $data['slug'] = Str::slug($request->get('name'));

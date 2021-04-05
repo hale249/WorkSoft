@@ -32,20 +32,6 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="status_id">Trạng thái</label>
-
-                    <div class="col-md-10">
-                        <select name="status_id" class="form-control" id="status_id">
-                            <option value="">Trạng thái</option>
-                            @foreach($statuses as $status)
-                                <option
-                                    {{ old('status_id') === $status->id ? 'selected' : '' }} value="{{ $status->id }}">{{ $status->name }}</option>
-                            @endforeach
-                        </select>
-                    </div><!--col-->
-                </div>
-
-                <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="job_ranting">Loại đầu việc</label>
 
                     <div class="col-md-10">

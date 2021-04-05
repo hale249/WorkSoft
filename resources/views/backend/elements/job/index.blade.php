@@ -11,9 +11,11 @@
                         @lang('Quản lý công việc')
                     </h4>
                 </div>
+                @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
                 <div class="col-4 text-right">
                     <a href="{{ route('backend.jobs.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo công việc')</a>
                 </div>
+                @endif
             </div>
 
             <form action="{{ route('backend.jobs.index') }}" method="GET" class="form-inline mt-2">

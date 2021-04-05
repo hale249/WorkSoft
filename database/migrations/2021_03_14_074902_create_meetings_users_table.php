@@ -14,10 +14,10 @@ class CreateMeetingsUsersTable extends Migration
     public function up()
     {
         Schema::create('meetings_users', function (Blueprint $table) {
-            $table->unsignedInteger('meetings');
-            $table->unsignedInteger('users');
-            $table->boolean('open_mail')->default(0)->change();
-            $table->boolean('is_reply')->default(0)->change();
+            $table->unsignedInteger('meeting_id');
+            $table->unsignedInteger('user_id');
+            $table->boolean('is_join')->default(0);
+            $table->timestamp('reply_at')->nullable();
         });
     }
 

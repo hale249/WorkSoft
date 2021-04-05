@@ -3,12 +3,15 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Helpers\Constant;
+use App\Helpers\Helper;
 use App\Helpers\Traits\FileHelperTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeetingRequest;
 use App\Jobs\SendEmailMeetingJob;
 use App\Models\Meeting;
+use App\Models\MeetingUser;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -20,8 +23,13 @@ class MeetingController extends Controller
 
     public function index(Request $request)
     {
-        $data = $request->input('name');
         $meetings = Meeting::query();
+        if (Helper::checkRole(Auth::user()) === false) {
+            $meetings = $meetings->whereHas('meetingUser', function ($q) {
+                $q->where('user_id', Auth::id());
+            });
+        }
+        $data = $request->input('name');
         if (!empty($data)) {
             $meetings = $meetings->where('name','like', '%' . $data . '%');
         }
@@ -116,5 +124,21 @@ class MeetingController extends Controller
         $category->delete();
 
         return redirect()->route('backend.meeting.index')->with('flash_success', __('Xóa lập lịch thành công'));
+    }
+
+    public function reply(Request $request, int $meetingId, int $userId)
+    {
+        $join = $request->is_join;
+        $meeting = MeetingUser::query()
+            ->where('meeting_id', $meetingId)
+            ->where('user_id', $userId)
+            ->first();
+        $meeting->update([
+            'is_join' => $join,
+            'reply_at' => Carbon::now()
+        ]);
+
+        return redirect()->route('meeting.show', ['id' => $meetingId]);
+
     }
 }

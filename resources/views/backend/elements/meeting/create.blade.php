@@ -47,19 +47,21 @@
                         <input class="form-control" type="time" name="end_meeting" value="{{ time() ?? old('end_meeting') }}" id="end_meeting" placeholder="Thời gian kết thúc ..." required="">
                     </div><!--col-->
                 </div>
-{{--                <div class="form-group row">--}}
-{{--                    <label class="col-md-2 form-control-label" for="description">Thành viên tham gia</label>--}}
+                <div class="form-group row">
+                    <label class="col-md-2 form-control-label" for="description">
+                        Thành viên tham gia
+                        <input type="checkbox" name="" id="checkbox" style="transform: translate(1.3)"> Check all
+                    </label>
 
-{{--                    <div class="col-md-10">--}}
-{{--                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">--}}
-{{--                            <option value="all">All</option>--}}
-{{--                            @foreach($users as $user)--}}
-{{--                            <option value="{{ $user->id }}">{!! $user->full_name !!}</option>--}}
-{{--                            @endforeach--}}
-{{--                        </select>--}}
+                    <div class="col-md-10">
+                        <select class="parent_filter_select2 pull-right form-control" id="parent_filter_select2" multiple="multiple" name="user_id" style="width: 100%">
+                            @foreach($users as $user)
+                            <option value="{{ $user->id }}">{!! $user->full_name !!}</option>
+                            @endforeach
+                        </select>
 
-{{--                    </div><!--col-->--}}
-{{--                </div>--}}
+                    </div><!--col-->
+                </div>
 
                 <div class="form-group row">
                     <label class="col-md-2 form-control-label" for="description">Nội dung cuộc họp</label>
@@ -100,25 +102,11 @@
        $('#parent_filter_select2').select2({
            placeholder: 'Thành viên nhân thông báo'
        });
-
-       let values = [];
-       $('#parent_filter_select2').change(function (e) {
-           e.preventDefault();
-           var val = $(this).val();
-
-           $('#parent_filter_select2').find('option').click(function () {
-               var opt= $(this);
-               var opvalue= opt.attr('value');
-               if(opvalue !== 'all') {
-                   values.push(opvalue);
-               }
-
-           });
-           if(val.indexOf('all') !== -1){
-               $('#parent_filter_select2').select2('val', values);
-           }
-           else{
-               $('#parent_filter_select2').select2('val', val);
+       $("#checkbox").click(function(){
+           if($("#checkbox").is(':checked') ){
+               $("select > option").prop("selected","selected");
+           }else{
+               $("select > option").removeAttr("selected");
            }
        });
    </script>

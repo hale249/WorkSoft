@@ -5,6 +5,17 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <form action="{{ route('backend.dashboard.index') }}" method="GET" class="form-inline my-3">
+                <div class="form-group">
+                    <select class="form-control" name="year">
+                        <option value="">-- Tìm kiếm theo năm --</option>
+                        @foreach($listYears as $key=>$year)
+                        <option value="{{ $key }}">{{ $year }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
+            </form>
             <div class="row">
 
                 <!-- Earnings (Monthly) Card Example -->

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Backend;
 
 use App\Helpers\Constant;
+use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ProjectRequest;
@@ -26,9 +27,12 @@ class JobController extends Controller
 
     public function index(Request $request)
     {
+        $jobs = Job::query();
+        if (Helper::checkRole(Auth::user()) === false) {
+            $jobs = $jobs->where('user_id', Auth::id());
+        }
         $name = $request->get('name');
         $status = $request->get('status');
-        $jobs = Job::query();
         if (!empty($name)) {
             $jobs = $jobs->where('name', 'like', '%' . $name . '%');
         }
@@ -47,9 +51,8 @@ class JobController extends Controller
     {
         $categories = Category::all();
         $users = User::all();
-        $statuses = Status::all();
 
-        return view('backend.elements.job.create', compact('categories', 'users', 'statuses'));
+        return view('backend.elements.job.create', compact('categories', 'users'));
     }
 
     public function store(ProjectRequest $request)
@@ -63,12 +66,12 @@ class JobController extends Controller
             'user_id',
             'deadline',
             'content',
-            'status_id',
             'person_support',
             'person_mission',
             'job_ranting'
         ]);
         $data['created_by'] = $userId;
+        $data['status_id'] = Status::query()->first()->id ?? 1;
         $data['slug'] = Str::slug($request->get('name'));
         $job = Job::create($data);
         if ($job) {

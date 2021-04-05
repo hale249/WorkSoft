@@ -3,7 +3,7 @@
 </div>
 <div class="card-body">
     <div class="form-group">
-        <form action="{{ route('backend.job.upload-attachment', ['jobId' => $job->id]) }}" class="dropzone dz-clickable" id="job-attachments">
+        <form action="{{ route('backend.job.upload-attachment', ['jobId' => $job->id]) }}" class="dropzone dz-clickable" id="">
             <div class="dz-default dz-message">
                 <button class="dz-button" type="button">Drop files here to upload</button>
             </div>
