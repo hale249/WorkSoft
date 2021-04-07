@@ -2,9 +2,6 @@
 
 namespace App\Models\Traits\Attributes;
 
-use App\Helpers\Checkers\CategoryCheck;
-use App\Helpers\PermissionConstant;
-
 trait CategoryAttribute
 {
     use StatusLabelAttribute;
@@ -16,9 +13,8 @@ trait CategoryAttribute
     {
         return '
         <div class="btn-group btn-group-sm" role="group" aria-label="Category Actions">
-          '.$this->show_button.'
-          '.$this->edit_button.'
-          '.$this->delete_button.'
+          ' . $this->edit_button . '
+          ' . $this->delete_button . '
         </div>';
     }
 
@@ -27,17 +23,9 @@ trait CategoryAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('backend.category.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
-
-    }
-
-    /**
-     * @return string
-     */
-    public function getShowButtonAttribute(): string
-    {
-        return '<a href="'.route('backend.category.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';
-
+        return '<a href="" class="btn btn-primary btn-sm edit-category" data-toggle="modal"
+         data-id="'.$this->id.'" data-target="#editCategoryModal" title="Edit category">
+         <i class="fas fa-edit"></i></a>';
     }
 
     /**
@@ -45,10 +33,10 @@ trait CategoryAttribute
      */
     public function getDeleteButtonAttribute(): string
     {
-        return '<a href="' . route('backend.category.destroy', $this->id) . '"
-                 data-trans-button-cancel="' . __('labels.general.cancel') . '"
-                 data-trans-button-confirm="' . __('labels.general.delete') . '"
-                 data-trans-title="' . __('strings.confirm_delete') . '"
-                 class="btn btn-danger js-confirm-delete btn-sm"><i class="fas fa-trash"></i></a>';
+        return '<a href="' . route('category.destroy', $this->id) . '"
+         class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
+         data-action="delete" data-confirm="Are you sure you want to delete this Attribute ?">
+         <i class="fas fa-trash"></i>
+         </a>';
     }
 }

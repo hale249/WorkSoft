@@ -11,7 +11,7 @@ class Job extends Model
     use JobAttribute;
     use SoftDeletes;
 
-    protected $table = 'projects';
+    protected $table = 'active_jobs';
 
     protected $guarded = [];
 

@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class JobAttachment extends Model
 {
-    protected $table = 'project_documents';
+    protected $table = 'job_attachments';
 
     protected $guarded = [];
 
@@ -33,7 +33,7 @@ class JobAttachment extends Model
                 return asset('images/icon-image.png');
 
             default:
-                return asset('images/icon-default.png');;
+                return asset('images/icon-default.png');
         }
     }
 

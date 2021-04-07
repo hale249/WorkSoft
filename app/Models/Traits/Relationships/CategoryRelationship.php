@@ -2,7 +2,7 @@
 
 namespace App\Models\Traits\Relationships;
 
-use App\Models\Project;
+use App\Models\Job;
 use App\Models\User;
 
 trait CategoryRelationship
@@ -14,6 +14,6 @@ trait CategoryRelationship
 
     public function project()
     {
-        return $this->belongsTo(Project::class, 'category_id', 'id');
+        return $this->belongsTo(Job::class, 'category_id', 'id');
     }
 }

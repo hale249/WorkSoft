@@ -12,26 +12,15 @@ use Illuminate\View\View;
 
 class AuthController extends Controller
 {
-    /**
-     * Show form login
-     *
-     * @return View
-     */
-    public function showFormLogin(): View
+    public function showFormLogin()
     {
         if(Auth::check()){
-            return redirect()->route('backend.dashboard.index');
+            return redirect()->route('dashboard.index');
         }
-        return view('login');
+        return view('auth.login');
     }
 
-    /**
-     * Handle login
-     *
-     * @param AuthLoginRequest $request
-     * @return RedirectResponse
-     */
-    public function login(AuthLoginRequest $request): RedirectResponse
+    public function login(AuthLoginRequest $request)
     {
         $credentials = $request->only([
             'email',
@@ -39,18 +28,13 @@ class AuthController extends Controller
         ]);
         $remember = $request->input('remember_me');
         if (Auth::attempt($credentials, $remember)) {
-            return redirect()->route('backend.dashboard.index')->with('flash_success', __('auth.login_success'));
+            return redirect()->route('dashboard.index')->with('flash_success', __('auth.login_success'));
         }
 
         return redirect()->back()->withErrors([__('auth.failed')]);
     }
 
-    /**
-     * Show form register
-     *
-     * @return View
-     */
-    public function showFormRegister(): View
+    public function showFormRegister()
     {
         return view('register');
     }

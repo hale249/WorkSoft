@@ -41,15 +41,13 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
  */
 Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 
-Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'middleware' => 'auth'], function () {
-    require __DIR__ . '/backend/dashboard.php';
-    require __DIR__ . '/backend/user.php';
-    require __DIR__ . '/backend/profile.php';
-    require __DIR__ . '/backend/category.php';
-    require __DIR__ . '/backend/meeting.php';
-    require __DIR__ . '/backend/job.php';
-    require __DIR__ . '/backend/role.php';
-    require __DIR__ . '/backend/permission.php';
-    require __DIR__ . '/backend/status.php';
+Route::group(['middleware' => 'auth'], function () {
+    require __DIR__ . '/web/dashboard.php';
+    require __DIR__ . '/web/user.php';
+    require __DIR__ . '/web/profile.php';
+    require __DIR__ . '/web/category.php';
+    require __DIR__ . '/web/meeting.php';
+    require __DIR__ . '/web/job.php';
+    require __DIR__ . '/web/status.php';
 
 });

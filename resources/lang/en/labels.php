@@ -2,14 +2,9 @@
 
 return [
     'general' => [
-        'buttons' => [
-            'login' => 'Đăng nhập'
-        ],
-        'titles' => [
-            'login' => 'Đăng nhập'
-        ],
+        'login' => 'Đăng nhập',
         'created_at' => 'Created at',
-        'action' => 'Action',
+        'action' => 'Hành động',
         'cancel' => 'Hủy bỏ',
         'delete' => 'Xóa',
         'update' => 'Cập nhật',
@@ -17,208 +12,205 @@ return [
         'logout' => 'Đăng xuất',
         'back' => 'Trở lại',
         'edit' => 'Chỉnh sửa',
-        'status' => 'Status',
-        'show' => 'Show',
-        'hidden' => 'Hidden',
-        'selling' => 'Selling',
-        'sold' => 'Sold',
-        'empty' => '<i>(Empty)</i>',
+        'status' => 'Trạng thái',
+        'show' => 'Hiển thị',
+        'hidden' => 'Ẩn',
+        'create' => 'Tạo mới',
+        'create_success' => 'Tạo mới thành công',
+        'create-error' => 'Thêm mới thất bại',
+        'edit_success' => 'Chỉnh sửa thành công',
+        'edit_error' => 'Chỉnh sửa thất bại',
+        'empty' => '<i>(Trống)</i>',
     ],
     'pages' => [
         'login' => [
             'form' => [
-                'email_placeholder' => 'Email',
-                'password_placeholder' => 'Password',
-                'remember' => 'Remember me',
-                'forgot_password' => 'Forgot Password',
-                'create_new_account' => 'Create new account',
+                'email_placeholder' => 'Nhập email ...',
+                'password_placeholder' => 'Nhập mật khẩu ...',
+                'remember' => 'Ghi nhớ',
+                'forgot_password' => 'Lấy lại password',
+                'create_new_account' => 'Tạo mới tài khoản',
             ],
         ],
-        'backend' => [
-            'dashboard' => [
-                'title' => 'Dashboard'
+        'dashboard' => [
+            'title' => 'Trang chủ'
+        ],
+        'users' => [
+            'title' => [
+                'management' => 'Quản lý người dùng',
             ],
-            'users' => [
-                'title' => [
-                    'management' => 'User Management',
-                    'create' => 'Create new user',
-                    'edit' => 'Edit user',
-                    'change_password' => 'Change password'
-                ],
-                'table' => [
-                    'name' => 'Name',
-                    'email' => 'Email',
-                ],
-                'form' => [
-                    'name' => 'Name',
-                    'email' => 'Email',
-                    'password' => 'Password',
-                    'password_confirmation' => 'Password Confirmation',
-                    'role' => 'Role',
-                    'create_submit' => 'Create User',
-                    'update_submit' => 'Update User',
-                    'change_password_submit' => 'Change Password',
-                    'placeholder' => [
-                        'name' => 'Typing name...',
-                        'email' => 'Typing email...',
-                        'password' => 'Typing password...',
-                        'password_confirmation' => 'Typing password confirmation...',
-                        'role' => 'Default User'
-                    ],
-                ],
-                'messages' => [
-                    'create_user_success' => 'Create new user successfully',
-                    'update_user_success' => 'Update user successfully',
-                    'delete_user_success' => 'Delete user successfully',
-                    'change_password_user_success' => 'Change password user successfully',
-                ],
-                'create_new_user' => 'Create new user',
+            'table' => [
+                'name' => 'Tên',
+                'email' => 'Email',
             ],
+            'form' => [
+                'name' => 'Tên',
+                'email' => 'Email',
+                'password' => 'Mật khẩu',
+                'password_confirmation' => 'Password Confirmation',
+                'role' => 'Role',
+                'create_submit' => 'Create User',
+                'update_submit' => 'Update User',
+                'change_password_submit' => 'Change Password',
+                'placeholder' => [
+                    'name' => 'Typing name...',
+                    'email' => 'Typing email...',
+                    'password' => 'Typing password...',
+                    'password_confirmation' => 'Typing password confirmation...',
+                    'role' => 'Default User'
+                ],
+            ],
+            'messages' => [
+                'create_user_success' => 'Create new user successfully',
+                'update_user_success' => 'Update user successfully',
+                'delete_user_success' => 'Delete user successfully',
+                'change_password_user_success' => 'Change password user successfully',
+            ],
+            'create_new_user' => 'Create new user',
+        ],
 
-            'category' => [
-                'title' => [
-                    'management' => 'Category Management',
-                    'create' => 'Create new category',
-                    'edit' => 'Edit category',
-                    'show' => 'Category detail',
-                ],
-                'table' => [
-                    'name' => 'Name',
-                    'image' => 'Image',
-                    'user' => 'Created by'
-                ],
-                'form' => [
-                    'placeholder' => [
-                        'name' => 'Typing category name...',
-                        'description' => 'Typing category description...'
-                    ],
-                    'name' => 'Category Name',
-                    'description' => 'Description (SEO)',
-                    'image' => 'Image (size 4x3)',
-                    'create_submit' => 'Create',
-                    'edit_submit' => 'Update'
-                ],
-                'messages' => [
-                    'create_success' => 'Create new category successfully',
-                    'update_success' => 'Update category successfully',
-                    'delete_success' => 'Delete category successfully',
-                ],
-                'create_new_category' => 'Create new category',
+        'category' => [
+            'title' => [
+                'management' => 'Category Management',
+                'create' => 'Create new category',
+                'edit' => 'Edit category',
+                'show' => 'Category detail',
             ],
-            'product' => [
-                'title' => [
-                    'management' => 'Product Management',
-                    'create' => 'Create new product',
-                    'edit' => 'Edit product',
-                    'show' => 'Product detail',
-                    'name' => 'Product',
-                ],
-                'table' => [
-                    'name' => 'Name',
-                    'image' => 'Image',
-                    'price' => 'Price',
-                    'quantity' => 'Quantity',
-                    'user' => 'Created by',
-                    'view_item' => 'View Items',
-                    'category' => 'Category',
-                ],
-                'form' => [
-                    'placeholder' => [
-                        'category' => 'Choose category',
-                        'name' => 'Typing product name...',
-                        'description' => 'Typing product description...',
-                        'price' => 'Typing product price...',
-                        'content' => 'Typing product content...',
-                    ],
-                    'category' => 'Category',
-                    'name' => 'Product Name',
-                    'description' => 'Description (SEO)',
-                    'image' => 'Image (size 4x3)',
-                    'price' => 'Price',
-                    'content' => 'Content',
-                    'status' => 'Status',
-                    'create_submit' => 'Create',
-                    'edit_submit' => 'Update'
-                ],
-                'messages' => [
-                    'create_success' => 'Create new product successfully',
-                    'update_success' => 'Update product successfully',
-                    'delete_success' => 'Delete product successfully',
-                ],
-                'filter' => [
-                    'name' => [
-                        'placeholder' => 'Product name',
-                    ],
-                    'category' => [
-                        'placeholder' => '-----Category-----',
-                    ],
-                ],
-                'create_new_product' => 'Create new product',
+            'table' => [
+                'name' => 'Name',
+                'image' => 'Image',
+                'user' => 'Created by'
             ],
-            'product_item' => [
-                'title' => [
-                    'management' => 'Item Management',
-                    'create' => 'Create new item',
-                    'edit' => 'Edit item'
+            'form' => [
+                'placeholder' => [
+                    'name' => 'Typing category name...',
+                    'description' => 'Typing category description...'
                 ],
-                'table' => [
-                    'token' => 'Token',
-                    'payment_status' => 'Payment Status',
-                    'user' => 'Created by'
-                ],
-                'form' => [
-                    'placeholder' => [
-                        'token' => 'Typing token...',
-                    ],
-                    'token' => 'Token',
-                    'status' => 'Status',
-                    'create_submit' => 'Create',
-                    'edit_submit' => 'Update',
-                ],
-                'filter' => [
-                    'payment_status' => [
-                        'all' => 'Payment status: All',
-                        'selling' => 'Payment status: Selling',
-                        'sold' => 'Payment status: Sold',
-                    ],
-                ],
-                'messages' => [
-                    'create_success' => 'Create new item successfully',
-                    'change_status_success' => 'Change status item successfully',
-                    'delete_success' => 'Delete item successfully',
-                    'update_token_success' => 'Update item successfully',
-                ],
-                'create_new_item' => 'Create new item',
-                'confirm_hidden' => 'Hide this item! Are you sure?',
-                'confirm_show' => 'Show this item! Are you sure?',
+                'name' => 'Category Name',
+                'description' => 'Description (SEO)',
+                'image' => 'Image (size 4x3)',
+                'create_submit' => 'Create',
+                'edit_submit' => 'Update'
             ],
-            'profile' => [
-                'title' => [
-                    'index' => 'Profile',
-                    'change_password' => 'Change password'
-                ],
-                'form' => [
-                    'email' => 'Email',
-                    'name' => 'Display name',
-                    'edit_submit' => 'Update',
-                    'old_password' => 'Old Password',
-                    'password' => 'New Password',
-                    'password_confirmation' => 'Password Confirmation',
-                    'placeholder' => [
-                        'name' => 'Typing your name....',
-                        'old_password' => 'Typing old password....',
-                        'password' => 'Typing password....',
-                        'password_confirmation' => 'Typing password confirmation....',
-                    ],
-                ],
-                'messages' => [
-                    'update_success' => 'Update profile successfully',
-                    'change_password_success' => 'Change password successfully',
-                    'wrong_old_password' => 'Wrong old password.',
-                ],
-                'change_password_label' => 'Change password'
+            'messages' => [
+                'create_success' => 'Create new category successfully',
+                'update_success' => 'Update category successfully',
+                'delete_success' => 'Delete category successfully',
             ],
+            'create_new_category' => 'Create new category',
         ],
-        'frontend' => [],
+        'product' => [
+            'title' => [
+                'management' => 'Product Management',
+                'create' => 'Create new product',
+                'edit' => 'Edit product',
+                'show' => 'Product detail',
+                'name' => 'Product',
+            ],
+            'table' => [
+                'name' => 'Name',
+                'image' => 'Image',
+                'price' => 'Price',
+                'quantity' => 'Quantity',
+                'user' => 'Created by',
+                'view_item' => 'View Items',
+                'category' => 'Category',
+            ],
+            'form' => [
+                'placeholder' => [
+                    'category' => 'Choose category',
+                    'name' => 'Typing product name...',
+                    'description' => 'Typing product description...',
+                    'price' => 'Typing product price...',
+                    'content' => 'Typing product content...',
+                ],
+                'category' => 'Category',
+                'name' => 'Product Name',
+                'description' => 'Description (SEO)',
+                'image' => 'Image (size 4x3)',
+                'price' => 'Price',
+                'content' => 'Content',
+                'status' => 'Status',
+                'create_submit' => 'Create',
+                'edit_submit' => 'Update'
+            ],
+            'messages' => [
+                'create_success' => 'Create new product successfully',
+                'update_success' => 'Update product successfully',
+                'delete_success' => 'Delete product successfully',
+            ],
+            'filter' => [
+                'name' => [
+                    'placeholder' => 'Product name',
+                ],
+                'category' => [
+                    'placeholder' => '-----Category-----',
+                ],
+            ],
+            'create_new_product' => 'Create new product',
+        ],
+        'product_item' => [
+            'title' => [
+                'management' => 'Item Management',
+                'create' => 'Create new item',
+                'edit' => 'Edit item'
+            ],
+            'table' => [
+                'token' => 'Token',
+                'payment_status' => 'Payment Status',
+                'user' => 'Created by'
+            ],
+            'form' => [
+                'placeholder' => [
+                    'token' => 'Typing token...',
+                ],
+                'token' => 'Token',
+                'status' => 'Status',
+                'create_submit' => 'Create',
+                'edit_submit' => 'Update',
+            ],
+            'filter' => [
+                'payment_status' => [
+                    'all' => 'Payment status: All',
+                    'selling' => 'Payment status: Selling',
+                    'sold' => 'Payment status: Sold',
+                ],
+            ],
+            'messages' => [
+                'create_success' => 'Create new item successfully',
+                'change_status_success' => 'Change status item successfully',
+                'delete_success' => 'Delete item successfully',
+                'update_token_success' => 'Update item successfully',
+            ],
+            'create_new_item' => 'Create new item',
+            'confirm_hidden' => 'Hide this item! Are you sure?',
+            'confirm_show' => 'Show this item! Are you sure?',
+        ],
+        'profile' => [
+            'title' => [
+                'index' => 'Profile',
+                'change_password' => 'Change password'
+            ],
+            'form' => [
+                'email' => 'Email',
+                'name' => 'Display name',
+                'edit_submit' => 'Update',
+                'old_password' => 'Old Password',
+                'password' => 'New Password',
+                'password_confirmation' => 'Password Confirmation',
+                'placeholder' => [
+                    'name' => 'Typing your name....',
+                    'old_password' => 'Typing old password....',
+                    'password' => 'Typing password....',
+                    'password_confirmation' => 'Typing password confirmation....',
+                ],
+            ],
+            'messages' => [
+                'update_success' => 'Update profile successfully',
+                'change_password_success' => 'Change password successfully',
+                'wrong_old_password' => 'Wrong old password.',
+            ],
+            'change_password_label' => 'Change password'
+        ]
     ],
 ];

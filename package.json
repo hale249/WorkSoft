@@ -25,8 +25,11 @@
         "bootstrap4-toggle": "^3.6.1",
         "chart.js": "^2.9.3",
         "dropzone": "^5.8.1",
-        "jquery": "^3.4.1",
+        "jquery": "^3.6.0",
+        "lightbox2": "^2.11.3",
+        "select2": "^4.1.0-rc.0",
         "startbootstrap-sb-admin-2": "^4.0.7",
-        "sweetalert2": "^9.7.1"
+        "sweetalert2": "^9.17.2",
+        "toastr": "^2.1.4"
     }
 }

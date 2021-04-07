@@ -15,20 +15,22 @@ class CreateUsersTable extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('first_name', 40)->nullable();
-            $table->string('last_name', 40)->nullable();
-            $table->string('email')->unique();
+            $table->string('staff_code', 40)->comment('Mã cán bộ');
+            $table->string('name', 100);
+            $table->string('email',  30)->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->boolean('status')->default(1);
             $table->text('avatar')->nullable();
-            $table->string('address')->nullable();
             $table->string('phone_number', 20)->nullable();
-            $table->date('birthday')->nullable();
             $table->string('password');
             $table->integer('role')->default('0');
+            $table->string('position')->nullable()->comment('Chức vụ');
+            $table->string('degree')->nullable()->comment('Cấp đô');
+            $table->date('birthday')->nullable();
+            $table->string('address')->nullable();
             $table->rememberToken();
-            $table->softDeletes();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
