@@ -1,8 +1,8 @@
-$('#btn-create-category-save').click(function() {
-    $('#create-category-form').trigger('submit');
+$('#btn-create-status-save').click(function() {
+    $('#create-status-form').trigger('submit');
 });
 
-$('#create-category-form').submit(function(e) {
+$('#create-status-form').submit(function(e) {
     e.preventDefault();
 
     const action = $(this).attr('action');
@@ -25,7 +25,7 @@ $('#create-category-form').submit(function(e) {
                 showSuccessMessage(response.message);
                 $(form).trigger('reset');
 
-                $('#createCategoryModal').modal('hide');
+                $('#createStatusModal').modal('hide');
 
                 setTimeout(function() {
                     window.location.reload();
@@ -40,35 +40,36 @@ $('#create-category-form').submit(function(e) {
             handleAjaxFormValidationErrors(form, error);
         },
         complete: function() {
-            $('#btn-create-category-save').removeAttr('disabled');
+            $('#btn-create-status-save').removeAttr('disabled');
         }
     });
 });
 
 // edit  category
-$(document).on('click', '.edit-category', function (e) {
+$(document).on('click', '.edit-status', function (e) {
     e.preventDefault();
     var id = $(this).data('id');
 
     $.ajax({
-        url: '/category/' + id + '/edit',
+        url: '/status/' + id + '/edit',
         type: 'GET',
         dataType: 'json',
         success: function (response) {
             $('.name').val(response.data.name)
+            $('.color').val(response.data.color)
             $('.description').val(response.data.description)
         }
     })
-    $('#btn-update-category-save').click(function() {
-        $('#update-category-form').trigger('submit');
+    $('#btn-update-status-save').click(function() {
+        $('#update-status-form').trigger('submit');
     });
 
-    $('#update-category-form').submit(function(e) {
+    $('#update-status-form').submit(function(e) {
         e.preventDefault();
 
         const form = $(this);
         $.ajax({
-            url: '/category/' + id,
+            url: '/status/' + id,
             type: 'PUT',
             dataType: 'json',
             data: form.serialize(),
@@ -83,7 +84,7 @@ $(document).on('click', '.edit-category', function (e) {
                     showSuccessMessage(response.message);
                     $(form).trigger('reset');
 
-                    $('#editAttributeModal').modal('hide');
+                    $('#editStatusModal').modal('hide');
 
                     setTimeout(function() {
                         window.location.reload();
@@ -98,7 +99,7 @@ $(document).on('click', '.edit-category', function (e) {
                 handleAjaxFormValidationErrors(form, error);
             },
             complete: function() {
-                $('#btn-update-category-save').removeAttr('disabled');
+                $('#btn-update-status-save').removeAttr('disabled');
             }
         });
     });

@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('labels.pages.backend.dashboard.title'))
+@section('title', __('Tổng quan'))
 
 @section('content')
     <div class="card">

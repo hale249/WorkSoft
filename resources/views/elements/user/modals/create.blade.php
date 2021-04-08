@@ -1,80 +1,75 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="createUserModal" data-backdrop="static"
+     id="createUserModal"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form action="{{ route('backend.users.store') }}" method="POST">
-                @csrf
-                <div class="card-body">
-                    <h4 class="card-title mb-0">
-                        @lang('Người dùng')
-                        <small class="text-muted">@lang('Tạo mới')</small>
-                    </h4>
-                    <hr>
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="first_name">@lang('First name')</label>
+            <div class="modal-header">
+                <h4 class="modal-title">Thêm người dùng</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="create-user-form" method="post" action="{{ route('users.store') }}">
+                    <div class="alert alert-danger text-center mb-3 show-errors" style="display: none"></div>
+                    <div class="card-body">
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="staff_code">Mã cán bộ</label>
 
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" name="first_name" id="first_name" value="{{ old('first_name') }}" placeholder="{{ __('First name') }}" maxlength="191" required="" autofocus="">
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="last_name">@lang('Last name')</label>
-
-                        <div class="col-md-10">
-                            <input class="form-control" type="text" name="last_name" id="last_name" value="{{ old('last_name') }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="email">@lang('labels.pages.backend.users.form.email')</label>
-
-                        <div class="col-md-10">
-                            <input class="form-control" type="email" name="email" id="email" value="{{ old('email') }}" placeholder="{{ __('labels.pages.backend.users.form.placeholder.email') }}" maxlength="191" required="" autofocus="">
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="password">@lang('labels.pages.backend.users.form.password')</label>
-
-                        <div class="col-md-10">
-                            <input class="form-control" type="password" name="password" id="password" placeholder="{{ __('labels.pages.backend.users.form.placeholder.password') }}" maxlength="191" required="" autofocus="">
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="password-confirmation">@lang('labels.pages.backend.users.form.password_confirmation')</label>
-
-                        <div class="col-md-10">
-                            <input class="form-control" type="password" name="password_confirmation" id="password-confirmation" placeholder="{{ __('labels.pages.backend.users.form.placeholder.password_confirmation') }}" maxlength="191" required="" autofocus="">
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-2 form-control-label" for="role">Gán vai trò</label>
-
-                        <div class="col-md-10">
-                            <select name="role" class="form-control" id="role">
-                                <option value="">Gán vai trò</option>
-                                @foreach($roles as $role)
-                                    <option {{ old('$role') === $role->id ? 'selected' : '' }} value="{{ $role->id }}">{{ trans('role.' . $role->name) }}</option>
-                                @endforeach
-                            </select>
-                        </div><!--col-->
-                    </div>
-
-                </div>
-                <div class="card-footer">
-                    <div class="row">
-                        <div class="col">
-                            <a href="{{ route('backend.users.index') }}" class="btn btn-danger btn-sm">@lang('labels.general.cancel')</a>
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="staff_code" value="{{ old('staff_code') }}" placeholder="Nhap mã cán bộ ..." maxlength="191" required="" autofocus>
+                            </div><!--col-->
                         </div>
 
-                        <div class="col text-right">
-                            <button type="submit" class="btn btn-success btn-sm">@lang('labels.pages.backend.users.form.create_submit')</button>
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="name">Tên</label>
+
+                            <div class="col-md-10">
+                                <input class="form-control" type="text" name="name" value="{{ old('name') }}" placeholder="Nhap ten ..." maxlength="191" required="">
+                            </div><!--col-->
                         </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="email">Email</label>
+
+                            <div class="col-md-10">
+                                <input class="form-control" type="email" name="email" id="email" value="{{ old('email') }}" placeholder="Nhap email..." maxlength="191" required="">
+                            </div><!--col-->
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="password">Mật khẩu</label>
+
+                            <div class="col-md-10">
+                                <input class="form-control" type="password" name="password" id="password" placeholder="Nhập mật khẩu ..." maxlength="191" required="">
+                            </div><!--col-->
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="password_confirmation">Nhập lại mật khẩu</label>
+
+                            <div class="col-md-10">
+                                <input class="form-control" type="password" name="password_confirmation" id="password_confirmation" placeholder="Nhập lại mật khẩu ..." maxlength="191" required="">
+                            </div><!--col-->
+                        </div>
+
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="role">Vai trò</label>
+
+                            <div class="col-md-10">
+                                <input class="ml-2" type="checkbox" name="role" style="transform: scale(2.0);">
+                                <label class="ml-3">Admin</label>
+                            </div><!--col-->
+                        </div>
+
+                        <button type="submit" name="submit" style="display: none">Submit</button>
                     </div>
-                </div>
-            </form>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="button" id="btn-create-user-save">Save</button>
+            </div>
         </div>
     </div>
 </div>

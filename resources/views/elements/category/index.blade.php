@@ -44,6 +44,7 @@
                         </tbody>
                     </table>
                 </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $categories ])
             </div>
         </div>
     </div>

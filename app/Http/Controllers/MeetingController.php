@@ -4,10 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
 use App\Helpers\Helper;
+use App\Helpers\ResponseTrait;
 use App\Helpers\Traits\FileHelperTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\MeetingRequest;
 use App\Jobs\SendEmailMeetingJob;
+use App\Jobs\SendMail;
+use App\Mail\EmailMeeting;
 use App\Models\Meeting;
 use App\Models\MeetingUser;
 use App\Models\User;
@@ -19,7 +22,7 @@ use Illuminate\Support\Str;
 
 class MeetingController extends ProtectedController
 {
-    use FileHelperTrait;
+    use FileHelperTrait, ResponseTrait;
 
     public function index(Request $request)
     {
@@ -57,21 +60,13 @@ class MeetingController extends ProtectedController
             'start_meeting',
             'end_meeting',
         ]);
-        if ($request->hasFile('document_file')) {
-            if (!empty($dataFile)) {
-                $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
-                $data['document_file'] = $dataFile['file_name'];
-                $data['document_file_url'] = $dataFile['url'];
-            }
-        }
 
         $users = User::query()->where('id', '!=', $userId)->get();
         $data['created_by'] = $userId;
         $meeting = Meeting::create($data);
-        $emailJob = new SendEmailMeetingJob($users, $meeting);
-        dispatch($emailJob);
+        dispatch(new EmailMeeting(), new SendMail());
 
-        return redirect()->route('backend.meeting.index')->with('flash_success', __('Tạo cuộc họp thành công'));
+        return $this->success('Tạo cuộc họp thành công', $meeting);
     }
 
     public function show(int $id)
@@ -100,18 +95,7 @@ class MeetingController extends ProtectedController
             'start_meeting',
             'end_meeting',
         ]);
-        if ($request->hasFile('document_file')) {
-            if (!empty($dataFile)) {
-                $dataFile = $this->uploadFile($request->file('document_file'), 'meetings', 'meetings');
-                $data['document_file'] = $dataFile['file_name'];
-                $data['document_file_url'] = $dataFile['url'];
-            }
-        }
-        $users = User::query()->where('id', '!=', $userId)->get();
         $data['created_by'] = $userId;
-
-       /* $emailJob = new SendEmailMeetingJob($users, $meeting);
-        dispatch($emailJob);*/
 
         $meeting->update($data);
 

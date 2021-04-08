@@ -28,42 +28,18 @@
 
     <!-- Nav Item - Pages Collapse Menu -->
 
-    <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-meeting-management" aria-expanded="true"
-           aria-controls="menu-meeting-management">
+    <li class="nav-item @if(\Request::is('meeting') || \Request::is('meeting/*')) active @endif">
+        <a class="nav-link" href="#">
             <i class="fas fa-fw fa-users"></i>
             <span>@lang('Lập lịch')</span>
         </a>
-        <div id="menu-meeting-management"
-             class="collapse @if(\Request::is('meeting') || \Request::is('meeting/*')) show @endif"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('meeting')) active @endif"
-                   href="{{ route('meeting.index') }}">@lang('Danh sách lập lịch')</a>
-                @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
-                <a class="collapse-item @if(\Request::is('meeting/create')) active @endif"
-                   href="{{ route('meeting.create') }}">@lang('Tạo lập lịch')</a>
-                    @endif
-            </div>
-        </div>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-project-management" aria-expanded="true"
-           aria-controls="menu-project-management">
+    <li class="nav-item @if(\Request::is('jobs') || \Request::is('jobs/*')) active @endif">
+        <a class="nav-link" href="{{ route('jobs.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>@lang('Công việc')</span>
         </a>
-        <div id="menu-project-management"
-             class="collapse @if(\Request::is('jobs') || \Request::is('jobs/*')) show @endif"
-             data-parent="#accordionSidebar">
-            <div class="bg-white py-2 collapse-inner rounded">
-                <a class="collapse-item @if(\Request::is('jobs')) active @endif"
-                   href="{{ route('jobs.index') }}">@lang('Danh sách công việc')</a>
-                <a class="collapse-item @if(\Request::is('jobs/create')) active @endif"
-                   href="{{ route('jobs.create') }}">@lang('Tạo công việc')</a>
-            </div>
-        </div>
     </li>
 
     <!-- Divider -->
@@ -73,63 +49,29 @@
     <div class="sidebar-heading">
         @lang('Cài đặt')
     </div>
-        <li class="nav-item @if(\Request::is('categories') || \Request::is('categories/*')) active @endif">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-category-management"
-               aria-expanded="true"
-               aria-controls="menu-category-management">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Danh mục</span>
-            </a>
-            <div id="menu-category-management"
-                 class="collapse @if(\Request::is('category') || \Request::is('category/*')) show @endif"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item @if(\Request::is('category')) active @endif"
-                       href="{{ route('category.index') }}">Danh mục</a>
-                    <a class="collapse-item @if(\Request::is('category/create')) active @endif"
-                       href="{{ route('category.create') }}">Tạo danh mục</a>
-                </div>
-            </div>
-        </li>
+    <li class="nav-item @if(\Request::is('categories') || \Request::is('categories/*')) active @endif">
+        <a class="nav-link" href="{{ route('category.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Danh mục</span>
+        </a>
+    </li>
 
-        <li class="nav-item">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-status-management"
-               aria-expanded="true"
-               aria-controls="menu-permission-management">
-                <i class="fas fa-fw fa-users"></i>
-                <span>@lang('Quản lý trạng thái')</span>
-            </a>
-            <div id="menu-status-management"
-                 class="collapse @if(\Request::is('status') || \Request::is('status/*')) show @endif"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item @if(\Request::is('status')) active @endif"
-                       href="{{ route('status.index') }}">@lang('Danh sách trạng thái')</a>
-                    <a class="collapse-item @if(\Request::is('status/create')) active @endif"
-                       href="{{ route('status.create') }}">@lang('Tạo trạng thái')</a>
-                </div>
-            </div>
-        </li>
+    <li class="nav-item @if(\Request::is('statuses') || \Request::is('statuses/*')) active @endif">
+        <a class="nav-link" href="{{ route('status.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Quản lý trạng thái')</span>
+        </a>
+    </li>
 
     <!-- Nav Item - Pages Collapse Menu -->
-        <li class="nav-item @if(\Request::is('users') || \Request::is('users/*')) active @endif">
-            <a class="nav-link" href="#" data-toggle="collapse" data-target="#menu-user-management" aria-expanded="true"
-               aria-controls="menu-user-management">
-                <i class="fas fa-fw fa-users"></i>
-                <span>@lang('Người dùng')</span>
-            </a>
-            <div id="menu-user-management"
-                 class="collapse @if(\Request::is('users') || \Request::is('admin/users/*')) show @endif"
-                 data-parent="#accordionSidebar">
-                <div class="bg-white py-2 collapse-inner rounded">
-                    <a class="collapse-item @if(\Request::is('users')) active @endif"
-                       href="{{ route('users.index') }}">@lang('Người dùng')</a>
-                    <a class="collapse-item @if(\Request::is('users/create')) active @endif"
-                       href="{{ route('users.create') }}">@lang('Tạo mới người dùng')</a>
-                </div>
-            </div>
-        </li>
-<!-- Divider -->
+    <li class="nav-item @if(\Request::is('users') || \Request::is('users/*')) active @endif">
+        <a class="nav-link" href="{{ route('users.index') }}"
+           aria-controls="menu-user-management">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Người dùng')</span>
+        </a>
+    </li>
+    <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
     <!-- Sidebar Toggler (Sidebar) -->

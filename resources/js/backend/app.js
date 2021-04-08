@@ -1,3 +1,4 @@
+require('jquery');
 require('./bootstrap');
 require('startbootstrap-sb-admin-2/js/sb-admin-2');
 require('startbootstrap-sb-admin-2/vendor/chart.js/Chart');
@@ -6,28 +7,10 @@ require('startbootstrap-sb-admin-2/vendor/jquery-easing/jquery.easing');
 require('bootstrap4-toggle');
 require('dropzone');
 require('./jscolor');
-require('lightbox2/dist/js/lightbox.min');
-
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-
-import Swal from 'sweetalert2/src/sweetalert2'
-// Auto add CSRF token to all ajax form submit
-$.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-/**
- * Ckeditor example
- *
- * import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
- * ClassicEditor.create( document.querySelector( '#editor' ));
- */
-
-let contentText = document.querySelector( '#content-text' );
-if (contentText) {
-    ClassicEditor.create(contentText);
-}
+require('jquery');
+require('popper.js');
+require('bootstrap');
+require('perfect-scrollbar');
 
 import swal from 'sweetalert2';
 window.Swal = swal;
@@ -38,29 +21,12 @@ window.$ = $;
 
 window.axios = require('axios');
 window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
-/*
-require('datatables.net-bs4');
-const feather = require('feather-icons');
-window.feather = feather;*/
 
-/*
-window.Dropzone = require('dropzone/dist/min/dropzone.min');
-Dropzone.autoDiscover = false;
-Dropzone.options.myAwesomeDropzone = {
-    maxFiles: 10,
-    thumbnailWidth: 50,
-    thumbnailHeight: 50,
-    maxFilesize: 20,
-    init: function() {
-        this.on("maxfilesexceeded", function(file){
-            showSuccessMessage('No more files please. We allow only 10 files to be uploaded at the same time.');
-            this.removeFile(file);
-        });
-    }
-};
-*/
+require('lightbox2/dist/js/lightbox.min');
+
 
 $(function() {
+
     // Click on row as hyperlink
     $('tr[data-href]').click(function() {
         const href = $(this).data('href');
@@ -122,6 +88,13 @@ $(function() {
                 });
             }
         });
+    });
+
+    // Auto add CSRF token to all ajax form submit
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
     });
 
     // Apply autonumeric to input

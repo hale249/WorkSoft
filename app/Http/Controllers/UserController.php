@@ -3,11 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserChangePasswordRequest;
 use App\Http\Requests\UserStoreRequest;
 use App\Http\Requests\UserUpdateRequest;
-use App\Models\Role;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -16,17 +16,12 @@ use Illuminate\View\View;
 
 class UserController extends ProtectedController
 {
-    /**
-     * Show list users
-     *
-     * @param Request $requestx
-     * @return View
-     */
-    public function index(Request $request): View
+    use ResponseTrait;
+
+    public function index(Request $request)
     {
         $data = $request->all();
-        $users = User::query()
-            ->with('roles');
+        $users = User::query();
 
         if (!empty($data['name'])) {
             $users = $users->where('name','like', '%' . $data['name'] . '%');
@@ -37,99 +32,62 @@ class UserController extends ProtectedController
         }
         $users = $users->paginate(Constant::DEFAULT_PER_PAGE);
 
-        return view('backend.elements.user.index', compact('users'));
-    }
-
-    /**
-     * Show form create user
-     *
-     * @return View
-     */
-    public function create(): View
-    {
-        $roles = Role::all();
-        return view('backend.elements.user.create', compact('roles'));
+        return view('elements.user.index', compact('users'));
     }
 
     public function store(UserStoreRequest $request)
     {
-        try {
-            DB::beginTransaction();
-            $data = $request->only([
-                'first_name',
-                'last_name',
-                'email',
-                'password',
-            ]);
-            $user = User::query()->create($data);
-            if ($user) {
-                $user->assignRole($request->role);
-            }
-            DB::commit();
-
-            return redirect()->route('backend.users.index')->with('flash_success', __('labels.pages.backend.users.messages.create_user_success'));
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());
-
+        $data = $request->only([
+            'staff_code',
+            'name',
+            'email',
+            'password',
+        ]);
+        if ($request->boolean('role'))
+        {
+            $data['role'] = 1;
+        } else {
+            $data['role'] = 0;
         }
+
+        $user = User::query()->create($data);
+
+        return $this->success('Thêm người dùng thành công', $user);
     }
 
-    /**
-     * Show form edit user
-     *
-     * @param int $id
-     * @return View
-     */
-    public function edit(int $id): View
+    public function edit(int $id)
     {
-        $user = User::query()->where('id', $id)->with('roles')->first();
-        $roles = Role::all();
+        $user = User::find($id);
 
-        return view('backend.elements.user.edit', compact('user', 'roles'));
+        return $this->success('hHiển thị dùng thành công', $user);
     }
 
     public function update(Request $request, int $id)
     {
-        try {
-            DB::beginTransaction();
-            $data = $request->only([
-                'first_name',
-                'last_name',
-            ]);
+        $user = User::find($id);
 
-            $user = User::query()
-                ->findOrFail($id);
-
-            $userUpdate = $user->update($data);
-
-            $userUpdate->roles->sync($request->role);
-            DB::commit();
-
-            return redirect()->route('backend.users.index')->with('flash_success', __('labels.pages.backend.users.messages.update_user_success'));
-        } catch (\Exception $exception) {
-            DB::rollBack();
-            Log::error('Message :' . $exception->getMessage() . '--- Line: ' . $exception->getLine());
+        $data = $request->only([
+            'staff_code',
+            'name',
+        ]);
+        if ($request->boolean('role'))
+        {
+            $data['role'] = 1;
+        } else {
+            $data['role'] = 0;
         }
+
+        $user->update($data);
+
+        return $this->success('Chỉnh sửa thành công', $user);
     }
 
     public function destroy(int $id)
     {
         $user = User::query()->findOrFail($id);
-        if ($user->id === 1) {
-            return redirect()->back()->withErrors([__('labels.pages.backend.users.messages.can_not_delete_user')]);
-        }
-
         $user->delete();
 
-        return redirect()->back()->with('flash_success', __('labels.pages.backend.users.messages.delete_user_success'));
-    }
-
-    public function showFormChangePassword(int $id): View
-    {
-        $user = User::query()->findOrFail($id);
-
-        return view('backend.elements.user.change_password', compact('user'));
+        return $this->success('Xóa thành công', $user);
     }
 
     public function changePassword(UserChangePasswordRequest $request, int $id)
@@ -138,6 +96,6 @@ class UserController extends ProtectedController
         $user = User::query()->findOrFail($id);
         $user->update(['password' => $password]);
 
-        return redirect()->back()->with('flash_success', __('labels.pages.backend.users.messages.change_password_user_success'));
+        return $this->success('Thay dổi mật khẩu thành công', $user);
     }
 }

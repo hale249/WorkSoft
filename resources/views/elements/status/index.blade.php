@@ -12,8 +12,10 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.status.create') }}" class="btn btn-primary btn-sm"><i
-                            class="fas fa-plus"></i> @lang('Tạo mới')</a>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createStatusModal">
+                        <i class="fas fa-plus"></i>
+                        Tạo mới
+                    </button>
                 </div>
             </div>
 
@@ -43,28 +45,15 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="text-right">
-                    {{ $statuses->links() }}
-                </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $statuses ])
             </div>
         </div>
     </div>
 @endsection
 
 @section('script')
-    <script src="{{ asset('js/backend/jscolor.js') }}"></script>
-    <script type="text/javascript">
-        jscolor.presets.default = {
-            width: 141,               // make the picker a little narrower
-            position: 'right',        // position it to the right of the target
-            previewPosition: 'right', // display color preview on the right
-            previewSize: 40,          // make the color preview bigger
-            palette: [
-                '#000000', '#7d7d7d', '#870014', '#ec1c23', '#ff7e26',
-                '#fef100', '#22b14b', '#00a1e7', '#3f47cc', '#a349a4',
-                '#ffffff', '#c3c3c3', '#b87957', '#feaec9', '#ffc80d',
-                '#eee3af', '#b5e61d', '#99d9ea', '#7092be', '#c8bfe7',
-            ],
-        };
-    </script>
+    @include('elements.status.modals.create')
+    @include('elements.status.modals.edit')
+
+    <script type="text/javascript" src="{{ asset('js/pages/status.js') }}"></script>
 @endsection

@@ -12,8 +12,10 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.users.create') }}" class="btn btn-primary btn-sm"><i
-                            class="fas fa-plus"></i> @lang('Tạo mới')</a>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createUserModal">
+                        <i class="fas fa-plus"></i>
+                        Tạo mới
+                    </button>
                 </div>
             </div>
 
@@ -22,34 +24,36 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <td><strong>Mã cán bộ</strong></td>
                             <td><strong>Tên</strong></td>
-                            <td><strong>@lang('labels.pages.backend.users.table.email')</strong></td>
+                            <td><strong>Email</strong></td>
                             <td><strong>Vai trò</strong></td>
-                            <td><strong>Số điện thoại</strong></td>
-                            <td><strong>Sinh ngày</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
                         </thead>
                         <tbody>
                         @foreach($users as $user)
                             <tr>
-                                <td>{!! $user->full_name !!}</td>
+                                <td>{{ $user->staff_code }}</td>
+                                <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
-                                <td><span class="badge badge-pill"
-                                          style="background-color: #58F09E; color: #000000">{{ !empty($user->roles()->first()) ? trans('role.' .$user->roles()->first()->name) : '' }}</span>
-                                </td>
-                                <td>{{ $user->phone_number }}</td>
-                                <td>{{ $user->birthday }}</td>
+                                <td>{!! $user->role_name !!}</td>
                                 <td>{!! $user->action_buttons !!}</td>
                             </tr>
                         @endforeach
                         </tbody>
                     </table>
                 </div>
-                <div class="text-right">
-                    {{ $users->links() }}
-                </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $users ])
             </div>
         </div>
     </div>
+@endsection
+
+@section('script')
+    @include('elements.user.modals.create')
+    @include('elements.user.modals.edit')
+    @include('elements.user.modals.change_password')
+
+    <script type="text/javascript" src="{{ asset('js/pages/user.js') }}"></script>
 @endsection

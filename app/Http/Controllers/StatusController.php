@@ -3,19 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
-use App\Helpers\PermissionConstant;
 use App\Helpers\ResponseTrait;
 use App\Helpers\Traits\FileHelperTrait;
-use App\Http\Controllers\Controller;
-use App\Http\Requests\CategoryStoreRequest;
 use App\Http\Requests\StatusRequest;
-use App\Models\Category;
 use App\Models\Status;
-use Exception;
-use Illuminate\Auth\Access\AuthorizationException;
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\View\View;
 
 class StatusController extends ProtectedController
 {
@@ -48,7 +40,7 @@ class StatusController extends ProtectedController
     {
         $status = Status::query()->findOrFail($id);
 
-        return $this->success($status);
+        return $this->success('', $status);
     }
 
     public function update(Request $request, $id)

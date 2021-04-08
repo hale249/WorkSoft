@@ -67,11 +67,6 @@ $(document).on('click', '.edit-category', function (e) {
         e.preventDefault();
 
         const form = $(this);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
         $.ajax({
             url: '/category/' + id,
             type: 'PUT',

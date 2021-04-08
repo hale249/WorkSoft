@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>@yield('title')</title>
+    <title>@yield('title') - HUMG</title>
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="icon" href="{{ asset('favicon.ico') }}">
@@ -80,7 +80,6 @@
     @include('share.modals.logout')
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('vendor/select2/select2.min.js') }}"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     @yield('script')
 </body>
 </html>
