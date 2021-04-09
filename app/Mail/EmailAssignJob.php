@@ -34,7 +34,7 @@ class EmailAssignJob extends Mailable
      */
     public function build()
     {
-        return $this->view('backend.mails.project')
+        return $this->view('mails.job')
             ->with([
                 'user' => $this->user,
                 'job' => $this->job

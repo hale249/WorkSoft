@@ -54,10 +54,10 @@ trait UserAttribute
     public function getDeleteButtonAttribute(): string
     {
         return '<a href="' . route('users.destroy', $this->id) . '"
-                 data-trans-button-cancel="' . __('labels.general.cancel') . '"
-                 data-trans-button-confirm="' . __('labels.general.delete') . '"
-                 data-trans-title="' . __('strings.confirm_delete') . '"
-                 class="btn btn-danger js-confirm-delete btn-sm"><i class="fas fa-trash"></i></a>';
+                 class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
+                 data-action="delete" data-confirm="Are you sure you want to delete this User ?">
+                 <i class="fas fa-trash"></i>
+                 </a>';
     }
 
     public function getChangePasswordButtonAttribute(): string

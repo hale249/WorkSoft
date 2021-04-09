@@ -15,7 +15,7 @@ class Job extends Model
 
     protected $guarded = [];
 
-    protected $appends = 'totals';
+//    protected $appends = 'totals';
 
     public function category()
     {

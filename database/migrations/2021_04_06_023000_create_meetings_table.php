@@ -16,8 +16,9 @@ class CreateMeetingsTable extends Migration
         Schema::create('meetings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->date('time_start')->comment('Thời gian bắt đầu');
-            $table->date('time_')->comment('Thời gian kết thúc');
+            $table->time('time_start')->comment('Thời gian bắt đầu');
+            $table->time('time_end')->comment('Thời gian kết thúc');
+            $table->date('date_meeting')->comment('Ngày hop');
             $table->text('description')->nullable();
             $table->integer('sent_count')->default(0);
             $table->integer('count_join')->default(0);

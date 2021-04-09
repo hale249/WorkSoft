@@ -3,9 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\JobController;
 
-Route::get('job', [JobController::class, 'index'])->name('jobs.index');
-Route::get('job/create', [JobController::class, 'create'])->name('jobs.create');
-Route::post('job', [JobController::class, 'store'])->name('jobs.store');
+Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
+Route::post('jobs', [JobController::class, 'store'])->name('jobs.store');
 Route::get('job/{id}', [JobController::class, 'show'])->name('jobs.show');
 Route::get('job/{id}/edit', [JobController::class, 'edit'])->name('jobs.edit');
 Route::put('job/{id}', [JobController::class, 'update'])->name('jobs.update');

@@ -12,7 +12,7 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <a href="{{ route('meeting.create') }}" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMeetingModal"><i class="fas fa-plus"></i> @lang('Tạo cuộc họp')</a>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMeetingModal"><i class="fas fa-plus"></i> @lang('Tạo cuộc họp')</button>
                 </div>
             </div>
             <form action="{{ route('meeting.index') }}" method="GET" class="form-inline mt-2">
@@ -53,6 +53,9 @@
         </div>
     </div>
 @endsection
+
 @section('script')
     @include('elements.meeting.modals.create')
+    @include('elements.meeting.modals.edit')
+    <script type="text/javascript" src="{{ asset('js/pages/meeting.js') }}"></script>
 @endsection

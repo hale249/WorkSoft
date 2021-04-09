@@ -27,11 +27,6 @@ class MeetingController extends ProtectedController
     public function index(Request $request)
     {
         $meetings = Meeting::query();
-        if (Helper::checkRole(Auth::user()) === false) {
-            $meetings = $meetings->whereHas('meetingUser', function ($q) {
-                $q->where('user_id', Auth::id());
-            });
-        }
         $data = $request->input('name');
         if (!empty($data)) {
             $meetings = $meetings->where('name','like', '%' . $data . '%');
@@ -39,32 +34,32 @@ class MeetingController extends ProtectedController
         $meetings = $meetings->orderBy('date_meeting', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
+        $users = User::query()
+            ->where('id', '<>', $this->currentUser->id)
+            ->get();
 
-        return view('elements.meeting.index', compact('meetings'));
+        return view('elements.meeting.index', compact('meetings','users'));
     }
 
-    public function create()
+    public function store(Request $request)
     {
-        $userId = Auth::id();
-        $users = User::query()->where('id', '!=', $userId)->get();
-        return view('elements.meeting.create', compact('users'));
-    }
-
-    public function store(MeetingRequest $request)
-    {
-        $userId = Auth::id();
         $data = $request->only([
             'name',
             'description',
             'date_meeting',
-            'start_meeting',
-            'end_meeting',
+            'time_start',
+            'time_end',
         ]);
-
-        $users = User::query()->where('id', '!=', $userId)->get();
-        $data['created_by'] = $userId;
         $meeting = Meeting::create($data);
-        dispatch(new EmailMeeting(), new SendMail());
+
+        foreach ($request->user as $userId) {
+            $user = User::find($userId);
+            MeetingUser::query()->updateOrCreate([
+                'meeting_id' => $meeting->id,
+                'user_id' => $userId
+            ]);
+            dispatch( new SendMail([$user->email], new EmailMeeting($user, $meeting)));
+         }
 
         return $this->success('Tạo cuộc họp thành công', $meeting);
     }
@@ -73,14 +68,14 @@ class MeetingController extends ProtectedController
     {
         $meeting = Meeting::find($id);
 
-        return view('backend.elements.meeting.show', compact('meeting'));
+        return $this->success('Xóa thành công');
     }
 
     public function edit(int $id)
     {
         $meeting = Meeting::find($id);
 
-        return view('elements.meeting.edit', compact('meeting'));
+        return $this->success('Chỉnh sửa lập lịch', $meeting);
 
     }
 
@@ -99,7 +94,7 @@ class MeetingController extends ProtectedController
 
         $meeting->update($data);
 
-        return redirect()->route('backend.meeting.index')->with('flash_success', __('Chỉnh sửa lập lịch'));
+        return $this->success('Chỉnh sửa lập lịch');
     }
 
     public function destroy(int $id)
@@ -107,7 +102,7 @@ class MeetingController extends ProtectedController
         $category = Meeting::query()->findOrFail($id);
         $category->delete();
 
-        return redirect()->route('backend.meeting.index')->with('flash_success', __('Xóa lập lịch thành công'));
+        return $this->success('Xóa thành công');
     }
 
     public function reply(Request $request, int $meetingId, int $userId)

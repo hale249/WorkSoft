@@ -41,6 +41,8 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
  */
 Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 
+Route::get('meeting/{id}/show', [\App\Http\Controllers\MeetingController::class, 'show'])->name('meeting.show');
+
 Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/dashboard.php';
     require __DIR__ . '/web/user.php';

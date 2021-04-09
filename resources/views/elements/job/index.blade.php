@@ -11,14 +11,12 @@
                         @lang('Quản lý công việc')
                     </h4>
                 </div>
-                @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
                 <div class="col-4 text-right">
-                    <a href="{{ route('backend.jobs.create') }}" class="btn btn-primary btn-sm"><i class="fas fa-plus"></i> @lang('Tạo công việc')</a>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createJobModal"><i class="fas fa-plus"></i>Tạo công việc</button>
                 </div>
-                @endif
             </div>
 
-            <form action="{{ route('backend.jobs.index') }}" method="GET" class="form-inline mt-2">
+            <form action="{{ route('jobs.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
                     <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
@@ -52,12 +50,12 @@
                             <tr>
                                 <td>
                                     @if(!empty($job->category))
-                                        <a href="{{ route('backend.category.show', $job->category_id) }}" target="_blank">{{ $job->category->name }}</a>
+                                        <a href="{{ route('category.show', $job->category_id) }}" target="_blank">{{ $job->category->name }}</a>
                                     @endif
                                 </td>
                                 <td>{{ $job->name }}</td>
                                 <td>{{ $job->job_ranting }}</td>
-                                <td>{{ $job->user->full_name }}</td>
+{{--                                <td>{{ $job->user->name }}</td>--}}
                                 <td>{{ $job->deadline }}</td>
                                 <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
                                 <td>{!! $job->action_buttons !!}</td>
@@ -72,4 +70,9 @@
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    @include('elements.job.modals.create')
+
+    <script type="text/javascript" src="{{ asset('js/pages/job.js') }}"></script>
 @endsection

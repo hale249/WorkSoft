@@ -7,10 +7,14 @@ use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateJobRequest;
+use App\Jobs\SendMail;
 use App\Mail\EmailAssignJob;
+use App\Mail\EmailMeeting;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\JobAttachment;
+use App\Models\JobUser;
+use App\Models\JobUserPerson;
 use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
@@ -43,34 +47,46 @@ class JobController extends ProtectedController
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
         $statuses = Status::all();
+        $categories = Category::all();
+        $users = User::all();
 
-        return view('backend.elements.job.index', compact('jobs', 'statuses'));
+        return view('elements.job.index', compact('jobs', 'statuses', 'users', 'categories'));
     }
 
-    public function store(CreateJobRequest $request)
+    public function store(Request $request)
     {
-        $userId = Auth::id();
         $data = $request->only([
             'name',
             'description',
-            'content',
             'category_id',
-            'user_id',
             'deadline',
-            'content',
-            'person_support',
-            'person_mission',
             'job_ranting'
         ]);
-        $data['created_by'] = $userId;
+        $data['created_by'] = $this->currentUser->id;
         $data['status_id'] = Status::query()->first()->id ?? 1;
-        $data['slug'] = Str::slug($request->get('name'));
         $job = Job::create($data);
-        if ($job) {
-            Mail::to($job->user->email)->send(new EmailAssignJob($job->user, $job));
-        }
 
-        return redirect()->route('backend.jobs.index')->with('flash_success', __('Tạo công việc thành công'));
+        JobUser::query()->updateOrCreate([
+            'job_id' => $job->id,
+            'user_id' => $request->user_id,
+            'person_support' => $request->person_mission,
+        ]);
+        dispatch( new SendMail([$this->getUserDetail($request->user_id)->email], new EmailAssignJob($this->getUserDetail($request->user_id), $job)));
+        dispatch( new SendMail([$this->getUserDetail($request->person_mission)->email], new EmailAssignJob($this->getUserDetail($request->person_mission), $job)));
+
+        foreach ($request->person_support as $item) {
+            JobUserPerson::query()->updateOrCreate([
+                'job_id' => $job->id,
+                'job_user_id' => $request->user_id,
+                'user_id' => $item,
+            ]);
+            dispatch( new SendMail([$this->getUserDetail($item)->email], new EmailAssignJob($this->getUserDetail($item), $job)));
+        }
+       /* if ($job) {
+            Mail::to($job->user->email)->send(new EmailAssignJob($job->user, $job));
+        }*/
+
+        return $this->success('Tạo công việc thành công', $job);
     }
 
     public function show(int $id)
@@ -87,7 +103,14 @@ class JobController extends ProtectedController
         $users = User::all();
         $statuses = Status::all();
 
-        return view('backend.elements.job.edit', compact('job', 'categories', 'users', 'statuses'));
+        $data = [
+            'job'=> $job,
+            'categories'=> $categories,
+            'users'=> $users,
+            'statuses'=> $statuses,
+        ];
+
+        return $this->success('Hien thi thanh cong', $data);
     }
 
     public function update(Request $request, int $id)
@@ -110,7 +133,7 @@ class JobController extends ProtectedController
 
         $job->update($data);
 
-        return redirect()->route('backend.jobs.index')->with('flash_success', __('Chỉnh sửa công việc thành công'));
+        return $this->success('Chỉnh sửa công việc thành công');
     }
 
     public function ajaxUploadAttachment(Request $request, int $jobId)
@@ -193,5 +216,9 @@ class JobController extends ProtectedController
             default:
                 return null;
         }
+    }
+
+    public function getUserDetail($id) {
+        return User::find($id);
     }
 }

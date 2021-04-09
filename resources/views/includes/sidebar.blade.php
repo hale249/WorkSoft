@@ -29,7 +29,7 @@
     <!-- Nav Item - Pages Collapse Menu -->
 
     <li class="nav-item @if(\Request::is('meeting') || \Request::is('meeting/*')) active @endif">
-        <a class="nav-link" href="#">
+        <a class="nav-link" href="{{ route('meeting.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>@lang('Lập lịch')</span>
         </a>

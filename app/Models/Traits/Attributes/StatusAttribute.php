@@ -34,9 +34,9 @@ trait StatusAttribute
     public function getDeleteButtonAttribute(): string
     {
         return '<a href="' . route('status.destroy', $this->id) . '"
-         class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
-         data-action="delete" data-confirm="Are you sure you want to delete this Status ?">
-         <i class="fas fa-trash"></i>
-         </a>';
+                 class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
+                 data-action="delete" data-confirm="Are you sure you want to delete this Status ?">
+                 <i class="fas fa-trash"></i>
+                 </a>';
     }
 }

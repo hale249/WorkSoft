@@ -34,7 +34,7 @@ class EmailMeeting extends Mailable
      */
     public function build()
     {
-        return $this->view('backend.mails.meeting')
+        return $this->view('mails.meeting')
             ->with([
                 'user' => $this->user,
                 'meeting' => $this->meeting

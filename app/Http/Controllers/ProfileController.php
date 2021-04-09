@@ -36,14 +36,6 @@ class ProfileController extends ProtectedController
             'hoc_vi',
         ]);
 
-        $attachment = $request->file('file');
-        $imageName = time() . $attachment->getClientOriginalName();
-        $pathToFile = 'avatars/' . $imageName;
-        Storage::put($pathToFile, fopen($attachment, 'r+'), 'public');
-        $url = Storage::url($pathToFile);
-
-        $data['avatar'] = $url;
-
         $user = User::query()->findOrFail(auth()->id());
         $userUpdate = $user->update($data);
 
