@@ -105,3 +105,66 @@ $('#create-meeting-form').submit(function(e) {
         }
     });
 });
+
+
+// edit  category
+$(document).on('click', '.edit-meeting', function (e) {
+    e.preventDefault();
+    var id = $(this).data('id');
+
+    $.ajax({
+        url: '/meeting/' + id + '/edit',
+        type: 'GET',
+        dataType: 'json',
+        success: function (response) {
+            $('.name').val(response.data.name)
+            $('.date_meeting').val(response.data.date_meeting)
+            $('.description').val(response.data.description)
+            $('.time_start').val(response.data.time_start)
+            $('.time_end').val(response.data.time_end)
+        }
+    })
+    $('#btn-update-meeting-save').click(function() {
+        $('#update-meeting-form').trigger('submit');
+    });
+
+    $('#update-meeting-form').submit(function(e) {
+        e.preventDefault();
+
+        const form = $(this);
+        $.ajax({
+            url: '/meeting/' + id,
+            type: 'PUT',
+            dataType: 'json',
+            data: form.serialize(),
+            beforeSend: function() {
+                $('#btn-update-meeting-save').attr('disabled', 'disabled');
+                $('.show-errors, .invalid-feedback').hide();
+                $('input.is-invalid, select.is-invalid,.select2-selection.is-invalid').removeClass('is-invalid');
+            },
+
+            success: function(response) {
+                if (response.code === 200) {
+                    showSuccessMessage(response.message);
+                    $(form).trigger('reset');
+
+                    $('#editMeetingModal').modal('hide');
+
+                    setTimeout(function() {
+                        window.location.reload();
+                    }, 1000);
+                }
+                else if (response.message) {
+                    $(form).find('.show-errors').text(response.message).show();
+                }
+            },
+
+            error: function(error) {
+                handleAjaxFormValidationErrors(form, error);
+            },
+            complete: function() {
+                $('#btn-update-meeting-save').removeAttr('disabled');
+            }
+        });
+    });
+})

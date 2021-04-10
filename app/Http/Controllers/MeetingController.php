@@ -65,13 +65,6 @@ class MeetingController extends ProtectedController
         return $this->success('Tạo cuộc họp thành công', $meeting);
     }
 
-    public function show(int $id)
-    {
-        $meeting = Meeting::find($id);
-
-        return $this->success('Xóa thành công');
-    }
-
     public function edit(int $id)
     {
         $meeting = Meeting::find($id);
@@ -80,7 +73,7 @@ class MeetingController extends ProtectedController
 
     }
 
-    public function update(MeetingRequest $request, int $id)
+    public function update(Request $request, int $id)
     {
         $meeting = Meeting::find($id);
         $userId = Auth::id();
@@ -91,7 +84,6 @@ class MeetingController extends ProtectedController
             'start_meeting',
             'end_meeting',
         ]);
-        $data['created_by'] = $userId;
 
         $meeting->update($data);
 
@@ -119,6 +111,5 @@ class MeetingController extends ProtectedController
         ]);
 
         return redirect()->route('meeting.show', ['id' => $meetingId]);
-
     }
 }

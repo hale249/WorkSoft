@@ -27,7 +27,9 @@ trait MeetingAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('meeting.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="" class="btn btn-primary btn-sm edit-meeting" data-toggle="modal"
+         data-id="'.$this->id.'" data-target="#editMeetingModal" title="Edit meeting">
+         <i class="fas fa-edit"></i></a>';
     }
 
     /**
