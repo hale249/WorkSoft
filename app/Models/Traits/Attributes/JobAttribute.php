@@ -31,14 +31,14 @@ trait JobAttribute
      */
     public function getShowButtonAttribute(): string
     {
-        return '<a href="'.route('jobs.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+        return '<a href="'.route('preview.job', $this->uuid).'" data-toggle="tooltip"  target="_blank" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
     }
 
-    /**
-     * @return string
-     */
-    public function getShowItemButtonAttribute(): string
-    {
-        return '<a href="'.route('job_task.index', $this->id).'" class="btn btn-info btn-sm">' . __('labels.pages.backend.product.table.view_item') . '</a>';
-    }
+//    /**
+//     * @return string
+//     */
+//    public function getShowItemButtonAttribute(): string
+//    {
+//        return '<a href="'.route('job_task.index', $this->id).'" class="btn btn-info btn-sm">' . __('labels.pages.backend.product.table.view_item') . '</a>';
+//    }
 }

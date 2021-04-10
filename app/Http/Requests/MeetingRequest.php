@@ -25,10 +25,10 @@ class MeetingRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'description' => 'required',
+            'user' => 'required',
             'date_meeting' => 'required',
-            'start_meeting' => 'required',
-            'end_meeting' => 'required',
+            'time_start' => 'required',
+            'time_end' => 'required',
         ];
     }
 }

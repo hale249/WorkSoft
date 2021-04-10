@@ -41,7 +41,7 @@ class MeetingController extends ProtectedController
         return view('elements.meeting.index', compact('meetings','users'));
     }
 
-    public function store(Request $request)
+    public function store(MeetingRequest $request)
     {
         $data = $request->only([
             'name',
@@ -50,6 +50,7 @@ class MeetingController extends ProtectedController
             'time_start',
             'time_end',
         ]);
+        $data['uuid'] = Str::uuid()->toString();
         $meeting = Meeting::create($data);
 
         foreach ($request->user as $userId) {

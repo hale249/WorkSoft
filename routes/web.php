@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Helpers\PermissionConstant;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\TaskController;
-
+use \App\Http\Controllers\PreviewController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,7 +41,6 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
  */
 Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 
-Route::get('meeting/{id}/show', [\App\Http\Controllers\MeetingController::class, 'show'])->name('meeting.show');
 
 Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/dashboard.php';
@@ -55,3 +54,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('excel', [\App\Http\Controllers\JobController::class, 'excel'])->name('excel');
 
 });
+
+Route::get('preview/meeting-{uuid}', [PreviewController::class, 'meeting'])->name('preview.meeting');
+Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])->name('preview.job');

@@ -36,7 +36,7 @@ trait MeetingAttribute
     public function getShowButtonAttribute(): string
     {
         if (Helper::checkRole(Auth::user())) {
-            return '<a href="' . route('meeting.show', $this->id) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+            return '<a href="' . route('preview.meeting', $this->uuid) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
         }
         return '';
     }

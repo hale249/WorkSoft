@@ -15,6 +15,7 @@ class CreateActiveJobsTable extends Migration
     {
         Schema::create('active_jobs', function (Blueprint $table) {
             $table->id();
+            $table->string('uuid');
             $table->unsignedInteger('status_id');
             $table->unsignedInteger('category_id');
             $table->text('name');

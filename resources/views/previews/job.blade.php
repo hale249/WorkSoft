@@ -24,7 +24,7 @@
             text-decoration: underline;
         }
 
-        @media only screen and (min-width: 620px) {
+        @media  only screen and (min-width: 620px) {
             .u-row {
                 width: 600px !important;
             }
@@ -231,7 +231,7 @@
                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 31px;font-family:'Cabin',sans-serif;" align="left">
 
                                                 <div style="color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-size: 24px; line-height: 33.6px;">Thư mời tham gia cuộc họp</span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-size: 24px; line-height: 33.6px;">Mô tả công việc</span></strong></p>
                                                 </div>
 
                                             </td>
@@ -270,8 +270,7 @@
                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
 
                                                 <div style="color: #000000; line-height: 160%; text-align: center; word-wrap: break-word;">
-                                                    <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 22px; line-height: 35.2px;">Ch&agrave;o {{ $user->name }}, </span></p>
-                                                    <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 18px; line-height: 28.8px;">{{ $meeting->name }}</span></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 18px; line-height: 28.8px;">{{ $job->name }}</span></p>
                                                 </div>
 
                                             </td>
@@ -285,10 +284,11 @@
                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
 
                                                 <div style="color: #000000; line-height: 160%; text-align: center; word-wrap: break-word;">
-                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Thời gian diễn ra cuộc họp</span></strong></p>
-                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">ng&agrave;y {{ $meeting->date_meeting }}</span></strong></p>
-                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">l&uacute;c</span></strong></p>
-                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">{!! $meeting->time_start_end !!} </span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Hạn đến</span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Ngày {{ $job->deadline }}</span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Thực hiện bởi:  {{ $job->user->name ?? '' }}</span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Người phụ trách: {{ $job->personMission->name ?? '' }} </span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Hỗ trợ: {{ $job->personMission->name ?? '' }} </span></strong></p>
                                                 </div>
 
                                             </td>
@@ -303,25 +303,8 @@
 
                                                 <div align="center">
                                                     <!--[if mso]><table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-spacing: 0; border-collapse: collapse; mso-table-lspace:0pt; mso-table-rspace:0pt;font-family:'Cabin',sans-serif;"><tr><td style="font-family:'Cabin',sans-serif;" align="center"><v:roundrect xmlns:v="urn:schemas-microsoft-com:vml" xmlns:w="urn:schemas-microsoft-com:office:word" href="https://dashboard.unlayer.com/" style="height:36px; v-text-anchor:middle; width:136px;" arcsize="11%" stroke="f" fillcolor="#3AAEE0"><w:anchorlock/><center style="color:#FFFFFF;font-family:'Cabin',sans-serif;"><![endif]-->
-                                                    <a href="{{ route('preview.meeting', $meeting->uuid) }}" target="_blank" style="box-sizing: border-box;display: inline-block;font-family:'Cabin',sans-serif;text-decoration: none;-webkit-text-size-adjust: none;text-align: center;color: #FFFFFF; background-color: #3AAEE0; border-radius: 4px; -webkit-border-radius: 4px; -moz-border-radius: 4px; width:auto; max-width:100%; overflow-wrap: break-word; word-break: break-word; word-wrap:break-word; mso-border-alt: none;">
-                                                        <span style="display:block;padding:10px 20px;line-height:120%;"><span style="font-size: 14px; line-height: 16.8px;">Nội dung chi tiết</span></span>
-                                                    </a>
+                                                    <p>{{ $job->description }}</p>
                                                     <!--[if mso]></center></v:roundrect></td></tr></table><![endif]-->
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                        </tbody>
-                                    </table>
-
-                                    <table style="font-family:'Cabin',sans-serif;" role="presentation" cellpadding="0" cellspacing="0" width="100%" border="0">
-                                        <tbody>
-                                        <tr>
-                                            <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px 60px;font-family:'Cabin',sans-serif;" align="left">
-
-                                                <div style="color: #000000; line-height: 160%; text-align: center; word-wrap: break-word;">
-                                                    <p style="line-height: 160%; font-size: 14px;"><span style="font-size: 18px; line-height: 28.8px;">Thanks,</span></p>
-                                                    <p style="line-height: 160%; font-size: 14px;"><span style="font-size: 18px; line-height: 28.8px;">The Company Team</span></p>
                                                 </div>
 
                                             </td>

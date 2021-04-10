@@ -13,7 +13,6 @@ use App\Mail\EmailMeeting;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\JobAttachment;
-use App\Models\JobUser;
 use App\Models\JobUserPerson;
 use App\Models\Status;
 use App\Models\User;
@@ -63,8 +62,9 @@ class JobController extends ProtectedController
             'deadline',
             'job_ranting',
             'user_id',
-            'person_support',
+            'person_mission',
         ]);
+        $data['uuid'] = Str::uuid()->toString();
         $data['created_by'] = $this->currentUser->id;
         $data['status_id'] = Status::query()->first()->id ?? 1;
         $job = Job::create($data);
