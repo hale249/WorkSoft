@@ -231,7 +231,7 @@
                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:0px 10px 31px;font-family:'Cabin',sans-serif;" align="left">
 
                                                 <div style="color: #e5eaf5; line-height: 140%; text-align: center; word-wrap: break-word;">
-                                                    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-size: 24px; line-height: 33.6px;">C&ocirc;ng việc mới</span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 140%;"><strong><span style="font-size: 24px; line-height: 33.6px;">{{ $text }}</span></strong></p>
                                                 </div>
 
                                             </td>
@@ -270,7 +270,7 @@
                                             <td style="overflow-wrap:break-word;word-break:break-word;padding:33px 55px;font-family:'Cabin',sans-serif;" align="left">
 
                                                 <div style="color: #000000; line-height: 160%; text-align: center; word-wrap: break-word;">
-                                                    <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 22px; line-height: 35.2px;">Ch&agrave;o {!! $user->full_name !!}, </span></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 22px; line-height: 35.2px;">Ch&agrave;o {!! $user->name !!}, </span></p>
                                                     <p style="font-size: 14px; line-height: 160%;"><span style="font-size: 18px; line-height: 28.8px;">{!! $job->name !!} </span></p>
                                                 </div>
 

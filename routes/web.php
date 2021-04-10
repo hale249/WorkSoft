@@ -52,4 +52,6 @@ Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/job.php';
     require __DIR__ . '/web/status.php';
 
+    Route::get('excel', [\App\Http\Controllers\JobController::class, 'excel'])->name('excel');
+
 });

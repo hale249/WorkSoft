@@ -190,11 +190,11 @@
     </div>
 @endsection
 @section('script')
-{{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
-   {{-- <script type="text/javascript">
-        var labelStatus = {!! json_encode($statusJob->label) !!};
-        var dataStatus = {!! json_encode($statusJob->data) !!};
-        var colorStatus = {!! json_encode($statusJob->color) !!};
+    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
+    <script type="text/javascript">
+        {{--var labelStatus = {!! json_encode($data['username']) !!};--}}
+        {{--var dataStatus = {!! json_encode($data->data) !!};--}}
+        {{--var colorStatus = {!! json_encode($statusJob->color) !!};--}}
 
         var ctx = document.getElementById("myPieChart");
         var myPieChart = new Chart(ctx, {
@@ -225,5 +225,5 @@
                 }]
             },
         });
-    </script>--}}
+    </script>
 @endsection

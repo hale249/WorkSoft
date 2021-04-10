@@ -24,6 +24,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use \Illuminate\Support\Str;
 use App\Helpers\FileType;
+use Maatwebsite\Excel\Excel;
 
 class JobController extends ProtectedController
 {
@@ -60,31 +61,24 @@ class JobController extends ProtectedController
             'description',
             'category_id',
             'deadline',
-            'job_ranting'
+            'job_ranting',
+            'user_id',
+            'person_support',
         ]);
         $data['created_by'] = $this->currentUser->id;
         $data['status_id'] = Status::query()->first()->id ?? 1;
         $job = Job::create($data);
 
-        JobUser::query()->updateOrCreate([
-            'job_id' => $job->id,
-            'user_id' => $request->user_id,
-            'person_support' => $request->person_mission,
-        ]);
-        dispatch( new SendMail([$this->getUserDetail($request->user_id)->email], new EmailAssignJob($this->getUserDetail($request->user_id), $job)));
-        dispatch( new SendMail([$this->getUserDetail($request->person_mission)->email], new EmailAssignJob($this->getUserDetail($request->person_mission), $job)));
+        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));
+        dispatch( new SendMail([$this->getUserDetail($job->person_mission)->email], new EmailAssignJob($this->getUserDetail($job->person_mission), $job, 'Bạn là người quản lý')));
 
         foreach ($request->person_support as $item) {
             JobUserPerson::query()->updateOrCreate([
                 'job_id' => $job->id,
-                'job_user_id' => $request->user_id,
                 'user_id' => $item,
             ]);
-            dispatch( new SendMail([$this->getUserDetail($item)->email], new EmailAssignJob($this->getUserDetail($item), $job)));
+            dispatch( new SendMail([$this->getUserDetail($item)->email], new EmailAssignJob($this->getUserDetail($item), $job, 'Bạn là có công việc hỗ trợ')));
         }
-       /* if ($job) {
-            Mail::to($job->user->email)->send(new EmailAssignJob($job->user, $job));
-        }*/
 
         return $this->success('Tạo công việc thành công', $job);
     }
@@ -220,5 +214,10 @@ class JobController extends ProtectedController
 
     public function getUserDetail($id) {
         return User::find($id);
+    }
+
+    public function excel()
+    {
+        return view('exports.job');
     }
 }

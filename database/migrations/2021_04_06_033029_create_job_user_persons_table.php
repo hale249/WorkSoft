@@ -15,7 +15,7 @@ class CreateJobUserPersonsTable extends Migration
     {
         Schema::create('job_user_persons', function (Blueprint $table) {
             $table->increments('id');
-            $table->unsignedBigInteger('job_user_id');
+            $table->unsignedBigInteger('job_id');
             $table->unsignedInteger('user_id')->comment('Người phụ trách công việc');
         });
     }

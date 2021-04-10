@@ -15,6 +15,13 @@ class Job extends Model
 
     protected $guarded = [];
 
+    protected $casts = [
+        'category_id' => 'integer',
+        'job_ranting' => 'integer',
+        'user_id' => 'integer',
+        'person_support' => 'integer',
+    ];
+
 //    protected $appends = 'totals';
 
     public function category()
