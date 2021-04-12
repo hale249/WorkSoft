@@ -3,123 +3,164 @@
 @section('title', __('Công việc') . ' - ' . $job->name)
 
 @section('content')
-    <div class="card">
-        <div class="card-body">
-            <h4 class="card-title mb-0">
-                Công việc
-                <small class="text-muted">Chi tiết công việc - {{ $job->name }}</small><br>
-                <small class="text-muted">Người tạo - {{ !empty($job->createdBy) ? $job->createdBy->full_name : '' }}</small>
-            </h4>
-            <hr>
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Tên công việc</label>
-
-                <div class="col-md-10">
-                    {{ $job->name }}
-                </div><!--col-->
-            </div>
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Xếp loại đầu việc</label>
-
-                <div class="col-md-10">
-                    {{ $job->job_ranting }}
-                </div><!--col-->
-            </div>
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Người phụ trách công việc</label>
-
-                <div class="col-md-10">
-                    {{ !empty($job->user) ? $job->user->full_name : '' }}
-                </div><!--col-->
-            </div>
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Điểm</label>
-
-                <div class="col-md-10">
-                    {{ $job->point_of_work }}
-                </div><!--col-->
-            </div>
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Người hỗ trợ</label>
-
-                <div class="col-md-10">
-                    {{ !empty($job->personSupport) ? $job->personSupport->full_name : '' }}
-                </div><!--col-->
-            </div>
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Điểm hỗ trợ</label>
-
-                <div class="col-md-10">
-                    {{ $job->point_of_work_sp }}
-                </div><!--col-->
-            </div>
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Nngười quản lý công việc</label>
-
-                <div class="col-md-10">
-                    {{ !empty($job->personMission) ? $job->personMission->full_name : '' }}
-                </div><!--col-->
-            </div>
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">Làm đến</label>
-
-                <div class="col-md-10">
-                    {{ $job  ->deadline }}
-                </div><!--col-->
-            </div>
-
-
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="description">Nội dung</label>
-
-                <div class="col-md-10">
-                    @if($job->description)
-                        {{ $job->description }}
-                    @else
-                        @lang('labels.general.empty')
-                    @endif
-                </div><!--col-->
-            </div>
-            <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="description">Content</label>
-
-                <div class="col-md-10">
-                    @if($job->content)
-                        {!! $job->content !!}
-                    @else
-                        @lang('labels.general.empty')
-                    @endif
-                </div><!--col-->
-            </div>
-
-        {{--    <div class="form-group row">
-                <label class="col-md-2 form-control-label" for="name">File dính kèm</label>
-
-                <div class="col-md-10">
-                    @if($meeting->document_file)
-                        <p class="mt-3"><img src="{{ $meeting->image }}" width="100" alt=""></p>
-                    @else
-                        @lang('labels.general.empty')
-                    @endif
-                </div><!--col-->
-            </div>--}}
-        </div>
-        <div class="card-footer">
-            <div class="row">
-                <div class="col">
-                    <a href="{{ route('backend.jobs.index') }}"
-                       class="btn btn-success btn-sm">@lang('labels.general.back')</a>
+    <div class="d-flex flex-column flex-sm-row mb-2">
+        <h4 class="flex-grow-1 mb-0 text-danger"><span>Hạn hoàn thành công việc: {{ $job->deadline }}</span></h4>
+    </div>
+    <div class="row">
+        <div class="col-12 col-md-12 col-lg-5 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-muted">CHI TIẾT CÔNG VIỆC</h5>
                 </div>
+                <div class="card-body">
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Xếp loại đầu việc</label>
 
-                <div class="col text-right">
-                    <a href="{{ route('backend.job_task.index', $job->id) }}" class="btn btn-primary btn-sm">@lang('Item task')</a>
+                        <div class="col-md-8">
+                            {{ $job->job_ranting }}
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Trạng thái</label>
+
+                        <div class="col-md-8">
+                            <span style="background-color: {{ !empty($job->status) ? $job->status->color : '' }}"
+                                  type="button">{{ !empty($job->status) ? $job->status->name : '' }}</span>
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Người phụ trách công việc</label>
+
+                        <div class="col-md-8">
+                            {{ !empty($job->user) ? $job->user->name : '' }}
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Điểm</label>
+
+                        <div class="col-md-8">
+                            {{ $job->point_of_work }}
+                        </div><!--col-->
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Người hỗ trợ</label>
+
+                        <div class="col-md-8">
+                            {{--@if(!empty($job->personSupport))
+                                @foreach($job->personSupport as $user)
+                                    <p>{{ $user->name }}</p>
+                                @endforeach
+                            @endif--}}
+                        </div><!--col-->
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Điểm hỗ trợ</label>
+
+                        <div class="col-md-8">
+                            {{ $job->point_of_work_sp }}
+                        </div><!--col-->
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Người quản lý công việc</label>
+
+                        <div class="col-md-8">
+                            {{ !empty($job->personMission) ? $job->personMission->name : '' }}
+                        </div><!--col-->
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">Làm đến</label>
+
+                        <div class="col-md-8">
+                            {{ $job->deadline }}
+                        </div><!--col-->
+                    </div>
+
+
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="description">Nội dung</label>
+
+                        <div class="col-md-8">
+                            @if($job->description)
+                                {{ $job->description }}
+                            @else
+                                @lang('labels.general.empty')
+                            @endif
+                        </div><!--col-->
+                    </div>
+                    @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
+                        <div class="mt-3">
+                            <button class="btn btn-primary" type="button" data-toggle="modal"
+                                    data-target="#editJobDetailModal">Edit
+                            </button>
+                        </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+
+        <div class="col-12 col-md-12 col-lg-7 mt-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="text-muted">Xác nhận minh chứng hoàn thành</h5>
+                </div>
+                <div class="card-body">
+                    <form action="{{ route('jobs.finish', $job->id) }}" id="finish-job-form">
+                        <div class="alert alert-danger text-center mb-3 show-errors" style="display: none"></div>
+                        <div class="row mt-2">
+                            <div class="col-2 task-label">Tiến độ:</div>
+                            <div class="col-8 font-weight-bold text-muted task-value">
+                                <input type="checkbox" class="is_finish" name="is_finish" @if($job->is_finish) checked
+                                       @endif style="transform: scale(2.0);">&ensp; Hoàn thành
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-2 task-label">Nội dung yêu cầu xác nhận:</div>
+                            <div class="col-10">
+                                <textarea class="form-control finish_mess" name="finish_mess"
+                                          rows="3">{{ $job->finish_mess }}</textarea>
+                            </div>
+                        </div>
+                        <button type="submit" name="submit" style="display: none">Submit</button>
+                        <div class="text-right mt-4">
+                            <button class="btn btn-primary" type="button" id="btn-finish-job-save">Save</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="card mt-3">
+                <div class="card-header">
+                    <h5 class="text-muted">ATTACHMENTS</h5>
+                </div>
+                <div class="card-body">
+                    <div class="form-group">
+                        @include('elements.job.includes.update')
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+@endsection
+@section('script')
+    @include('elements.job.modals.edit')
+    <script type="text/javascript" src="{{ asset('js/pages/show-job.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+    <script type="text/javascript">
+        $("#").dropzone({
+            url: $('#').attr('action'),
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            },
+            init: function () {
+                this.on("queuecomplete", function (file) {
+                    setTimeout(function () {
+                        window.location.reload();
+                    }, 500);
+                });
+            }
+        });
+    </script>
 @endsection

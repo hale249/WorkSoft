@@ -23,7 +23,7 @@ trait JobAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('jobs.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="'.route('jobs.show', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
     }
 
     /**

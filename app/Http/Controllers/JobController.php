@@ -85,9 +85,20 @@ class JobController extends ProtectedController
 
     public function show(int $id)
     {
-        $job = Job::query()->where('id', $id)->with(['user', 'category'])->first();
+        $job = Job::query()->where('id', $id)->with([
+            'user', 'category',
+            'personMission', 'createdBy', 'status'])->first();
 
-        return view('backend.elements.job.show', compact('job'));
+        $attachments = JobAttachment::query()
+            ->where('job_id', $id)
+//            ->orderBy('created_at', 'desc')
+            ->get();
+
+        $users = User::query()->select(['id', 'name'])->get();
+
+        $statuses = Status::all();
+
+        return view('elements.job.show', compact('job', 'users', 'statuses', 'attachments'));
     }
 
     public function edit(int $id)
@@ -219,5 +230,20 @@ class JobController extends ProtectedController
     public function excel()
     {
         return view('exports.job');
+    }
+
+    public function finish(Request $request, $id)
+    {
+        $job = Job::find($id);
+
+        $data = $request->finish_mess;
+        if ($request->is_finish == 'on') {
+            $data['is_finish']  = 1;
+        } else {
+            $data['is_finish']  = 0;
+        }
+        $job->update($data);
+
+        return $this->success('Xác nhận đã hoàn thành');
     }
 }

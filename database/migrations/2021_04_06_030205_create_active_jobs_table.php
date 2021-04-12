@@ -32,6 +32,8 @@ class CreateActiveJobsTable extends Migration
             $table->boolean('is_embark')->default(0)->comment('Xác nhận tham gia hay không');
             $table->text('note')->nullable();
             $table->timestamp('reply_at');
+            $table->boolean('is_finish')->default(0);
+            $table->text('finish_mess')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

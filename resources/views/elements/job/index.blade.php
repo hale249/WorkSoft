@@ -40,13 +40,14 @@
                             <td><strong>Danh mục</strong></td>
                             <td><strong>Tên công việc</strong></td>
                             <td><strong>Mức độ ưu tiên</strong></td>
-                            <td><strong>Người làm</strong></td>
+                            <td><strong>Người thực hiện</strong></td>
                             <td><strong>Hạn</strong></td>
                             <td><strong>Trạng thái</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
                         </thead>
                         <tbody>
+                        @if(count($jobs) > 0)
                         @foreach($jobs as $job)
                             <tr>
                                 <td>
@@ -56,18 +57,21 @@
                                 </td>
                                 <td>{{ $job->name }}</td>
                                 <td>{{ $job->job_ranting }}</td>
-                                <td>{{ $job->jobUser  }}</td>
+                                <td>{{ $job->user->name ?? ''  }}</td>
                                 <td>{{ $job->deadline }}</td>
                                 <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
                                 <td>{!! $job->action_buttons !!}</td>
                             </tr>
                         @endforeach
+                        @else
+                            <tr>
+                                <td scope="7" class="odd">Không có dữ liệu trong bảng</td>
+                            </tr>
+                            @endif
                         </tbody>
                     </table>
                 </div>
-                <div class="text-right">
-                    {{ $jobs->links() }}
-                </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $jobs ])
             </div>
         </div>
     </div>

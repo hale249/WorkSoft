@@ -5,9 +5,10 @@ use App\Http\Controllers\JobController;
 
 Route::get('jobs', [JobController::class, 'index'])->name('jobs.index');
 Route::post('jobs', [JobController::class, 'store'])->name('jobs.store');
-Route::get('job/{id}', [JobController::class, 'show'])->name('jobs.show');
-Route::get('job/{id}/edit', [JobController::class, 'edit'])->name('jobs.edit');
-Route::put('job/{id}', [JobController::class, 'update'])->name('jobs.update');
+Route::get('jobs/{id}', [JobController::class, 'show'])->name('jobs.show');
+Route::get('jobs/{id}/edit', [JobController::class, 'edit'])->name('jobs.edit');
+Route::put('jobs/{id}', [JobController::class, 'update'])->name('jobs.update');
+Route::put('job/{id}/finish', [JobController::class, 'finish'])->name('jobs.finish');
 
 
 /*Route::get('job/{id}/items', [TaskController::class, 'index'])->name('job_task.index');

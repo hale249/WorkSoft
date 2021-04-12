@@ -41,7 +41,7 @@ class Job extends Model
 
     public function personSupport()
     {
-        return $this->belongsTo(User::class, 'person_support', 'id');
+        return $this->hasMany(User::class, 'person_support', 'id');
     }
 
     public function personMission()

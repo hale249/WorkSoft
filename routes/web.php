@@ -51,6 +51,7 @@ Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/meeting.php';
     require __DIR__ . '/web/job.php';
     require __DIR__ . '/web/status.php';
+    require __DIR__ . '/web/timetable.php';
 
     Route::get('excel', [\App\Http\Controllers\JobController::class, 'excel'])->name('excel');
 
@@ -61,3 +62,4 @@ Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])->name('previ
 
 Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])->name('meeting.reject');
 Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])->name('meeting.accept');
+

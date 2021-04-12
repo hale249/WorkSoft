@@ -29,7 +29,7 @@
                             <td><strong>Tên cuộc họp</strong></td>
                             <td><strong>Ngày họp</strong></td>
                             <td><strong>Thời gian họp</strong></td>
-                            <td><strong>Người tạo</strong></td>
+                            <td><strong>Tổng số người tham gia</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
                         </thead>
@@ -39,7 +39,7 @@
                                 <td>{{ $meeting->name }}</td>
                                 <td>{{ $meeting->date_meeting }}</td>
                                 <td>{!! $meeting->time_start_end !!}</td>
-                                <td>{{ $meeting->auth ? $meeting->auth->full_name : '' }}</td>
+                                <td>{!! $meeting->count_user_join !!}</td>
                                 <td>{!! $meeting->action_buttons !!}</td>
                             </tr>
                         @endforeach

@@ -33,4 +33,16 @@ class Meeting extends Model
     {
         return $this->hasMany(MeetingUser::class, 'meeting_id', 'id');
     }
+
+    public function getCountUserJoinAttribute()
+    {
+        $userJoins = $this->meetingUser;
+        $dem = 0;
+        foreach ($userJoins as $meeting) {
+            if ($meeting->is_embark) {
+                $dem ++;
+            }
+        }
+        return $dem;
+    }
 }

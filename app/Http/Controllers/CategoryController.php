@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Helpers\Traits\FileHelperTrait;
 use App\Http\Requests\CategoryStoreRequest;
@@ -15,6 +16,10 @@ class CategoryController extends ProtectedController
 
     public function index(Request $request)
     {
+        if (Helper::checkRole($this->currentUser) == false) {
+            return \view('share.errors.403');
+        }
+
         $data = $request->all();
         $categories = Category::query()->with('user');
         if (!empty($data['name'])) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Helpers\Traits\FileHelperTrait;
 use App\Http\Requests\StatusRequest;
@@ -15,6 +16,10 @@ class StatusController extends ProtectedController
 
     public function index()
     {
+        if (Helper::checkRole($this->currentUser) == false) {
+            return \view('share.errors.403');
+        }
+
         $statuses = Status::query()
             ->orderBy('created_at', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);

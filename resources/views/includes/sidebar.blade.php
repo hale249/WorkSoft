@@ -42,28 +42,43 @@
         </a>
     </li>
 
+    <li class="nav-item @if(\Request::is('time-table') || \Request::is('time-table/*')) active @endif">
+        <a class="nav-link" href="{{ route('timetable.index') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>@lang('Môn học')</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider">
 
     <!-- Heading -->
+    @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
     <div class="sidebar-heading">
         @lang('Cài đặt')
     </div>
+    @endif
+
+    @if(App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
     <li class="nav-item @if(\Request::is('categories') || \Request::is('categories/*')) active @endif">
         <a class="nav-link" href="{{ route('category.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Danh mục</span>
         </a>
     </li>
+    @endif
 
+    @if(App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
     <li class="nav-item @if(\Request::is('statuses') || \Request::is('statuses/*')) active @endif">
         <a class="nav-link" href="{{ route('status.index') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>@lang('Quản lý trạng thái')</span>
         </a>
     </li>
+    @endif
 
     <!-- Nav Item - Pages Collapse Menu -->
+    @if(App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
     <li class="nav-item @if(\Request::is('users') || \Request::is('users/*')) active @endif">
         <a class="nav-link" href="{{ route('users.index') }}"
            aria-controls="menu-user-management">
@@ -71,6 +86,7 @@
             <span>@lang('Người dùng')</span>
         </a>
     </li>
+    @endif
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

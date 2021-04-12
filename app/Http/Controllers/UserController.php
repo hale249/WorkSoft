@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Constant;
+use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\UserChangePasswordRequest;
@@ -20,6 +21,9 @@ class UserController extends ProtectedController
 
     public function index(Request $request)
     {
+        if (Helper::checkRole($this->currentUser) == false) {
+            return \view('share.errors.403');
+        }
         $data = $request->all();
         $users = User::query();
 

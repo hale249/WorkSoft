@@ -5,6 +5,19 @@
 @section('content')
     <div class="card">
         <div class="card-body">
+            <div class="row">
+                <span class="text-danger">Bạn sắp có cuộc họp diễn ra vào :</span>
+                <span> {{ $meetingStart->name }} - {{ $meetingStart->date_meeting }}</span>
+            </div>
+            @if(empty($jobUsers))
+            <div class="row">
+                <div>Bạn có công việc mới </div>
+                @foreach($jobUsers as $job)
+                    <p>{{ $job->name }} - {{ $job->deadline }}</p>
+                @endforeach
+            </div>
+            @endif
+            <hr>
             <form action="{{ route('dashboard.index') }}" method="GET" class="form-inline my-3">
                 <div class="form-group">
                     <select class="form-control" name="year">
@@ -27,7 +40,7 @@
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Số lượng thành viên
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->user }}--}}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countUser }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -47,7 +60,7 @@
                                         Cuộc họp sắp diễn ra
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->meeting }}--}}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countMeeting }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -67,7 +80,7 @@
                                         Công việc
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->project }}--}}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countJob }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -83,12 +96,12 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Nhiệm vụ
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Công việc cần check
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
                                             <div
-                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{--{{ $statistical->task }}--}}</div>
+                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical->countJobTime }}</div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm mr-2">
@@ -114,20 +127,6 @@
                         <!-- Card Header - Dropdown -->
                         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
                             <h6 class="m-0 font-weight-bold text-primary">Tiến độ công việc</h6>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                     aria-labelledby="dropdownMenuLink">
-                                    <div class="dropdown-header">Dropdown Header:</div>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>
-                            </div>
                         </div>
                         <!-- Card Body -->
                         <div class="card-body">
@@ -190,12 +189,13 @@
     </div>
 @endsection
 @section('script')
+{{--
     <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
+--}}
     <script type="text/javascript">
-        {{--var labelStatus = {!! json_encode($data['username']) !!};--}}
-        {{--var dataStatus = {!! json_encode($data->data) !!};--}}
-        {{--var colorStatus = {!! json_encode($statusJob->color) !!};--}}
-
+        var labelStatus = {!! json_encode($statusJob->label) !!};
+        var dataStatus = {!! json_encode($statusJob->data) !!};
+        var colorStatus = {!! json_encode($statusJob->color) !!};
         var ctx = document.getElementById("myPieChart");
         var myPieChart = new Chart(ctx, {
             type: 'doughnut',
@@ -208,7 +208,6 @@
                 }],
             },
         });
-
         var ctx1 = document.getElementById("myAreaChart");
         var myPieChart = new Chart(ctx1, {
             type: 'bar',
