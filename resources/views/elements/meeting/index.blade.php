@@ -46,9 +46,7 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="text-right">
-                    {{ $meetings->links() }}
-                </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $meetings ])
             </div>
         </div>
     </div>

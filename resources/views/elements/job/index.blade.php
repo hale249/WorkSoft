@@ -31,6 +31,7 @@
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
 
+            <button type="submit" class="btn btn-success btn-same-select ml-2">Xuất excel</button>
             <div class="mt-4">
                 <div class="table-responsive">
                     <table class="table">

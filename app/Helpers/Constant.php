@@ -13,4 +13,6 @@ interface Constant
         2 => 'Thực hiện',
         3 => 'Hoàn thành'
     ];
+
+    public const URL_TIMEATABLE = 'https://daotao.humg.edu.vn/Default.aspx?page=thoikhoabieu&id=';
 }

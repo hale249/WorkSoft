@@ -5,6 +5,7 @@ use App\Helpers\PermissionConstant;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\TaskController;
 use \App\Http\Controllers\PreviewController;
+use App\Http\Controllers\ConfirmMeetingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -57,3 +58,6 @@ Route::group(['middleware' => 'auth'], function () {
 
 Route::get('preview/meeting-{uuid}', [PreviewController::class, 'meeting'])->name('preview.meeting');
 Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])->name('preview.job');
+
+Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])->name('meeting.reject');
+Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])->name('meeting.accept');
