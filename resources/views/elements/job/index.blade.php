@@ -1,0 +1,83 @@
+@extends('layouts.app')
+
+@section('title', __('Quản lý công việc'))
+
+@section('content')
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-8">
+                    <h4 class="card-title mb-0">
+                        @lang('Quản lý công việc')
+                    </h4>
+                </div>
+                <div class="col-4 text-right">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createJobModal"><i class="fas fa-plus"></i>Tạo công việc</button>
+                </div>
+            </div>
+
+            <form action="{{ route('jobs.index') }}" method="GET" class="form-inline mt-2">
+                <div class="form-group">
+                    <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
+                </div>
+                <div class="form-group ml-2">
+                    <select name="status" class="form-control" id="status">
+                        <option value="">Trạng thái</option>
+                        @foreach($statuses as $status)
+                            <option value="{{ $status->id }}">{{ $status->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
+            </form>
+
+            <button type="submit" class="btn btn-success btn-same-select ml-2">Xuất excel</button>
+            <div class="mt-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <td><strong>Danh mục</strong></td>
+                            <td><strong>Tên công việc</strong></td>
+                            <td><strong>Mức độ ưu tiên</strong></td>
+                            <td><strong>Người thực hiện</strong></td>
+                            <td><strong>Hạn</strong></td>
+                            <td><strong>Trạng thái</strong></td>
+                            <td><strong>Hành động</strong></td>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @if(count($jobs) > 0)
+                        @foreach($jobs as $job)
+                            <tr>
+                                <td>
+                                    @if(!empty($job->category))
+                                        <a href="{{ route('category.show', $job->category_id) }}" target="_blank">{{ $job->category->name }}</a>
+                                    @endif
+                                </td>
+                                <td>{{ $job->name }}</td>
+                                <td>{{ $job->job_ranting }}</td>
+                                <td>{{ $job->user->name ?? ''  }}</td>
+                                <td>{{ $job->deadline }}</td>
+                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
+                                <td>{!! $job->action_buttons !!}</td>
+                            </tr>
+                        @endforeach
+                        @else
+                            <tr>
+                                <td scope="7" class="odd">Không có dữ liệu trong bảng</td>
+                            </tr>
+                            @endif
+                        </tbody>
+                    </table>
+                </div>
+                @include('share.pagination.simple-bootstrap-4', [ 'paginator' => $jobs ])
+            </div>
+        </div>
+    </div>
+@endsection
+@section('script')
+    @include('elements.job.modals.create')
+
+    <script type="text/javascript" src="{{ asset('js/pages/job.js') }}"></script>
+@endsection

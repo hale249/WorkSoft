@@ -4,10 +4,11 @@ namespace App\Models;
 
 use App\Models\Traits\Attributes\MeetingAttribute;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Meeting extends Model
 {
-    use MeetingAttribute;
+    use MeetingAttribute, SoftDeletes;
 
     protected $table = 'meetings';
 
@@ -20,7 +21,7 @@ class Meeting extends Model
 
     public function getTimeStartEndAttribute()
     {
-        return $this->start_meeting . ' - ' . $this->end_meeting;
+        return $this->time_start . ' - ' . $this->time_end;
     }
 
     public function auth()
@@ -31,5 +32,17 @@ class Meeting extends Model
     public function meetingUser()
     {
         return $this->hasMany(MeetingUser::class, 'meeting_id', 'id');
+    }
+
+    public function getCountUserJoinAttribute()
+    {
+        $userJoins = $this->meetingUser;
+        $dem = 0;
+        foreach ($userJoins as $meeting) {
+            if ($meeting->is_embark) {
+                $dem ++;
+            }
+        }
+        return $dem;
     }
 }

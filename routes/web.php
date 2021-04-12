@@ -4,7 +4,8 @@ use Illuminate\Support\Facades\Route;
 use App\Helpers\PermissionConstant;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Backend\TaskController;
-
+use \App\Http\Controllers\PreviewController;
+use App\Http\Controllers\ConfirmMeetingController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -41,15 +42,24 @@ Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.
  */
 Route::post('register', [AuthController::class, 'register'])->name('auth.register');
 
-Route::group(['namespace' => 'Backend', 'as' => 'backend.', 'middleware' => 'auth'], function () {
-    require __DIR__ . '/backend/dashboard.php';
-    require __DIR__ . '/backend/user.php';
-    require __DIR__ . '/backend/profile.php';
-    require __DIR__ . '/backend/category.php';
-    require __DIR__ . '/backend/meeting.php';
-    require __DIR__ . '/backend/job.php';
-    require __DIR__ . '/backend/role.php';
-    require __DIR__ . '/backend/permission.php';
-    require __DIR__ . '/backend/status.php';
+
+Route::group(['middleware' => 'auth'], function () {
+    require __DIR__ . '/web/dashboard.php';
+    require __DIR__ . '/web/user.php';
+    require __DIR__ . '/web/profile.php';
+    require __DIR__ . '/web/category.php';
+    require __DIR__ . '/web/meeting.php';
+    require __DIR__ . '/web/job.php';
+    require __DIR__ . '/web/status.php';
+    require __DIR__ . '/web/timetable.php';
+
+    Route::get('excel', [\App\Http\Controllers\JobController::class, 'excel'])->name('excel');
 
 });
+
+Route::get('preview/meeting-{uuid}', [PreviewController::class, 'meeting'])->name('preview.meeting');
+Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])->name('preview.job');
+
+Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])->name('meeting.reject');
+Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])->name('meeting.accept');
+

@@ -3,87 +3,44 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AuthLoginRequest;
-use App\Http\Requests\AuthRegisterRequest;
-use App\Models\User;
-use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\View\View;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    /**
-     * Show form login
-     *
-     * @return View
-     */
-    public function showFormLogin(): View
+    public function showFormLogin()
     {
-        if(Auth::check()){
-            return redirect()->route('backend.dashboard.index');
-        }
-        return view('login');
+        session([ 'previous_url' => url()->previous() ]);
+
+        return view('auth.login');
     }
 
-    /**
-     * Handle login
-     *
-     * @param AuthLoginRequest $request
-     * @return RedirectResponse
-     */
-    public function login(AuthLoginRequest $request): RedirectResponse
+    public function login(AuthLoginRequest $request)
     {
-        $credentials = $request->only([
-            'email',
-            'password'
-        ]);
-        $remember = $request->input('remember_me');
-        if (Auth::attempt($credentials, $remember)) {
-            return redirect()->route('backend.dashboard.index')->with('flash_success', __('auth.login_success'));
+        $userData = $request->only([ 'email', 'password' ]);
+        $remember = $request->boolean('remember');
+
+        if (Auth::attempt($userData, $remember)) {
+            $previousUrl = session('previous_url');
+            if (empty($previousUrl) || strpos($previousUrl, '/login') !== false) {
+                $previousUrl = '/';
+            }
+
+            return redirect($previousUrl);
         }
 
-        return redirect()->back()->withErrors([__('auth.failed')]);
+        return Redirect::to('login')
+            ->withInput($request->except('password'))
+            ->with('error', 'Email/password mismatch, please try again.');
     }
 
-    /**
-     * Show form register
-     *
-     * @return View
-     */
-    public function showFormRegister(): View
-    {
-        return view('register');
-    }
-
-    /**
-     * Handle register
-     *
-     * @param AuthRegisterRequest $request
-     * @return RedirectResponse
-     */
-    public function register(AuthRegisterRequest $request): RedirectResponse
-    {
-        $data = $request->only([
-            'email',
-            'name',
-            'password'
-        ]);
-        $data['password'] = Hash::make($data['password']);
-
-        User::query()->create($data);
-
-        return redirect()->route('auth.login')->with('flash_success', __('auth.register_success'));
-    }
-
-    /**
-     * Logout
-     *
-     * @return RedirectResponse
-     */
-    public function logout(): RedirectResponse
+    public function logout(Request $request)
     {
         Auth::logout();
 
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('auth.login')->with('flash_success', __('auth.logout_success'));
     }
 }

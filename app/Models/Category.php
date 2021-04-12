@@ -10,16 +10,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Category extends Model
 {
-    use SoftDeletes, CategoryAttribute, CategoryRelationship, Slug;
+    use SoftDeletes, CategoryAttribute, CategoryRelationship;
 
-    protected $fillable = [
-        'user_id',
-        'name',
-        'slug',
-        'image',
-        'description',
-        'is_disabled'
-    ];
+    protected $guarded = [];
 
     protected $casts = [
         'user_id' => 'integer',

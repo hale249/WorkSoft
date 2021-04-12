@@ -26,15 +26,14 @@ class UserStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'first_name' => 'required',
-            'last_name' => 'required',
+            'staff_code' => 'required',
+            'name' => 'required',
             'email' => [
                 'required',
                 'email',
                 Rule::unique('users')->whereNull('deleted_at')
             ],
             'password' => 'required|confirmed|min:6',
-            'role' => 'required'
         ];
     }
 }

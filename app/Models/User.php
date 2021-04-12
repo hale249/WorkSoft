@@ -36,4 +36,11 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [];
+
+    public function canOrFail($role) {
+        if ($this->role === $role) {
+            return true;
+        }
+        return false;
+    }
 }

@@ -11,11 +11,18 @@ class Job extends Model
     use JobAttribute;
     use SoftDeletes;
 
-    protected $table = 'projects';
+    protected $table = 'active_jobs';
 
     protected $guarded = [];
 
-    protected $appends = 'totals';
+    protected $casts = [
+        'category_id' => 'integer',
+        'job_ranting' => 'integer',
+        'user_id' => 'integer',
+        'person_support' => 'integer',
+    ];
+
+//    protected $appends = 'totals';
 
     public function category()
     {
@@ -34,7 +41,7 @@ class Job extends Model
 
     public function personSupport()
     {
-        return $this->belongsTo(User::class, 'person_support', 'id');
+        return $this->hasMany(User::class, 'person_support', 'id');
     }
 
     public function personMission()

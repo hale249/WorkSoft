@@ -43,7 +43,9 @@ trait UserAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('backend.users.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="" class="btn btn-primary btn-sm edit-user" data-toggle="modal"
+         data-id="'.$this->id.'" data-target="#editUserModal" title="Edit user">
+         <i class="fas fa-edit"></i></a>';
     }
 
     /**
@@ -51,21 +53,26 @@ trait UserAttribute
      */
     public function getDeleteButtonAttribute(): string
     {
-        return '<a href="' . route('backend.users.destroy', $this->id) . '"
-                 data-trans-button-cancel="' . __('labels.general.cancel') . '"
-                 data-trans-button-confirm="' . __('labels.general.delete') . '"
-                 data-trans-title="' . __('strings.confirm_delete') . '"
-                 class="btn btn-danger js-confirm-delete btn-sm"><i class="fas fa-trash"></i></a>';
+        return '<a href="' . route('users.destroy', $this->id) . '"
+                 class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
+                 data-action="delete" data-confirm="Are you sure you want to delete this User ?">
+                 <i class="fas fa-trash"></i>
+                 </a>';
     }
 
     public function getChangePasswordButtonAttribute(): string
     {
-        return '<a href="'.route('backend.users.show_form_change_password', $this->id).'" data-toggle="tooltip" data-placement="top" title="Change Password" class="btn btn-warning btn-sm text-white"><i class="fas fa-unlock"></i></a>';
+        return '<a href="" class="btn btn-warning btn-sm edit-password" data-toggle="modal"
+         data-id="'.$this->id.'" data-target="#changePasswordUserModal" title="Change password">
+         <i class="fas fa-key"></i></a>';
     }
 
 
-    public function getFullNameAttribute()
+    public function getRoleNameAttribute()
     {
-        return $this->first_name . ' ' . $this->last_name;
+        if ($this->role) {
+            return '<span class="badge badge-pill" style="background-color: #58F09E; color: #000000">Admin</span>';
+        }
+        return  '';
     }
 }

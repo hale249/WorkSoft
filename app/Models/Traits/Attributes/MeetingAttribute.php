@@ -27,7 +27,9 @@ trait MeetingAttribute
      */
     public function getEditButtonAttribute(): string
     {
-        return '<a href="'.route('backend.meeting.edit', $this->id).'" data-toggle="tooltip" data-placement="top" title="Edit" class="btn btn-primary btn-sm"><i class="fas fa-edit"></i></a>';
+        return '<a href="" class="btn btn-primary btn-sm edit-meeting" data-toggle="modal"
+         data-id="'.$this->id.'" data-target="#editMeetingModal" title="Edit meeting">
+         <i class="fas fa-edit"></i></a>';
     }
 
     /**
@@ -36,7 +38,7 @@ trait MeetingAttribute
     public function getShowButtonAttribute(): string
     {
         if (Helper::checkRole(Auth::user())) {
-            return '<a href="' . route('backend.meeting.show', $this->id) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+            return '<a href="' . route('preview.meeting', $this->uuid) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
         }
         return '';
     }
@@ -46,13 +48,10 @@ trait MeetingAttribute
      */
     public function getDeleteButtonAttribute(): string
     {
-        if (Helper::checkRole(Auth::user())) {
-            return '<a href="' . route('backend.meeting.destroy', $this->id) . '"
-                 data-trans-button-cancel="' . __('labels.general.cancel') . '"
-                 data-trans-button-confirm="' . __('labels.general.delete') . '"
-                 data-trans-title="' . __('strings.confirm_delete') . '"
-                 class="btn btn-danger js-confirm-delete btn-sm"><i class="fas fa-trash"></i></a>';
-        }
-        return  '';
+        return  '<a href="' . route('meeting.destroy', $this->id) . '"
+                 class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
+                 data-action="delete" data-confirm="Are you sure you want to delete this Meeting ?">
+                 <i class="fas fa-trash"></i>
+                 </a>';
     }
 }
