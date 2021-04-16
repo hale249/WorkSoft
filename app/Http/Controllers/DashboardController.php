@@ -16,7 +16,7 @@ class DashboardController extends ProtectedController
 {
     public function index(Request $request)
     {
-        $jobProgress = Job::query()
+        /*jobProgress = Job::query()
             ->join('statuses', 'active_jobs.status_id', '=', 'statuses.id')
             ->join('users', function ($a) {
                 $a->on('active_jobs.user_id', '=', 'users.id') ;
@@ -102,8 +102,8 @@ class DashboardController extends ProtectedController
             'countJobTime' => count($jobTime),
             'countJob' => count($jobs),
             'countUser' => $countUser,
-        ];
+        ];*/
 
-        return view('elements.dashboard.index', compact('meetingStart', 'jobUsers', 'statistical', 'statusJob'));
+        return view('elements.dashboard.index');
     }
 }

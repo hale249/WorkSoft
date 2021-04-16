@@ -33,19 +33,6 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="job_ranting">Loại đầu việc</label>
-
-                            <div class="col-md-10">
-                                <select name="job_ranting" class="form-control" id="job_ranting" required>
-                                    <option value="">Loại đầu việc</option>
-                                    <option value="1" {{ old('job_ranting') === 1 ? 'selected' : '' }}>1</option>
-                                    <option value="2" {{ old('job_ranting') === 2 ? 'selected' : '' }}>2</option>
-                                    <option value="3" {{ old('job_ranting') === 3 ? 'selected' : '' }}>3</option>
-                                </select>
-                            </div><!--col-->
-                        </div>
-
-                        <div class="form-group row">
                             <label class="col-md-2 form-control-label" for="category_id">Danh mục</label>
 
                             <div class="col-md-10">
@@ -70,32 +57,6 @@
                                 </select>
                             </div><!--col-->
                         </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="person_mission">Người quản lý công việc</label>
-
-                            <div class="col-md-10">
-                                <select name="person_mission" class="form-control">
-                                    <option value="">Người quản lý công việc</option>
-                                    @foreach($users as $user)
-                                        <option {{ old('person_mission') === $user->id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div><!--col-->
-                        </div>
-
-                        <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="person_support">Người hỗ trợ</label>
-
-                            <div class="col-md-10">
-                                <select class="js-example-basic-multiple form-control" name="person_support[]" multiple="multiple" style="width: 100%">
-                                    @foreach($users as $user)
-                                        <option {{ old('person_support') === $user->id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
-                                    @endforeach
-                                </select>
-                            </div><!--col-->
-                        </div>
-
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label" for="description">Nội dung</label>
 

@@ -7,8 +7,8 @@
         <div class="card-body">
             <div class="row">
                 <span class="text-danger">Bạn sắp có cuộc họp diễn ra vào :</span>
-                <span> {{ $meetingStart->name }} - {{ $meetingStart->date_meeting }}</span>
-            </div>
+                {{--<span> {{ $meetingStart->name }} - {{ $meetingStart->date_meeting }}</span>--}}
+            </div>{{--
             @if(empty($jobUsers))
             <div class="row">
                 <div>Bạn có công việc mới </div>
@@ -16,7 +16,7 @@
                     <p>{{ $job->name }} - {{ $job->deadline }}</p>
                 @endforeach
             </div>
-            @endif
+            @endif--}}
             <hr>
             <form action="{{ route('dashboard.index') }}" method="GET" class="form-inline my-3">
                 <div class="form-group">
@@ -40,7 +40,7 @@
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Số lượng thành viên
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countUser }}</div>
+                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->countUser }}--}}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -60,7 +60,7 @@
                                         Cuộc họp sắp diễn ra
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countMeeting }}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->countMeeting }}--}}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -80,7 +80,7 @@
                                         Công việc
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countJob }}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{--{{ $statistical->countJob }}--}}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -101,7 +101,7 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
                                             <div
-                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical->countJobTime }}</div>
+                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{--{{ $statistical->countJobTime }}--}}</div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm mr-2">
@@ -189,9 +189,8 @@
     </div>
 @endsection
 @section('script')
-{{--
     <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
---}}
+{{--
     <script type="text/javascript">
         var labelStatus = {!! json_encode($statusJob->label) !!};
         var dataStatus = {!! json_encode($statusJob->data) !!};
@@ -225,4 +224,5 @@
             },
         });
     </script>
+--}}
 @endsection

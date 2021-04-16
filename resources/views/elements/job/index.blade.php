@@ -56,7 +56,6 @@
                                     @endif
                                 </td>
                                 <td>{{ $job->name }}</td>
-                                <td>{{ $job->job_ranting }}</td>
                                 <td>{{ $job->user->name ?? ''  }}</td>
                                 <td>{{ $job->deadline }}</td>
                                 <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>

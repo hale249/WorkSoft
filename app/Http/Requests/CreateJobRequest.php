@@ -26,12 +26,9 @@ class CreateJobRequest extends FormRequest
         return [
             'name' => 'required',
             'category_id' => 'required',
-            'description' => 'required',
             'deadline' => 'required',
             'user_id' => 'required',
-            'person_mission' => 'required',
             'status_id' => 'required',
-            'job_ranting' => 'required'
         ];
     }
 }
