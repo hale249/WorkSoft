@@ -38,21 +38,4 @@ trait JobAttribute
         return '<a href="'.route('preview.job', $this->uuid).'" data-toggle="tooltip"  target="_blank" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
     }
 
-  /*  public function getStatusNameAttribute()
-    {
-        $now = strtotime(Carbon::now()->toDateString());
-        $timeDead = strtotime($this->deadline);
-        $tonTai = strtotime($this->finish_at);
-
-        if (empty($tonTai)) {
-
-        }
-
-        if ($timeDead < $tonTai || (empty($tonTai) && $now > $timeDead)) {
-            $text = Constant::STATUS_OUT_OF_DATE;
-        }
-
-        return $text;
-    }*/
-
 }

@@ -19,7 +19,7 @@ class CreateMeetingUsersTable extends Migration
             $table->boolean('is_attend')->default(0)->comment('Xác nhận gửi email');
             $table->boolean('is_embark')->default(0)->comment('Xác nhận tham gia hay không');
             $table->text('note')->nullable();
-            $table->timestamp('reply_at');
+            $table->timestamp('reply_at')->nullable();
             $table->timestamps();
         });
     }

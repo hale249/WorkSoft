@@ -14,6 +14,8 @@ class Meeting extends Model
 
     protected $guarded = [];
 
+    public $appends = ['count_user_join', 'sent_count_meeting'];
+
     public function users()
     {
         return $this->hasMany(MeetingUser::class, 'user_id', 'id');
@@ -40,6 +42,18 @@ class Meeting extends Model
         $dem = 0;
         foreach ($userJoins as $meeting) {
             if ($meeting->is_embark) {
+                $dem ++;
+            }
+        }
+        return $dem;
+    }
+
+    public function getSentCountMeetingAttribute()
+    {
+        $userJoins = $this->meetingUser;
+        $dem = 0;
+        foreach ($userJoins as $meeting) {
+            if ($meeting->user_id) {
                 $dem ++;
             }
         }

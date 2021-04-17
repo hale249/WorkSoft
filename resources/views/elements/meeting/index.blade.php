@@ -29,6 +29,7 @@
                             <td><strong>Tên cuộc họp</strong></td>
                             <td><strong>Ngày họp</strong></td>
                             <td><strong>Thời gian họp</strong></td>
+                            <td><strong>Số lượng đã gửi</strong></td>
                             <td><strong>Tổng số người tham gia</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
@@ -39,6 +40,7 @@
                                 <td>{{ $meeting->name }}</td>
                                 <td>{{ $meeting->date_meeting }}</td>
                                 <td>{!! $meeting->time_start_end !!}</td>
+                                <td>{!! $meeting->sent_count_meeting !!}</td>
                                 <td>{!! $meeting->count_user_join !!}</td>
                                 <td>{!! $meeting->action_buttons !!}</td>
                             </tr>

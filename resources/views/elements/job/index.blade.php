@@ -30,8 +30,6 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
-
-            <button type="submit" class="btn btn-success btn-same-select ml-2">Xuất excel</button>
             <div class="mt-4">
                 <div class="table-responsive">
                     <table class="table">
@@ -39,7 +37,6 @@
                         <tr>
                             <td><strong>Danh mục</strong></td>
                             <td><strong>Tên công việc</strong></td>
-                            <td><strong>Mức độ ưu tiên</strong></td>
                             <td><strong>Người thực hiện</strong></td>
                             <td><strong>Hạn</strong></td>
                             <td><strong>Trạng thái</strong></td>
@@ -56,10 +53,9 @@
                                     @endif
                                 </td>
                                 <td>{{ $job->name }}</td>
-                                <td>{{ $job->job_ranting }}</td>
                                 <td>{{ $job->user->name ?? ''  }}</td>
                                 <td>{{ $job->deadline }}</td>
-{{--                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>--}}
+                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
                                 <td>{!! $job->action_buttons !!}</td>
 
                             </tr>

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\Constant;
 use App\Helpers\Helper;
 use App\Models\Job;
 use App\Models\Meeting;
 use App\Models\MeetingUser;
+use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -16,109 +18,103 @@ class DashboardController extends ProtectedController
 {
     public function index(Request $request)
     {
-        /*jobProgress = Job::query()
-            ->join('statuses', 'active_jobs.status_id', '=', 'statuses.id')
-            ->join('users', function ($a) {
-                $a->on('active_jobs.user_id', '=', 'users.id') ;
-            })
-            ->select([
-                DB::raw('COUNT(*) as total'),
-                DB::raw('YEAR(active_jobs.created_at) as year'),
-                'statuses.name as status',
-                'users.name as username'])
-            ->groupBy('statuses.name', 'users.name', 'year')
-            ->get();
-
-        $data = [
-            'year' => [],
-            'status' => [],
-            'username' => [],
-            'total' => []
-        ];
-
-        foreach ($jobProgress as $job) {
-           array_push($data['year'], $job->year);
-           array_push($data['status'], $job->status);
-           array_push($data['username'], $job->username);
-           array_push($data['total'], $job->total);
-        }
-
-        $timeNow = Carbon::today()->toDateString();
-        $startM = Meeting::query()
-            ->where('date_meeting','>=', $timeNow)
-            ->orderBy('date_meeting', 'asc')
-            ->first();
-
-        $meetingUser = MeetingUser::query()->where('meeting_id', $startM->id)
-            ->where('user_id', Auth::id())
-            ->first();
-
-        if ((!Helper::checkRole($this->currentUser) && !empty($meetingUser)) || Helper::checkRole($this->currentUser)) {
-            $meetingStart = $startM;
-        } else {
-            $meetingStart = '';
-        }
+        $requestYear = !empty($request->year) ? $request->year : Carbon::now()->year;
 
         $queryJob = Job::query();
-        $jobUsers = $queryJob->where('deadline', '>=' ,$timeNow)
-            ->where('user_id', Auth::id())->get();
 
-        $queryMeeting = Meeting::query();
-        $meetingTime = $queryMeeting->where('date_meeting','>=', $timeNow)
-            ->get();
+        // lấy năm tạo job
+        $createdYearJobs = $queryJob->select(DB::raw('YEAR(created_at) as years'))->get();
 
-        if ($request->year) {
-            $jobs = $queryJob->where('created_at', 'LIKE', $request->year)->get();
-        } else {
-            $jobs = $queryJob->get();
+        $yearJob = [];
+        foreach ($createdYearJobs as $job) {
+            array_push($yearJob, $job->years);
         }
 
-        $countUser = count(User::all());
+        // thống kê
+        $countJob = $queryJob->whereYear('created_at', $requestYear)->count();
+        $countJobCompleted = $queryJob->where('status_id', Constant::STATUS_APPROVAL)
+            ->whereYear('created_at', $requestYear)
+            ->count();
 
-        $jobTime = Job::query()->where('deadline', '>=' ,$timeNow)->get();
+        $countUser = User::query()->whereYear('created_at', $requestYear)->count();
 
-        $statusJob = Job::query()
+        $countMeetingUpcoming = Meeting::query()
+            ->whereDate('date_meeting', '>', Carbon::now()->toDateString())
+            ->whereYear('created_at', $requestYear)
+            ->count();
+
+        // Trạng thái công việc
+        $statusJob = DB::table('active_jobs')
             ->select([
                 'statuses.name as name',
-                'statuses.color as color',
-                DB::raw('COUNT(*) as total')
+                'statuses.id as status_id',
             ])
             ->join('statuses', 'statuses.id', '=', 'status_id')
-            ->groupBy('name', 'color')
+            ->whereYear('active_jobs.created_at', $requestYear)
             ->get();
 
-        $labels = $statusJob->pluck('name')->toArray();
-        $totalValues = $statusJob->pluck('total')->toArray();
-        $colorValues = $statusJob->pluck('color')->toArray();
-
-        $statusJob = (object)[
-            'label' => $labels,
-            'color' => $colorValues,
-            'data' => $totalValues
-        ];
-
-        $statistical = (object) [
-            'countMeeting' => count($meetingTime),
-            'countJobTime' => count($jobTime),
-            'countJob' => count($jobs),
-            'countUser' => $countUser,
-        ];*/
-
-        $data =DB::table('active_jobs')
+        // Thông kê tiến dộ công việc
+        $jobUser = DB::table('active_jobs')
             ->join('statuses', 'active_jobs.status_id', '=', 'statuses.id')
             ->join('users', 'active_jobs.user_id', '=', 'users.id')
-            ->select(DB::raw('users.id as user_id, users.name as user_name, users.role as user_role, active_jobs.id as active_job_id, active_jobs.name as active_jobs_name, active_jobs.created_at as active_job_created_at, statuses.id as status_id, statuses.name as status_name'))
-            ->whereYear('active_jobs.created_at', $request->year)
+            ->select(
+                DB::raw('users.id as user_id, users.name as user_name,
+                users.role as user_role, active_jobs.id as active_job_id, active_jobs.name as active_jobs_name,
+                active_jobs.created_at as active_job_created_at, statuses.id as status_id, statuses.name as status_name'))
+            ->whereYear('active_jobs.created_at', $requestYear)
             ->get();
 
         $response = [];
         $users = User::query()->get()->pluck('name', 'id')->toArray();
         $statuses = Status::query()->get()->pluck('name', 'id')->toArray();
+        $label = [];
+        $dataSetStart = [];
+        $dataSetCompleted = [];
+        $dataSetApproval = [];
+        $dataSetOutOfDate = [];
+        $labelStatus = [
+            Constant::STATUS_START,
+            Constant::STATUS_APPROVAL,
+            Constant::STATUS_COMPLETED,
+            Constant::STATUS_OUT_OF_DATE,
+        ];
         foreach ($users as $userId => $userName) {
             foreach ($statuses as $statusId => $statusName) {
-                $response[$userName][$statusName] = $data->where('user_id', $userId)->where('status_id', $statusId)->count();
+                $response[$userName][$statusName] = $jobUser->where('user_id', $userId)->where('status_id', $statusId)->count();
             }
         }
-        return view('elements.dashboard.index');
+
+        foreach ($response as $key=>$item) {
+            array_push($label, $key);
+            array_push($dataSetStart, $item[Constant::STATUS_START]);
+            array_push($dataSetApproval, $item[Constant::STATUS_APPROVAL]);
+            array_push($dataSetCompleted, $item[Constant::STATUS_COMPLETED]);
+            array_push($dataSetOutOfDate, $item[Constant::STATUS_OUT_OF_DATE]);
+        }
+
+        $responseStatus = [];
+        foreach ($statuses as $statusId=>$statusName) {
+            $responseStatus[] = $statusJob->where('status_id', $statusId)->count();
+        }
+
+        $jobProgress = [
+            'data' => $label,
+            'label' => $labelStatus,
+            'start' => $dataSetStart,
+            'approval' => $dataSetApproval,
+            'completed' => $dataSetCompleted,
+            'out_of_date' => $dataSetOutOfDate,
+        ];
+
+        $statistical = [
+            'countJob' => $countJob,
+            'countUser' => $countUser,
+            'countJobCompleted' => $countJobCompleted,
+            'meetingUpcoming' => $countMeetingUpcoming
+        ];
+
+        $listYears = array_unique($yearJob);
+
+        return view('elements.dashboard.index', compact('jobProgress', 'statistical', 'listYears', 'responseStatus'));
     }
 }

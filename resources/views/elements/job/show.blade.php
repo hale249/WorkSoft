@@ -14,13 +14,6 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Xếp loại đầu việc</label>
-
-                        <div class="col-md-8">
-                            {{ $job->job_ranting }}
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
                         <label class="col-md-4 form-control-label" for="name">Trạng thái</label>
 
                         <div class="col-md-8">
@@ -29,44 +22,10 @@
                         </div><!--col-->
                     </div>
                     <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Người phụ trách công việc</label>
+                        <label class="col-md-4 form-control-label" for="name">Người thực hiện công việc</label>
 
                         <div class="col-md-8">
                             {{ !empty($job->user) ? $job->user->name : '' }}
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Điểm</label>
-
-                        <div class="col-md-8">
-                            {{ $job->point_of_work }}
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Người hỗ trợ</label>
-
-                        <div class="col-md-8">
-                            {{--@if(!empty($job->personSupport))
-                                @foreach($job->personSupport as $user)
-                                    <p>{{ $user->name }}</p>
-                                @endforeach
-                            @endif--}}
-                        </div><!--col-->
-                    </div>
-
-                    <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Điểm hỗ trợ</label>
-
-                        <div class="col-md-8">
-                            {{ $job->point_of_work_sp }}
-                        </div><!--col-->
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-md-4 form-control-label" for="name">Người quản lý công việc</label>
-
-                        <div class="col-md-8">
-                            {{ !empty($job->personMission) ? $job->personMission->name : '' }}
                         </div><!--col-->
                     </div>
 

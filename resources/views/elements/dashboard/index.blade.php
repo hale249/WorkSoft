@@ -5,26 +5,13 @@
 @section('content')
     <div class="card">
         <div class="card-body">
-            <div class="row">
-                <span class="text-danger">Bạn sắp có cuộc họp diễn ra vào :</span>
-                <span> {{ $meetingStart->name }} - {{ $meetingStart->date_meeting }}</span>
-            </div>
-            @if(empty($jobUsers))
-            <div class="row">
-                <div>Bạn có công việc mới </div>
-                @foreach($jobUsers as $job)
-                    <p>{{ $job->name }} - {{ $job->deadline }}</p>
-                @endforeach
-            </div>
-            @endif
-            <hr>
             <form action="{{ route('dashboard.index') }}" method="GET" class="form-inline my-3">
                 <div class="form-group">
                     <select class="form-control" name="year">
-                        <option value="">-- Tìm kiếm theo năm --</option>
-{{--                        @foreach($listYears as $key=>$year)--}}
-{{--                        <option value="{{ $key }}">{{ $year }}</option>--}}
-{{--                        @endforeach--}}
+                        <option value="{{ \Carbon\Carbon::now()->year }}">-- Tìm kiếm theo năm --</option>
+                        @foreach($listYears as $year)
+                            <option value="{{ $year }}">{{ $year }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
@@ -40,7 +27,8 @@
                                     <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                                         Số lượng thành viên
                                     </div>
-                                    <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countUser }}</div>
+                                    <div
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countUser'] }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-calendar fa-2x text-gray-300"></i>
@@ -60,7 +48,7 @@
                                         Cuộc họp sắp diễn ra
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countMeeting }}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['meetingUpcoming'] }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -80,7 +68,7 @@
                                         Công việc
                                     </div>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical->countJob }}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countJob'] }}</div>
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -96,12 +84,13 @@
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Công việc cần check
+                                    <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Công việc cần
+                                        phê duyệt
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
                                             <div
-                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical->countJobTime }}</div>
+                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical['countJobCompleted'] }}</div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm mr-2">
@@ -157,14 +146,14 @@
                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
                                 </a>
-                               {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                     aria-labelledby="dropdownMenuLink">
-                                    <div class="dropdown-header">Dropdown Header:</div>
-                                    <a class="dropdown-item" href="#">Action</a>
-                                    <a class="dropdown-item" href="#">Another action</a>
-                                    <div class="dropdown-divider"></div>
-                                    <a class="dropdown-item" href="#">Something else here</a>
-                                </div>--}}
+                                {{-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                      aria-labelledby="dropdownMenuLink">
+                                     <div class="dropdown-header">Dropdown Header:</div>
+                                     <a class="dropdown-item" href="#">Action</a>
+                                     <a class="dropdown-item" href="#">Another action</a>
+                                     <div class="dropdown-divider"></div>
+                                     <a class="dropdown-item" href="#">Something else here</a>
+                                 </div>--}}
                             </div>
                         </div>
                         <!-- Card Body -->
@@ -189,39 +178,60 @@
     </div>
 @endsection
 @section('script')
-{{--
-    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>
---}}
+    {{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
     <script type="text/javascript">
-        var labelStatus = {!! json_encode($statusJob->label) !!};
-        var dataStatus = {!! json_encode($statusJob->data) !!};
-        var colorStatus = {!! json_encode($statusJob->color) !!};
+        var dataStatus = '{!! json_encode($responseStatus) !!}';
         var ctx = document.getElementById("myPieChart");
-        var myPieChart = new Chart(ctx, {
+        var myPieChart2 = new Chart(ctx, {
             type: 'doughnut',
             data: {
-                labels: labelStatus,
+                labels: [
+                    '{{ \App\Helpers\Constant::STATUS_START }}',
+                    '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
+                    '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
+                    '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}'
+                ],
                 datasets: [{
                     data: dataStatus,
-                    backgroundColor: colorStatus,
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                    backgroundColor: ['aqua', 'blue', 'lime', 'red'],
+                    hoverBackgroundColor: ['aqua', 'blue', 'lime', 'red'],
                 }],
             },
         });
+
+        var dataLabels = {!! json_encode($jobProgress['data']) !!};
+        var dataSetStart = {!! json_encode($jobProgress['start']) !!};
+        var dataSetApproval = {!! json_encode($jobProgress['approval']) !!};
+        var dataSetCompleted = {!! json_encode($jobProgress['completed']) !!};
+        var dataSetOutOfDate = {!! json_encode($jobProgress['out_of_date']) !!};
+
         var ctx1 = document.getElementById("myAreaChart");
         var myPieChart = new Chart(ctx1, {
             type: 'bar',
             data: {
-                labels: ['Nguyen van A', 'Nguyen Van B', 'Nguyen Van C', 'Nguyen Van D', 'Lê Hiêu', 'Tien Dat', 'Minh Ngoc'],
-                datasets: [{
-                    label: "Hoàn thành",
-                    backgroundColor: "blue",
-                    data: [7, 8, 3,2, 0, 3, 1]
-                }, {
-                    label: "Chua hoàn thành",
-                    backgroundColor: "red",
-                    data: [0, 9, 7,2, 0, 0, 0]
-                }]
+                labels: dataLabels,
+                datasets: [
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_START }}',
+                        backgroundColor: "aqua",
+                        data: dataSetStart
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
+                        backgroundColor: "blue",
+                        data: dataSetApproval
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
+                        backgroundColor: "lime",
+                        data: dataSetCompleted
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}',
+                        backgroundColor: "red",
+                        data: dataSetOutOfDate
+                    }
+                ]
             },
         });
     </script>

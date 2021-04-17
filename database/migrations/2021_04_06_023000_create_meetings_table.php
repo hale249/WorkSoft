@@ -21,8 +21,6 @@ class CreateMeetingsTable extends Migration
             $table->time('time_end')->comment('Thời gian kết thúc');
             $table->date('date_meeting')->comment('Ngày hop');
             $table->text('description')->nullable();
-            $table->integer('sent_count')->default(0);
-            $table->integer('count_join')->default(0);
             $table->timestamps();
             $table->softDeletes();
         });

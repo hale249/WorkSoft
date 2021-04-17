@@ -2,7 +2,9 @@
 
 namespace App\Models;
 
+use App\Helpers\Constant;
 use App\Models\Traits\Attributes\JobAttribute;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -17,12 +19,10 @@ class Job extends Model
 
     protected $casts = [
         'category_id' => 'integer',
-        'job_ranting' => 'integer',
         'user_id' => 'integer',
-        'person_support' => 'integer',
     ];
 
-//    protected $appends = 'totals';
+    protected $appends = ['status_name'];
 
     public function category()
     {
@@ -39,16 +39,6 @@ class Job extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    public function personSupport()
-    {
-        return $this->hasMany(User::class, 'person_support', 'id');
-    }
-
-    public function personMission()
-    {
-        return $this->belongsTo(User::class, 'person_mission', 'id');
-    }
-
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');
@@ -57,5 +47,29 @@ class Job extends Model
     public function status()
     {
         return $this->belongsTo(Status::class, 'status_id', 'id');
+    }
+
+
+      public function getStatusNameAttribute()
+    {
+        $now = strtotime(Carbon::now()->toDateString());
+        $timeDead = strtotime($this->deadline);
+        $tonTai = strtotime($this->finish_at);
+
+        if (empty($tonTai)) {
+            if ($timeDead > $now) {
+                $text = Constant::STATUS_START;
+            } else {
+                $text = Constant::STATUS_OUT_OF_DATE;
+            }
+        } else {
+            if ($timeDead >= $tonTai) {
+                $text = Constant::STATUS_COMPLETED;
+            } else {
+                $text = Constant::STATUS_OUT_OF_DATE;
+            }
+        }
+
+        return $text;
     }
 }

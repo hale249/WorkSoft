@@ -12,6 +12,6 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(\Database\Seeders\UserAdminSeed::class);
-        $this->call(\Database\Seeders\StatusSeed::class);
+        $this->call(\Database\Seeders\FakeDateSeeder::class);
     }
 }
