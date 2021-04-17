@@ -21,12 +21,12 @@
                     <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
                 </div>
                 <div class="form-group ml-2">
-                    <select name="status" class="form-control" id="status">
+                    {{--<select name="status" class="form-control" id="status">
                         <option value="">Trạng thái</option>
                         @foreach($statuses as $status)
                             <option value="{{ $status->id }}">{{ $status->name }}</option>
                         @endforeach
-                    </select>
+                    </select>--}}
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
@@ -58,13 +58,14 @@
                                 <td>{{ $job->name }}</td>
                                 <td>{{ $job->user->name ?? ''  }}</td>
                                 <td>{{ $job->deadline }}</td>
-                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
+{{--                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>--}}
                                 <td>{!! $job->action_buttons !!}</td>
+
                             </tr>
                         @endforeach
                         @else
                             <tr>
-                                <td scope="7" class="odd">Không có dữ liệu trong bảng</td>
+                                <td rowspan="7" class="odd">Không có dữ liệu trong bảng</td>
                             </tr>
                             @endif
                         </tbody>

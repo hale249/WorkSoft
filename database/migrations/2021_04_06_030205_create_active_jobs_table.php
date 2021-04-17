@@ -16,7 +16,7 @@ class CreateActiveJobsTable extends Migration
         Schema::create('active_jobs', function (Blueprint $table) {
             $table->id();
             $table->string('uuid');
-            $table->unsignedInteger('status_id');
+//            $table->unsignedInteger('status_id');
             $table->unsignedInteger('category_id');
             $table->text('name');
             $table->text('description')->nullable();
@@ -30,6 +30,7 @@ class CreateActiveJobsTable extends Migration
             $table->timestamp('reply_at')->nullable();
             $table->boolean('is_finish')->default(0);
             $table->text('finish_mess')->nullable();
+            $table->date('finish_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -36,21 +36,16 @@ class JobController extends ProtectedController
             $jobs = $jobs->where('user_id', Auth::id());
         }
         $name = $request->get('name');
-        $status = $request->get('status');
         if (!empty($name)) {
             $jobs = $jobs->where('name', 'like', '%' . $name . '%');
-        }
-        if (!empty($status)) {
-            $jobs = $jobs->where('status_id', $status);
         }
         $jobs = $jobs->orderBy('deadline', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
-        $statuses = Status::all();
         $categories = Category::all();
         $users = User::all();
 
-        return view('elements.job.index', compact('jobs', 'statuses', 'users', 'categories'));
+        return view('elements.job.index', compact('jobs', 'users', 'categories'));
     }
 
     public function store(Request $request)
@@ -65,7 +60,6 @@ class JobController extends ProtectedController
         ]);
         $data['uuid'] = Str::uuid()->toString();
         $data['created_by'] = $this->currentUser->id;
-        $data['status_id'] = Status::query()->first()->id ?? 1;
         $job = Job::create($data);
 
 /*        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));*/
@@ -80,7 +74,6 @@ class JobController extends ProtectedController
 
         $attachments = JobAttachment::query()
             ->where('job_id', $id)
-//            ->orderBy('created_at', 'desc')
             ->get();
 
         $users = User::query()->select(['id', 'name'])->get();
@@ -95,13 +88,11 @@ class JobController extends ProtectedController
         $job = Job::find($id);
         $categories = Category::all();
         $users = User::all();
-        $statuses = Status::all();
 
         $data = [
             'job'=> $job,
             'categories'=> $categories,
             'users'=> $users,
-            'statuses'=> $statuses,
         ];
 
         return $this->success('Hien thi thanh cong', $data);

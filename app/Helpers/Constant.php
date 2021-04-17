@@ -8,11 +8,9 @@ interface Constant
 
     public const TIME_EXPIRED_TOKEN = 23;
 
-    public const STATUS = [
-        1 => 'Bắt đầu',
-        2 => 'Thực hiện',
-        3 => 'Hoàn thành'
-    ];
+    public const STATUS_START = 'Đang thực hiện';
+    public const STATUS_COMPLETED = 'Hoàn thành';
+    public const STATUS_OUT_OF_DATE = 'Quá hạn';
 
     public const URL_TIMEATABLE = 'https://daotao.humg.edu.vn/Default.aspx?page=thoikhoabieu&id=';
 }

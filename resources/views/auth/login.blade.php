@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Styles -->
-    <link rel="stylesheet" href="/css/backend/app.css">
+    <link rel="stylesheet" href="/css/app.css">
     <style>
         .bg-gradient-primary {
             background-color: #357ee8 !important;

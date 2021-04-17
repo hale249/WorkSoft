@@ -104,6 +104,21 @@ class DashboardController extends ProtectedController
             'countUser' => $countUser,
         ];*/
 
+        $data =DB::table('active_jobs')
+            ->join('statuses', 'active_jobs.status_id', '=', 'statuses.id')
+            ->join('users', 'active_jobs.user_id', '=', 'users.id')
+            ->select(DB::raw('users.id as user_id, users.name as user_name, users.role as user_role, active_jobs.id as active_job_id, active_jobs.name as active_jobs_name, active_jobs.created_at as active_job_created_at, statuses.id as status_id, statuses.name as status_name'))
+            ->whereYear('active_jobs.created_at', $request->year)
+            ->get();
+
+        $response = [];
+        $users = User::query()->get()->pluck('name', 'id')->toArray();
+        $statuses = Status::query()->get()->pluck('name', 'id')->toArray();
+        foreach ($users as $userId => $userName) {
+            foreach ($statuses as $statusId => $statusName) {
+                $response[$userName][$statusName] = $data->where('user_id', $userId)->where('status_id', $statusId)->count();
+            }
+        }
         return view('elements.dashboard.index');
     }
 }
