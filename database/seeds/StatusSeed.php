@@ -2,7 +2,6 @@
 
 namespace Database\Seeders;
 
-use App\Models\Category;
 use App\Models\Status;
 use Illuminate\Database\Seeder;
 
@@ -38,17 +37,6 @@ class StatusSeed extends Seeder
         Status::query()->updateOrCreate([
             'name' => 'Quá hạn',
             'description' => 'Hoàn thành công việc'
-        ]);
-
-
-        Category::query()->updateOrCreate([
-            'name' => 'Công việc bộ môn',
-            'description' => 'Công việc bộ môn',
-        ]);
-
-        Category::query()->updateOrCreate([
-            'name' => 'Công việc khoa',
-            'description' => 'Công việc khoa',
         ]);
     }
 }

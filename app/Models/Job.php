@@ -39,6 +39,16 @@ class Job extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
+    public function personSupport()
+    {
+        return $this->hasMany(User::class, 'person_support', 'id');
+    }
+
+    public function personMission()
+    {
+        return $this->belongsTo(User::class, 'person_mission', 'id');
+    }
+
     public function createdBy()
     {
         return $this->belongsTo(User::class, 'created_by', 'id');

@@ -57,12 +57,22 @@ class JobController extends ProtectedController
             'deadline',
             'job_ranting',
             'user_id',
+            'person_mission',
         ]);
         $data['uuid'] = Str::uuid()->toString();
         $data['created_by'] = $this->currentUser->id;
         $job = Job::create($data);
 
-/*        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));*/
+        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));
+        dispatch( new SendMail([$this->getUserDetail($job->person_mission)->email], new EmailAssignJob($this->getUserDetail($job->person_mission), $job, 'Bạn là người quản lý')));
+
+        foreach ($request->person_support as $item) {
+            JobUserPerson::query()->updateOrCreate([
+                'job_id' => $job->id,
+                'user_id' => $item,
+            ]);
+            dispatch( new SendMail([$this->getUserDetail($item)->email], new EmailAssignJob($this->getUserDetail($item), $job, 'Bạn là có công việc hỗ trợ')));
+        }
 
         return $this->success('Tạo công việc thành công', $job);
     }
@@ -70,7 +80,8 @@ class JobController extends ProtectedController
     public function show(int $id)
     {
         $job = Job::query()->where('id', $id)->with([
-            'user', 'category', 'createdBy', 'status'])->first();
+            'user', 'category',
+            'personMission', 'createdBy', 'status'])->first();
 
         $attachments = JobAttachment::query()
             ->where('job_id', $id)
@@ -110,6 +121,9 @@ class JobController extends ProtectedController
             'deadline',
             'content',
             'status_id',
+            'person_support',
+            'person_mission',
+            'job_ranting'
         ]);
         $data['created_by'] = $userId;
 
@@ -153,13 +167,13 @@ class JobController extends ProtectedController
     public function ajaxDeleteAttachment(int $jobId, int $attachmentId)
     {
         $attachment = JobAttachment::query()
-            ->where('job_id', $jobId)
+            ->where('project_id', $jobId)
             ->where('id', $attachmentId)
             ->first();
 
         $attachment->delete();
 
-        return $this->success('Xoá tài liệu thành công.', $attachment);
+        return redirect()->route('backend.jobs.index')->with('flash_success', __('Xoá tài liệu thành công'));
     }
 
     public static function getFileType(?string $extension): ?string

@@ -23,7 +23,6 @@ class CreateMeetingsTable extends Migration
             $table->text('description')->nullable();
             $table->integer('sent_count')->default(0);
             $table->integer('count_join')->default(0);
-            $table->timestamp('sent_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
