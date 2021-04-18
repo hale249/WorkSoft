@@ -17,21 +17,21 @@
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
             <div class="row">
-
-                <!-- Earnings (Monthly) Card Example -->
+                <!-- Pending Requests Card Example -->
                 <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card border-left-warning shadow h-100 py-2">
                         <div class="card-body">
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                        Số lượng thành viên
+                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+                                        Công việc
                                     </div>
+                                    <small>Tổng số công việc trong 1 năm</small>
                                     <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countUser'] }}</div>
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countJob'] }}</div>
                                 </div>
                                 <div class="col-auto">
-                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
@@ -58,26 +58,6 @@
                     </div>
                 </div>
 
-                <!-- Pending Requests Card Example -->
-                <div class="col-xl-3 col-md-6 mb-4">
-                    <div class="card border-left-warning shadow h-100 py-2">
-                        <div class="card-body">
-                            <div class="row no-gutters align-items-center">
-                                <div class="col mr-2">
-                                    <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                        Công việc
-                                    </div>
-                                    <div
-                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countJob'] }}</div>
-                                </div>
-                                <div class="col-auto">
-                                    <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
                 <!-- Earnings (Monthly) Card Example -->
                 <div class="col-xl-3 col-md-6 mb-4">
                     <div class="card border-left-info shadow h-100 py-2">
@@ -85,12 +65,12 @@
                             <div class="row no-gutters align-items-center">
                                 <div class="col mr-2">
                                     <div class="text-xs font-weight-bold text-info text-uppercase mb-1">Công việc cần
-                                        phê duyệt
+                                        thực hiện
                                     </div>
                                     <div class="row no-gutters align-items-center">
                                         <div class="col-auto">
                                             <div
-                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical['countJobCompleted'] }}</div>
+                                                class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ $statistical['countJobStart'] }}</div>
                                         </div>
                                         <div class="col">
                                             <div class="progress progress-sm mr-2">
@@ -102,6 +82,26 @@
                                 </div>
                                 <div class="col-auto">
                                     <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Earnings (Monthly) Card Example -->
+                <div class="col-xl-3 col-md-6 mb-4">
+                    <div class="card border-left-primary shadow h-100 py-2">
+                        <div class="card-body">
+                            <div class="row no-gutters align-items-center">
+                                <div class="col mr-2">
+                                    <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                        Công việc quá hạn
+                                    </div>
+                                    <div
+                                        class="h5 mb-0 font-weight-bold text-gray-800">{{ $statistical['countJobOutOfDate'] }}</div>
+                                </div>
+                                <div class="col-auto">
+                                    <i class="fas fa-calendar fa-2x text-gray-300"></i>
                                 </div>
                             </div>
                         </div>
@@ -173,6 +173,7 @@
     {{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
     <script type="text/javascript">
         var dataStatus = '{!! json_encode($responseStatus) !!}';
+        var jobProgress = '{!! json_encode($response) !!}';
         var ctx = document.getElementById("myPieChart");
         var myPieChart2 = new Chart(ctx, {
             type: 'doughnut',
@@ -191,40 +192,22 @@
             },
         });
 
-        var dataLabels = {!! json_encode($jobProgress['data']) !!};
-        var dataSetStart = {!! json_encode($jobProgress['start']) !!};
-        var dataSetApproval = {!! json_encode($jobProgress['approval']) !!};
-        var dataSetCompleted = {!! json_encode($jobProgress['completed']) !!};
-        var dataSetOutOfDate = {!! json_encode($jobProgress['out_of_date']) !!};
-
         var ctx1 = document.getElementById("myAreaChart");
         var myPieChart = new Chart(ctx1, {
             type: 'bar',
-            data: {
-                labels: dataLabels,
-                datasets: [
-                    {
-                        label: '{{ \App\Helpers\Constant::STATUS_START }}',
-                        backgroundColor: "aqua",
-                        data: dataSetStart
-                    },
-                    {
-                        label: '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
-                        backgroundColor: "blue",
-                        data: dataSetApproval
-                    },
-                    {
-                        label: '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
-                        backgroundColor: "lime",
-                        data: dataSetCompleted
-                    },
-                    {
-                        label: '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}',
-                        backgroundColor: "red",
-                        data: dataSetOutOfDate
-                    }
-                ]
-            },
+            labels: [
+                '{{ \App\Helpers\Constant::STATUS_START }}',
+                '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
+                '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
+                '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}'
+            ],
+            datasets: [
+                {
+                    fillColor: "#79D1CF",
+                    strokeColor: "#79D1CF",
+                    data: jobProgress
+                }
+            ]
         });
     </script>
 @endsection
