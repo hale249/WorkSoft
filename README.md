@@ -58,9 +58,7 @@ sudo chmod -R 775 storage
 ```
 ### Run seed
 ```bash
-php artisan db:seed --class=RoleSeed
-php artisan db:seed --class=UserAdminSeed
-php artisan permissions:refresh
+php artisan db:seed
 ```
 
 ### Run project
