@@ -53,69 +53,103 @@
                             @endif
                         </div><!--col-->
                     </div>
-                    @if(\App\Helpers\Helper::checkRole(\Illuminate\Support\Facades\Auth::user()))
-                        <div class="mt-3">
-                            <button class="btn btn-primary" type="button" data-toggle="modal"
-                                    data-target="#editJobDetailModal">Edit
-                            </button>
-                        </div>
-                    @endif
+
+                    <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="name">File dính kèm</label>
+
+                        <div class="col-md-8">
+{{--                            {{ $job->deadline }}--}}
+                        </div><!--col-->
+                    </div>
+
                 </div>
             </div>
         </div>
 
         <div class="col-12 col-md-12 col-lg-6">
-{{--            <div class="card">--}}
-{{--                <div class="card-header">--}}
-{{--                    <h5 class="text-muted">Xác nhận minh chứng hoàn thành</h5>--}}
-{{--                </div>--}}
-{{--                <div class="card-body">--}}
-{{--                    <form action="{{ route('jobs.finish', $job->id) }}" id="finish-job-form">--}}
-{{--                        <div class="alert alert-danger text-center mb-3 show-errors" style="display: none"></div>--}}
-{{--                        <div class="row mt-2">--}}
-{{--                            <div class="col-2 task-label">Tiến độ:</div>--}}
-{{--                            <div class="col-8 font-weight-bold text-muted task-value">--}}
-{{--                                <input type="checkbox" class="is_finish" name="is_finish" @if($job->is_finish) checked--}}
-{{--                                       @endif style="transform: scale(2.0);">&ensp; Hoàn thành--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <div class="row mt-4">--}}
-{{--                            <div class="col-2 task-label">Nội dung yêu cầu xác nhận:</div>--}}
-{{--                            <div class="col-10">--}}
-{{--                                <textarea class="form-control finish_mess" name="finish_mess"--}}
-{{--                                          rows="3">{{ $job->finish_mess }}</textarea>--}}
-{{--                            </div>--}}
-{{--                        </div>--}}
-{{--                        <button type="submit" name="submit" style="display: none">Submit</button>--}}
-{{--                        <div class="text-right mt-4">--}}
-{{--                            <button class="btn btn-primary" type="button" id="btn-finish-job-save">Save</button>--}}
-{{--                        </div>--}}
-{{--                    </form>--}}
-{{--                </div>--}}
-{{--            </div>--}}
             <div class="card mt-3">
                 @include('elements.job.includes.update')
             </div>
         </div>
     </div>
+
+  {{--  <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <td><strong>Tên nhiệm vụ</strong></td>
+                        <td><strong>Thời hạn</strong></td>
+                        <td><strong>Trạng thái</strong></td>
+                        <td><strong>Hành động</strong></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach($tasks as $task)
+                        <tr>
+                            <td>{{ $task->name }}</td>
+                            <td>{{ $task->deadline }}</td>
+                            <td><span class="badge badge-pill" style="background-color: {{ $task->status->color }}; color: #000000">{{ $task->status->name }}</span></td>
+                            <td>{!! $task->getActionButtonsAttribute($job->id) !!}</td>
+                        </tr>
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+            <div class="text-right">
+                {{ $tasks->links() }}
+            </div>
+        </div>
+    </div>--}}
 @endsection
 @section('script')
     @include('elements.job.includes.messages')
     <script type="text/javascript" src="{{ asset('js/pages/show-job.js') }}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     <script type="text/javascript">
-        $("#").dropzone({
-            url: $('#').attr('action'),
+        Dropzone.autoDiscover = false;
+        $("#job-attachments").dropzone({
+            url: $('#job-attachments').attr('action'),
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             },
-            init: function () {
+            init: function() {
                 this.on("queuecomplete", function (file) {
-                    setTimeout(function () {
+                    showSuccessMessage('Attachments have been uploaded successfully.');
+                    setTimeout(function() {
                         window.location.reload();
                     }, 500);
                 });
             }
         });
+
+        @if(\Session::has('message'))
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000
+        });
+
+        Toast.fire({
+            icon: 'success',
+            title: '{{ session('message') }}'
+        });
+        @endif
+
+        @if(\Session::has('error'))
+        const Toast2 = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+        });
+
+        Toast2.fire({
+            icon: 'error',
+            title: '{{ session('error') }}'
+        });
+        @endif
     </script>
 @endsection
+

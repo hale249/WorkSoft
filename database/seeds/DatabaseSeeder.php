@@ -12,6 +12,7 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call(\Database\Seeders\UserAdminSeed::class);
-        $this->call(\Database\Seeders\FakeDateSeeder::class);
+        $this->call(\Database\Seeders\FakeDataSeeder::class);
+        $this->call(\Database\Seeders\SubjectSeeder::class);
     }
 }

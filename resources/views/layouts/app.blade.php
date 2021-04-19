@@ -81,6 +81,18 @@
     @include('share.modals.logout')
     <script src="{{ asset('js/app.js') }}"></script>
     <script type="text/javascript" src="{{ asset('vendor/select2/select2.min.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
     @yield('script')
+    <script>
+        $("#click").toggle(
+            function() {
+                $("#ccc").slideDown("fast").show();
+                $(this).removeClass('bbb').addClass('aaa');
+            },
+            function() {
+                $("#ccc").hide();
+                $(this).removeClass('aaa').addClass('bbb');
+            });
+    </script>
 </body>
 </html>

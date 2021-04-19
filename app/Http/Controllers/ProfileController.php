@@ -50,7 +50,7 @@ class ProfileController extends ProtectedController
     {
         $user = auth()->user();
 
-        return view('backend.elements.profile.change_password', compact('user'));
+        return view('elements.profile.change_password', compact('user'));
     }
 
     public function changePassword(ProfileChangePasswordRequest $request)

@@ -4,6 +4,20 @@
 
 @section('content')
     <div class="card">
+        <div class="card-body btn btn-block text-danger font-weight-bold">
+            <div class="">
+                <p>Cuộc họp sắp tới</p>
+                <span>Ngày: {{ $sidebarMeeting->date_meeting ?? '' }} - {{ $sidebarMeeting->name ?? '' }}</span>
+            </div>
+            @if(!empty($sidebarJob->name))
+            <div class="">
+                <p>Công việc cần kiểm duyệt</p>
+                <span><a href="{{ !empty($sidebarJob->name) ? route('jobs.show', $sidebarJob->id) : '' }}">{{ $sidebarJob->name ?? '' }}</a></span>
+            </div>
+            @endif
+        </div>
+    </div>
+    <div class="card mt-3">
         <div class="card-body">
             <form action="{{ route('dashboard.index') }}" method="GET" class="form-inline my-3">
                 <div class="form-group">

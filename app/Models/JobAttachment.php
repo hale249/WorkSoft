@@ -77,6 +77,6 @@ class JobAttachment extends Model
 
     public function updatedBy()
     {
-        return $this->belongsTo(User::class, 'upload_by', 'id');
+        return $this->belongsTo(User::class, 'created_by', 'id');
     }
 }

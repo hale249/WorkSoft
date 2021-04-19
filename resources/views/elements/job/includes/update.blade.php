@@ -4,7 +4,7 @@
 </div>
 <div class="card-body">
     <div class="form-group">
-        <form action="{{--{{ route('backend.job.upload-attachment', ['jobId' => $job->id]) }}--}}" class="dropzone dz-clickable" id="">
+        <form action="{{ route('jobs.upload-attachment', ['jobId' => $job->id]) }}" class="dropzone dz-clickable" id="job-attachments">
             <div class="dz-default dz-message">
                 <button class="dz-button" type="button">Drop files here to upload</button>
             </div>
@@ -26,13 +26,15 @@
             @if (!empty($attachments) && $attachments->count() > 0)
                 @foreach($attachments as $attachment)
                     <tr>
-                        <td  style="width: 20px"><img alt="{{ $attachment->type }}" src="{{ $attachment->type_icon }}" style="height:20px;width:20px;"></td>
+                        <td style="width: 20px"><img alt="{{ $attachment->type }}" src="{{ $attachment->type_icon }}"
+                                                     style="height:20px;width:20px;"></td>
                         <td>{{ $attachment->file_name }}</td>
-{{--                        <td>{{ $attachment->created_at->format('d M Y H:i A') }}</td>--}}
+                        <td>{{ $attachment->created_at->format('dd-m-Y') }}</td>
                         <td>{{ !empty($attachment->updatedBy) ? $attachment->updatedBy->name : '' }}</td>
                         <td>
-                            <a href="{{ $attachment->url }}" class="btn btn-success btn-sm" title="Open file in new tab" target="_blank"><i class="fas fa-info-circle"></i></a>
-                            <a href="{{ route('job.delete-attachment', ['jobId' => $job->id, 'attachmentId' => $attachment->id]) }}"
+                            <a href="{{ $attachment->url }}" class="btn btn-success btn-sm" title="Open file in new tab"
+                               target="_blank"><i class="fas fa-info-circle"></i></a>
+                            <a href=""
                                data-trans-button-cancel="{{ trans('labels.general.cancel') }}"
                                data-trans-button-confirm="{{ trans('labels.general.delete') }}"
                                data-trans-title="{{ trans('strings.confirm_delete') }}"

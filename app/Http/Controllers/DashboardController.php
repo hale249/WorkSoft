@@ -34,7 +34,7 @@ class DashboardController extends ProtectedController
 
         if ($this->currentUser->role === 1) {
 
-            // thống kês
+            // thống kê
             $countJob = $queryJob->whereYear('created_at', $requestYear)->count();
             $countJobCompleted = $queryJob->where('status_id', Constant::STATUS_APPROVAL)
                 ->whereYear('created_at', $requestYear)
@@ -42,10 +42,17 @@ class DashboardController extends ProtectedController
 
             $countUser = User::query()->whereYear('created_at', $requestYear)->count();
 
-            $countMeetingUpcoming = Meeting::query()
-                ->whereDate('date_meeting', '>', Carbon::now()->toDateString())
+            $queryMeetingUpcoming = Meeting::query()
+                ->whereDate('date_meeting', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)
-                ->count();
+                ->orderBy('date_meeting', 'asc');
+
+            $sidebarMeeting = $queryMeetingUpcoming->first();
+            $countMeetingUpcoming = $queryMeetingUpcoming->count();
+
+            $sidebarJob = $queryJob->where('status_id', Constant::STATUS_APPROVAL)
+                ->whereYear('created_at', $requestYear)
+                ->orderBy('deadline', 'asc')->first();
 
             // Trạng thái công việc
             $statusJob = DB::table('active_jobs')
@@ -116,7 +123,7 @@ class DashboardController extends ProtectedController
                 'meetingUpcoming' => $countMeetingUpcoming
             ];
 
-            return view('elements.dashboard.index', compact('jobProgress', 'statistical', 'listYears', 'responseStatus'));
+            return view('elements.dashboard.index', compact('jobProgress', 'statistical', 'listYears', 'responseStatus', 'sidebarMeeting', 'sidebarJob'));
         } else {
 
             $userId = $this->currentUser->id;
@@ -125,22 +132,22 @@ class DashboardController extends ProtectedController
 
             $countMeetingUpcoming = Meeting::query()
                 ->whereIn('id', $meetingUserIds)
-                ->whereDate('date_meeting', '>', Carbon::now()->toDateString())
+                ->whereDate('date_meeting', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)
                 ->count();
 
             $countJob = $queryJob->where('user_id', $userId)
-                ->whereDate('deadline', '>', Carbon::now()->toDateString())
+                ->whereDate('deadline', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)->count();
 
             $countJobStart = $queryJob->where('user_id', $userId)
                 ->where('status_id', Status::query()->where('name', Constant::STATUS_START)->first()->id)
-                ->whereDate('deadline', '>', Carbon::now()->toDateString())
+                ->whereDate('deadline', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)->count();
 
             $countJobOutOfDate = $queryJob->where('user_id', $userId)
                 ->where('status_id', Status::query()->where('name', Constant::STATUS_OUT_OF_DATE)->first()->id)
-                ->whereDate('deadline', '>', Carbon::now()->toDateString())
+                ->whereDate('deadline', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)->count();
 
 

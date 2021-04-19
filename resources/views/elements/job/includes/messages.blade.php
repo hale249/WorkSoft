@@ -9,25 +9,25 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="" method="POST" enctype="multipart/form-data">
-                    @csrf
+            <form action="{{ route('jobs.send-message', $job->id) }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                @method('PUT')
+                <div class="modal-body">
                     <div class="form-group row">
                         <label class="col-md-2 form-control-label" for="finish_mess">Nội dung</label>
 
                         <div class="col-md-10">
                             <textarea class="form-control" name="finish_mess" id="finish_mess"
                                       placeholder="Nhập nội dung gửi email"
-                                      rows="5"></textarea>
+                                      rows="5">{{ $job->finish_mess }}</textarea>
                         </div><!--col-->
                     </div>
-                </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="button" id="btn-update-finish-save">Save</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button class="btn btn-primary" type="submit" id="btn-update-finish-save">Save</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

@@ -12,7 +12,9 @@ class AuthController extends Controller
     public function showFormLogin()
     {
         session([ 'previous_url' => url()->previous() ]);
-
+        if (Auth::check()) {
+            return Redirect::route('dashboard.index');
+        }
         return view('auth.login');
     }
 

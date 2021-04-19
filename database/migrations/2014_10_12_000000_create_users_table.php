@@ -26,6 +26,7 @@ class CreateUsersTable extends Migration
             $table->integer('role')->default('0');
             $table->string('position')->nullable()->comment('Chức vụ');
             $table->string('degree')->nullable()->comment('Cấp đô');
+            $table->boolean('sex')->default('1')->comment('1- nam, 0-nữ');
             $table->date('birthday')->nullable();
             $table->string('address')->nullable();
             $table->rememberToken();

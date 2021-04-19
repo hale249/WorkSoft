@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', __('labels.pages.backend.profile.title.index'))
+@section('title', __('Cập nhật thông tin cá nhân'))
 
 @section('content')
     <div class="card">
@@ -11,17 +11,17 @@
                 <div class="row">
                     <div class="col-8">
                         <h4 class="card-title mb-0">
-                            @lang('labels.pages.backend.profile.title.index')
+                            Cập nhật thông tin cá nhân
                             <small class="text-muted">{{ $user->name }}</small>
                         </h4>
                     </div>
                     <div class="col-4 text-right">
-                        <a href="{{ route('profile.show_form_change_password') }}" class="btn btn-primary btn-sm">@lang('labels.pages.backend.profile.change_password_label')</a>
+                        <a href="{{ route('profile.show_form_change_password') }}" class="btn btn-primary btn-sm">Thay đổi mật khẩu</a>
                     </div>
                 </div>
                 <hr>
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="email">@lang('labels.pages.backend.profile.form.email')</label>
+                    <label class="col-md-2 form-control-label" for="email">Email</label>
 
                     <div class="col-md-10">
                         <input class="form-control" type="email" name="email" id="email" value="{{ $user->email }}" disabled>
@@ -29,18 +29,10 @@
                 </div>
 
                 <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="name">First name</label>
+                    <label class="col-md-2 form-control-label" for="name">Tên</label>
 
                     <div class="col-md-10">
-                        <input class="form-control" type="text" name="first_name" id="first_name" value="{{ $user->first_name }}" placeholder="{{ __('First name') }}" maxlength="191" required="" autofocus="">
-                    </div><!--col-->
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-md-2 form-control-label" for="last_name">Last name</label>
-
-                    <div class="col-md-10">
-                        <input class="form-control" type="text" name="last_name" id="last_name" value="{{ $user->last_name }}" placeholder="{{ __('Last name') }}" maxlength="191" required="">
+                        <input class="form-control" type="text" name="name" id="name" value="{{ $user->name }}" placeholder="{{ __('Nhập tên ...') }}" maxlength="191" required="">
                     </div><!--col-->
                 </div>
 
@@ -111,7 +103,7 @@
                     </div>
 
                     <div class="col text-right">
-                        <button type="submit" class="btn btn-success btn-sm">@lang('labels.pages.backend.profile.form.edit_submit')</button>
+                        <button type="submit" class="btn btn-success btn-sm">Lưu</button>
                     </div>
                 </div>
             </div>

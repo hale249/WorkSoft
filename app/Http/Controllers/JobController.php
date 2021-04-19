@@ -36,16 +36,22 @@ class JobController extends ProtectedController
             $jobs = $jobs->where('user_id', Auth::id());
         }
         $name = $request->get('name');
+        $status = $request->status;
         if (!empty($name)) {
             $jobs = $jobs->where('name', 'like', '%' . $name . '%');
+        }
+
+        if (!empty($status)) {
+            $jobs = $jobs->where('status_id', $status);
         }
         $jobs = $jobs->orderBy('deadline', 'desc')
             ->paginate(Constant::DEFAULT_PER_PAGE);
 
         $categories = Category::all();
         $users = User::all();
+        $statuses = Status::all();
 
-        return view('elements.job.index', compact('jobs', 'users', 'categories'));
+        return view('elements.job.index', compact('jobs', 'users', 'categories', 'statuses'));
     }
 
     public function store(Request $request)
@@ -62,9 +68,9 @@ class JobController extends ProtectedController
         $data['status_id']  = Status::query()->first()->id;
         $job = Job::create($data);
 
-/*        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));*/
+        dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));
 
-        return $this->success('Tạo công việc thành công', $job);
+        return redirect()->back()->with('message','Tạo công việc thành công');
     }
 
     public function show(int $id)
@@ -129,7 +135,7 @@ class JobController extends ProtectedController
         $attachment = $request->file('file');
         $imageName = time() . $attachment->getClientOriginalName();
         $extension = $attachment->getClientOriginalExtension();
-        $pathToFile = 'jobs/' . $jobId . '/attachments/' . $imageName;
+        $pathToFile = 'files/jobs/' . $imageName;
 
         Storage::put($pathToFile, fopen($attachment, 'r+'), 'public');
 
@@ -137,11 +143,11 @@ class JobController extends ProtectedController
 
         $now = Carbon::now();
         $attachment = JobAttachment::create([
-            'project_id' => $jobId,
+            'job_id' => $jobId,
             'file_name' => $imageName,
             'file_path' => $pathToFile,
             'url' => $url,
-            'upload_by' => $userId,
+            'created_by' => $userId,
             'type' => JobAttachment::getFileType($extension),
             'created_at' => $now,
             'updated_at' => $now,
@@ -153,13 +159,13 @@ class JobController extends ProtectedController
     public function ajaxDeleteAttachment(int $jobId, int $attachmentId)
     {
         $attachment = JobAttachment::query()
-            ->where('project_id', $jobId)
+            ->where('job_id', $jobId)
             ->where('id', $attachmentId)
             ->first();
 
         $attachment->delete();
 
-        return redirect()->route('backend.jobs.index')->with('flash_success', __('Xoá tài liệu thành công'));
+        return redirect()->back()->with('message', __('Xoá tài liệu thành công'));
     }
 
     public static function getFileType(?string $extension): ?string
@@ -204,23 +210,21 @@ class JobController extends ProtectedController
         return User::find($id);
     }
 
-    public function excel()
+    public function sendMessage(Request $request, $id)
     {
-        return view('exports.job');
+        $request->validate([
+            'finish_mess' => 'required',
+        ]);
+
+        $job = Job::find($id);
+        $job->update([
+            'finish_mess' => $request->finish_mess
+        ]);
+
+        return redirect()->back()->with('message','Gửi xác nhận nội dung công việc thành công');
     }
 
-    public function finish(Request $request, $id)
-    {
-        $job = Job::find($id);
+    public function taskList(int $jobId) {
 
-        $data = $request->finish_mess;
-        if ($request->is_finish == 'on') {
-            $data['is_finish']  = 1;
-        } else {
-            $data['is_finish']  = 0;
-        }
-        $job->update($data);
-
-        return $this->success('Xác nhận đã hoàn thành');
     }
 }

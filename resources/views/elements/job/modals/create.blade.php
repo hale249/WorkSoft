@@ -1,17 +1,18 @@
-<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="createJobModal" data-backdrop="static"
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="createJobModal"
+     data-backdrop="static"
      id="createJobModal"
      aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Tạo lập lịch</h4>
+                <h4 class="modal-title">Tạo công việc</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form id="create-job-form" method="post">
-                    <div class="alert alert-danger text-center mb-3 show-errors" style="display: none"></div>
+            <form action="{{ route('jobs.store') }}" method="post" enctype="multipart/form-data">
+                @csrf
+                <div class="modal-body">
                     <div class="card-body">
                         <div class="form-group row">
                             <label class="col-md-2 form-control-label" for="name">Tên công việc</label>
@@ -39,7 +40,8 @@
                                 <select name="category_id" class="form-control" id="category_id" required>
                                     <option value="">Danh mục</option>
                                     @foreach($categories as $category)
-                                        <option {{ old('category_id') === $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
+                                        <option
+                                            {{ old('category_id') === $category->id ? 'selected' : '' }} value="{{ $category->id }}">{{ $category->name }}</option>
                                     @endforeach
                                 </select>
                             </div><!--col-->
@@ -52,7 +54,8 @@
                                 <select name="user_id" class="form-control" id="user_id">
                                     <option value="">Người phụ trách công việc</option>
                                     @foreach($users as $user)
-                                        <option {{ old('user_id') === $user->id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
+                                        <option
+                                            {{ old('user_id') === $user->id ? 'selected' : '' }} value="{{ $user->id }}">{{ $user->name }}</option>
                                     @endforeach
                                 </select>
                             </div><!--col-->
@@ -67,14 +70,20 @@
                             </div><!--col-->
                         </div>
 
-                        <button type="submit" name="submit" style="display: none">Submit</button>
+                        <div class="form-group row">
+                            <label class="col-md-2 form-control-label" for="description">File dính kèm</label>
+
+                            <div class="col-md-10">
+                                <input type="file" name="document_file">
+                            </div><!--col-->
+                        </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" type="button" id="btn-create-job-save">Save</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button class="btn btn-primary" type="submit" id="btn-create-job-save">Lưu</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

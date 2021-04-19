@@ -12,21 +12,24 @@
                     </h4>
                 </div>
                 <div class="col-4 text-right">
-                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createJobModal"><i class="fas fa-plus"></i>Tạo công việc</button>
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createJobModal"><i
+                            class="fas fa-plus"></i>Tạo công việc
+                    </button>
                 </div>
             </div>
 
             <form action="{{ route('jobs.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">
-                    <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control" placeholder="Tìm kiếm lập lịch">
+                    <input type="text" name="name" value="{{ request()->get('name') }}" class="form-control"
+                           placeholder="Tìm kiếm lập lịch">
                 </div>
                 <div class="form-group ml-2">
-                    {{--<select name="status" class="form-control" id="status">
+                    <select name="status" class="form-control" id="status">
                         <option value="">Trạng thái</option>
                         @foreach($statuses as $status)
                             <option value="{{ $status->id }}">{{ $status->name }}</option>
                         @endforeach
-                    </select>--}}
+                    </select>
                 </div>
                 <button type="submit" class="btn btn-primary btn-same-select ml-2">Tìm kiếm</button>
             </form>
@@ -45,26 +48,29 @@
                         </thead>
                         <tbody>
                         @if(count($jobs) > 0)
-                        @foreach($jobs as $job)
-                            <tr>
-                                <td>
-                                    @if(!empty($job->category))
-                                        <a href="{{ route('category.show', $job->category_id) }}" target="_blank">{{ $job->category->name }}</a>
-                                    @endif
-                                </td>
-                                <td>{{ $job->name }}</td>
-                                <td>{{ $job->user->name ?? ''  }}</td>
-                                <td>{{ $job->deadline }}</td>
-                                <td><span class="badge badge-pill" style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span></td>
-                                <td>{!! $job->action_buttons !!}</td>
+                            @foreach($jobs as $job)
+                                <tr>
+                                    <td>
+                                        @if(!empty($job->category))
+                                            <a href="{{ route('category.show', $job->category_id) }}"
+                                               target="_blank">{{ $job->category->name }}</a>
+                                        @endif
+                                    </td>
+                                    <td>{{ $job->name }}</td>
+                                    <td>{{ $job->user->name ?? ''  }}</td>
+                                    <td>{{ $job->deadline }}</td>
+                                    <td><span class="badge badge-pill"
+                                              style="background-color: {{ $job->status->color }}; color: #000000">{{ $job->status->name }}</span>
+                                    </td>
+                                    <td>{!! $job->action_buttons !!}</td>
 
-                            </tr>
-                        @endforeach
+                                </tr>
+                            @endforeach
                         @else
                             <tr>
                                 <td rowspan="7" class="odd">Không có dữ liệu trong bảng</td>
                             </tr>
-                            @endif
+                        @endif
                         </tbody>
                     </table>
                 </div>
@@ -77,4 +83,33 @@
     @include('elements.job.modals.create')
 
     <script type="text/javascript" src="{{ asset('js/pages/job.js') }}"></script>
+    <script type="text/javascript">
+        @if(\Session::has('message'))
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000
+        });
+
+        Toast.fire({
+            icon: 'success',
+            title: '{{ session('message') }}'
+        });
+        @endif
+
+        @if(\Session::has('error'))
+        const Toast2 = Swal.mixin({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 10000,
+        });
+
+        Toast2.fire({
+            icon: 'error',
+            title: '{{ session('error') }}'
+        });
+        @endif
+    </script>
 @endsection

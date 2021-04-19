@@ -13,5 +13,10 @@ interface Constant
     public const STATUS_OUT_OF_DATE = 'Quá hạn';
     public const STATUS_APPROVAL = 'Chờ phê duyệt';
 
+    public const THAC_SI = 'Thạc sĩ';
+    public const KY_SU = 'Kỹ sư';
+    public const TIEN_SI = 'Tiến sĩ';
+    public const NGUYEN_CUU_SINH = 'Nguyên cứu sinh';
+
     public const URL_TIMEATABLE = 'https://daotao.humg.edu.vn/Default.aspx?page=thoikhoabieu&id=';
 }

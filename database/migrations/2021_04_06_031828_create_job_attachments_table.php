@@ -19,6 +19,9 @@ class CreateJobAttachmentsTable extends Migration
             $table->string('type')->nullable();
             $table->string('file_name')->nullable()->comment('Tên file');
             $table->string('file_path')->nullable()->comment('Tên đường dẫn file');
+            $table->string('url')->nullable();
+            $table->timestamps();
+            $table->softDeletes();
         });
     }
 
