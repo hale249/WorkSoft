@@ -16,9 +16,7 @@ class ConfirmMeetingController
         $meeting = MeetingUser::query()
             ->where('meeting_id', $request->meetingId)
             ->where('user_id', $request->userId)
-            ->first();
-
-        MeetingUser::find($meeting->id)->update([
+            ->update([
             'is_embark' => 0,
             'reply_at' => Carbon::now()
         ]);
@@ -30,14 +28,10 @@ class ConfirmMeetingController
     {
         $meeting = MeetingUser::query()
             ->where('meeting_id', $request->meetingId)
-            ->where('user_id', $request->userId)
-            ->first();
-
-        MeetingUser::find($meeting->id)->update([
+            ->where('user_id', $request->userId)->update([
             'is_embark' => 1,
             'reply_at' => Carbon::now()
         ]);
         return view('accuracy.accept');
-
     }
 }

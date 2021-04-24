@@ -38,7 +38,7 @@ class CheckStatusActiveJob implements ShouldQueue
         Job::query()->chunk(30, function (Collection $jobs) {
             foreach ($jobs as $job) {
                 try {
-                    if (($job->deadline) - Carbon::now() == 2) {
+                    if (($job->deadline) - Carbon::now()->toDateString() == 2) {
                         $users = $job->user;
                         foreach ($users as $user) {
                             dispatch(new CustomSendNotify('Bạn có cuộc họp dien ra lúc' ));

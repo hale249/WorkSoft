@@ -8,6 +8,7 @@
     <title>từ chối  - HUMG</title>
 </head>
 <body>
- từ chối Đồng ý cuộc họp
+ <h3>từ chối Đồng ý cuộc họp</h3>
+ <a href="/">Quay ve trang chu</a>
 </body>
 </html>

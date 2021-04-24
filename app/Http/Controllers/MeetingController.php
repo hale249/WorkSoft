@@ -59,7 +59,7 @@ class MeetingController extends ProtectedController
                 'meeting_id' => $meeting->id,
                 'user_id' => $userId
             ]);
-/*            dispatch( new SendMail([$user->email], new EmailMeeting($user, $meeting)));*/
+            dispatch( new SendMail([$user->email], new EmailMeeting($user, $meeting)));
          }
 
         return $this->success('Tạo cuộc họp thành công', $meeting);

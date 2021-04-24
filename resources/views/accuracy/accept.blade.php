@@ -8,6 +8,7 @@
     <title>Đồng ý - HUMG</title>
 </head>
 <body>
-        Đồng ý cuộc họp
+        <h3>Đồng ý cuộc họp</h3>
+        <a href="/">Quay ve trang chu</a>
 </body>
 </html>

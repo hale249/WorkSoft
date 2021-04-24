@@ -185,8 +185,6 @@ class DashboardController extends ProtectedController
                 $responseStatus[] = $statusJob->where('status_id', $statusId)->count();
             }
 
-
-
             $statistical = [
                 'countJob' => $countJob,
                 'countJobOutOfDate' => $countJobOutOfDate,

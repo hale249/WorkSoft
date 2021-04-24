@@ -14,5 +14,6 @@ class DatabaseSeeder extends Seeder
         $this->call(\Database\Seeders\UserAdminSeed::class);
         $this->call(\Database\Seeders\FakeDataSeeder::class);
         $this->call(\Database\Seeders\SubjectSeeder::class);
+
     }
 }
