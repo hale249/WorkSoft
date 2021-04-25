@@ -16,6 +16,7 @@
                             {{ session('error') }}
                         </div>
                     @endif
+
                     <div class="form-group">
                         <label for="password" class="font-size-small required">
                             New password
