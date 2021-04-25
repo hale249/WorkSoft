@@ -9,9 +9,8 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Task extends Model
 {
     use TaskAttribute;
-    use SoftDeletes;
 
-    protected $table = 'tasks';
+    protected $table = 'job_tasks';
     protected $guarded = [];
 
     public function status()

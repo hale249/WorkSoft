@@ -15,6 +15,7 @@ use App\Models\Job;
 use App\Models\JobAttachment;
 use App\Models\JobUserPerson;
 use App\Models\Status;
+use App\Models\Task;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -66,6 +67,12 @@ class JobController extends ProtectedController
         $data['uuid'] = Str::uuid()->toString();
         $data['created_by'] = $this->currentUser->id;
         $data['status_id']  = Status::query()->first()->id;
+        $file = $request->file('document_file');
+        if (file_exists($file)) {
+            $fileName = time() . '_' . $file->getClientOriginalName();
+            $data['document_file'] = $file->storeAs('files/jobs', $fileName, 'public');
+        }
+
         $job = Job::create($data);
 
         dispatch( new SendMail([$this->getUserDetail($job->user_id)->email], new EmailAssignJob($this->getUserDetail($job->user_id), $job)));
@@ -86,7 +93,9 @@ class JobController extends ProtectedController
 
         $statuses = Status::all();
 
-        return view('elements.job.show', compact('job', 'users', 'statuses', 'attachments'));
+        $tasks = Task::query()->where('job_id', $id)->get();
+
+        return view('elements.job.show', compact('job', 'users', 'statuses', 'attachments', 'tasks'));
     }
 
     public function edit(int $id)
@@ -110,18 +119,14 @@ class JobController extends ProtectedController
         $userId = Auth::id();
         $data = $request->only([
             'description',
-            'content',
-            'category_id',
             'user_id',
             'deadline',
-            'content',
             'status_id',
         ]);
         $data['created_by'] = $userId;
-
         $job->update($data);
 
-        return $this->success('Chỉnh sửa công việc thành công');
+        return redirect()->back();
     }
 
     public function ajaxUploadAttachment(Request $request, int $jobId)
@@ -137,7 +142,7 @@ class JobController extends ProtectedController
         $extension = $attachment->getClientOriginalExtension();
         $pathToFile = 'files/jobs/' . $imageName;
 
-        Storage::put($pathToFile, fopen($attachment, 'r+'), 'public');
+        $attachment->storeAs($pathToFile, $imageName, 'public');
 
         $url = Storage::url($pathToFile);
 
@@ -224,7 +229,54 @@ class JobController extends ProtectedController
         return redirect()->back()->with('message','Gửi xác nhận nội dung công việc thành công');
     }
 
-    public function taskList(int $jobId) {
+    public function createTask(Request $request, $jobId)
+    {
+        Task::create([
+            'job_id' => $jobId,
+            'name' => !empty($request->nameTask) ? $request->nameTask : 'Task A',
+            'description' => $request->descriptionTask,
+            'deadline' => !empty($request->deadlineTask) ? $request->deadlineTask : Carbon::now()->toDateString(),
+            'status_id' => Status::query()->first()->id,
+        ]);
 
+        return redirect()->back();
+    }
+
+    public function editTask($jobId, $taskId)
+    {
+        $task = Task::query()
+            ->where('id', $taskId)
+            ->where('job_id', $jobId)
+            ->first();
+
+        return $this->success('hien thi thanh cong', $task);
+    }
+
+    public function updateTask($jobId, $taskId)
+    {
+        $task = Task::query()
+            ->where('id', $taskId)
+            ->where('job_id', $jobId)
+            ->first();
+
+        $task->update([
+            'job_id' => $jobId,
+            'name' => !empty($request->nameTask) ? $request->nameTask : 'Task A',
+            'description' => $request->descriptionTask,
+            'deadline' => !empty($request->deadlineTask) ? $request->deadlineTask : Carbon::now()->toDateString(),
+        ]);
+
+        return redirect()->back();
+    }
+
+    public function deleteTask($jobId, $taskId)
+    {
+        $task = Task::query()
+            ->where('id', $taskId)
+            ->where('job_id', $jobId)
+            ->first();
+        $task->delete();
+
+        return redirect()->back();
     }
 }

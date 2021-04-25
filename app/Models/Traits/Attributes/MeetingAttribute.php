@@ -7,8 +7,6 @@ use Illuminate\Support\Facades\Auth;
 
 trait MeetingAttribute
 {
-/*    use StatusLabelAttribute;*/
-
     /**
      * @return string
      */
@@ -17,6 +15,7 @@ trait MeetingAttribute
         return '
         <div class="btn-group btn-group-sm" role="group" aria-label="Meeting Actions">
           '.$this->show_button.'
+          '.$this->view_button.'
           '.$this->edit_button.'
           '.$this->delete_button.'
         </div>';
@@ -37,8 +36,13 @@ trait MeetingAttribute
      */
     public function getShowButtonAttribute(): string
     {
+        return '<a href="' . route('preview.meeting', $this->uuid) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+    }
+
+    public function getViewButtonAttribute(): string
+    {
         if (Helper::checkRole(Auth::user())) {
-            return '<a href="' . route('preview.meeting', $this->uuid) . '" data-toggle="tooltip" data-placement="top" title="Show" class="btn btn-success btn-sm"><i class="fas fa-info-circle"></i></a>';;
+            return '<a href="' . route('meeting.viewed', $this->id) . '"  title="Xem chi tiết người tha gia" class="btn btn-secondary btn-sm"><i class="fas fa-street-view"></i></a>';;
         }
         return '';
     }

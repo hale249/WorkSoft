@@ -105,11 +105,22 @@ class MeetingController extends ProtectedController
             ->where('meeting_id', $meetingId)
             ->where('user_id', $userId)
             ->first();
+
         $meeting->update([
             'is_join' => $join,
             'reply_at' => Carbon::now()
         ]);
 
         return redirect()->route('meeting.show', ['id' => $meetingId]);
+    }
+
+    public function viewed($id)
+    {
+        $meetings =  MeetingUser::query()
+            ->where('is_embark', 1)
+            ->where('meeting_id', $id)
+            ->get();
+
+        return view('elements.meeting.viewed', compact('meetings'));
     }
 }

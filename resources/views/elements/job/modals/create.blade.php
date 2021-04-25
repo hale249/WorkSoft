@@ -71,7 +71,7 @@
                         </div>
 
                         <div class="form-group row">
-                            <label class="col-md-2 form-control-label" for="description">File dính kèm</label>
+                            <label class="col-md-2 form-control-label">File dính kèm</label>
 
                             <div class="col-md-10">
                                 <input type="file" name="document_file">

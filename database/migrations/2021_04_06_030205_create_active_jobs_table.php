@@ -31,6 +31,7 @@ class CreateActiveJobsTable extends Migration
             $table->boolean('is_finish')->default(0);
             $table->text('finish_mess')->nullable();
             $table->date('finish_at')->nullable();
+            $table->text('document_file')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

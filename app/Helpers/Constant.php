@@ -4,7 +4,7 @@ namespace App\Helpers;
 
 interface Constant
 {
-    public const DEFAULT_PER_PAGE = 20;
+    public const DEFAULT_PER_PAGE = 10;
 
     public const TIME_EXPIRED_TOKEN = 23;
 

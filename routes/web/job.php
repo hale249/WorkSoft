@@ -22,7 +22,7 @@ Route::delete('job/{id}/items/{taskId}', [TaskController::class, 'destroy'])->na
 Route::post('ajax/{jobId}/upload-attachment', [JobController::class, 'ajaxUploadAttachment'])->name('jobs.upload-attachment');
 Route::delete('jobs/{jobId}/delete-attachment/{attachmentId}', [JobController::class, 'ajaxDeleteAttachment'])->name('jobs.delete-attachment');
 
-/*Route::get('jobs/{id}/tasks', [JobController::class, 'taskList'])->name('task.list');
-Route::get('jobs/{id}/tasks', [JobController::class, 'taskList'])->name('task.list');
-Route::get('jobs/{id}/tasks', [JobController::class, 'taskList'])->name('task.list');
-Route::get('jobs/{id}/tasks', [JobController::class, 'taskList'])->name('task.list');*/
+Route::post('jobs/{id}/tasks/create', [JobController::class, 'createTask'])->name('task.create');
+Route::get('jobs/{id}/tasks/{taskId}/edit', [JobController::class, 'editTask'])->name('task.edit');
+Route::put('jobs/{id}/tasks/{taskId}/update', [JobController::class, 'updateTask'])->name('task.update');
+Route::get('jobs/{id}/tasks/{taskId}', [JobController::class, 'deleteTask'])->name('task.destroy');

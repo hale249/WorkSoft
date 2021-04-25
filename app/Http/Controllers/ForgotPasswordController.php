@@ -44,7 +44,7 @@ class ForgotPasswordController extends Controller
             dispatch(new SendMail([$request->email], new ResetPasswordMail($token, $request->email)));
         }
 
-        return $this->success('Reset password has been updated successfully');
+        return redirect()->back();
     }
 
     public function checkResetPasswordToken($token)

@@ -18,6 +18,18 @@
                 </div>
                 <div class="card-body">
                     <div class="form-group row">
+                        <label class="col-md-4 form-control-label" for="description">Tên công việc</label>
+
+                        <div class="col-md-8">
+                            @if($job->name)
+                                {{ $job->name }}
+                            @else
+                                @lang('labels.general.empty')
+                            @endif
+                        </div><!--col-->
+                    </div>
+
+                    <div class="form-group row">
                         <label class="col-md-4 form-control-label" for="name">Trạng thái</label>
 
                         <div class="col-md-8">
@@ -58,10 +70,14 @@
                         <label class="col-md-4 form-control-label" for="name">File dính kèm</label>
 
                         <div class="col-md-8">
-{{--                            {{ $job->deadline }}--}}
+                            <a href="{{ asset($job->document_file) }}"> Xem tài liệu</a>
                         </div><!--col-->
                     </div>
-
+                    @if(\Auth::user()->role == 1)
+                    <button type="button" class="btn btn-success" data-toggle="modal" data-target="#editJobDetailModal">
+                        Cập nhật công việc
+                    </button>
+                    @endif
                 </div>
             </div>
         </div>
@@ -73,15 +89,28 @@
         </div>
     </div>
 
-  {{--  <div class="card">
+
+    <div class="card">
         <div class="card-body">
+            <div class="row mb-3">
+                <div class="col-8">
+                    <h4 class="card-title mb-0">
+                        @lang('Danh sách nhiệm vụ')
+                    </h4>
+                </div>
+                <div class="col-4 text-right">
+                    <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createTaskModal"><i
+                            class="fas fa-plus"></i>Tạo nhiệm vụ
+                    </button>
+                </div>
+            </div>
             <div class="table-responsive">
                 <table class="table">
                     <thead>
                     <tr>
                         <td><strong>Tên nhiệm vụ</strong></td>
                         <td><strong>Thời hạn</strong></td>
-                        <td><strong>Trạng thái</strong></td>
+                        <td><strong>Nội dung</strong></td>
                         <td><strong>Hành động</strong></td>
                     </tr>
                     </thead>
@@ -90,21 +119,21 @@
                         <tr>
                             <td>{{ $task->name }}</td>
                             <td>{{ $task->deadline }}</td>
-                            <td><span class="badge badge-pill" style="background-color: {{ $task->status->color }}; color: #000000">{{ $task->status->name }}</span></td>
+                            <td>{{ $task->description }}</td>
                             <td>{!! $task->getActionButtonsAttribute($job->id) !!}</td>
                         </tr>
                     @endforeach
                     </tbody>
                 </table>
             </div>
-            <div class="text-right">
-                {{ $tasks->links() }}
-            </div>
         </div>
-    </div>--}}
+    </div>
 @endsection
 @section('script')
     @include('elements.job.includes.messages')
+    @include('elements.job.modals.edit')
+    @include('elements.job.modals.create_task')
+    @include('elements.job.modals.edit_task')
     <script type="text/javascript" src="{{ asset('js/pages/show-job.js') }}"></script>
     <script type="text/javascript">
         Dropzone.autoDiscover = false;
@@ -150,6 +179,8 @@
             title: '{{ session('error') }}'
         });
         @endif
+
+
     </script>
 @endsection
 

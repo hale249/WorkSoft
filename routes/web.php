@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use \App\Http\Controllers\PreviewController;
 use App\Http\Controllers\ConfirmMeetingController;
+use App\Http\Controllers\ForgotPasswordController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -18,28 +19,33 @@ use App\Http\Controllers\ConfirmMeetingController;
 /**
  * @see \App\Http\Controllers\AuthController::showFormLogin()
  */
-Route::get('login', [AuthController::class, 'showFormLogin'])->name('auth.show-form-login');
+Route::get('login', [AuthController::class, 'showFormLogin'])
+    ->name('auth.show-form-login');
 
 /**
  * @see \App\Http\Controllers\AuthController::login()
  */
-Route::post('login', [AuthController::class, 'login'])->name('auth.login');
+Route::post('login', [AuthController::class, 'login'])
+    ->name('auth.login');
 
 /**
  * @see \App\Http\Controllers\AuthController::logout()
  */
-Route::post('logout',  [AuthController::class, 'logout'])->name('auth.logout');
+Route::post('logout',  [AuthController::class, 'logout'])
+    ->name('auth.logout');
 
-/**
- * @see \App\Http\Controllers\AuthController::showFormRegister()
- */
-Route::get('register', [AuthController::class, 'showFormRegister'])->name('auth.show-form-register');
+// Forgot password
+Route::get('login/forgot-password', [ForgotPasswordController::class, 'showFormEmail'])
+    ->name('show-form-email');
 
-/**
- * @see \App\Http\Controllers\AuthController::register()
- */
-Route::post('register', [AuthController::class, 'register'])->name('auth.register');
+Route::post('login/forgot-password', [ForgotPasswordController::class, 'postEmail'])
+    ->name('postEmail');
 
+Route::get('login/reset/{token}', [ForgotPasswordController::class, 'checkResetPasswordToken'])
+    ->name('getPassword');
+
+Route::post('login/reset-password/{token}', [ForgotPasswordController::class, 'resetPassword'])
+    ->name('updatePassword');
 
 Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/dashboard.php';
@@ -51,12 +57,16 @@ Route::group(['middleware' => 'auth'], function () {
     require __DIR__ . '/web/status.php';
     require __DIR__ . '/web/timetable.php';
 
-/*    Route::get('excel', [\App\Http\Controllers\JobController::class, 'excel'])->name('excel');*/
-
 });
 
-Route::get('preview/meeting-{uuid}', [PreviewController::class, 'meeting'])->name('preview.meeting');
-Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])->name('preview.job');
+Route::get('preview/meeting-{uuid}', [PreviewController::class, 'meeting'])
+    ->name('preview.meeting');
 
-Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])->name('meeting.reject');
-Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])->name('meeting.accept');
+Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])
+    ->name('preview.job');
+
+Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])
+    ->name('meeting.reject');
+
+Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])
+    ->name('meeting.accept');

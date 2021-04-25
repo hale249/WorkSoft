@@ -52,7 +52,7 @@
                                 <tr>
                                     <td>
                                         @if(!empty($job->category))
-                                            <a href="{{ route('category.show', $job->category_id) }}"
+                                            <a href="#"
                                                target="_blank">{{ $job->category->name }}</a>
                                         @endif
                                     </td>
