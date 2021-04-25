@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Helpers\Constant;
 use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
-use App\Helpers\Traits\FileHelperTrait;
 use App\Http\Requests\CategoryStoreRequest;
 use App\Models\Category;
+use App\Models\TimeTable;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use voku\helper\HtmlDomParser;
 
 class CategoryController extends ProtectedController
 {

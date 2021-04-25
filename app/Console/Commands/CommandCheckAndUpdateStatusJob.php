@@ -2,25 +2,27 @@
 
 namespace App\Console\Commands;
 
-use App\Jobs\CrawlerTimetableJob;
-use App\Models\User;
+use App\Helpers\Constant;
+use App\Jobs\CheckAndUpdateStatusJob;
+use App\Models\Job;
+use App\Models\Status;
 use Illuminate\Console\Command;
 
-class SyncTimeatable extends Command
+class CommandCheckAndUpdateStatusJob extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'user:sync-timeatabel';
+    protected $signature = 'job:check-deadline-status';
 
     /**
      * The console command description.
      *
      * @var string
      */
-    protected $description = 'Cap nhat thoi khoa bieu';
+    protected $description = 'Cap nhat nhung cong viec qua han chua';
 
     /**
      * Create a new command instance.
@@ -39,10 +41,11 @@ class SyncTimeatable extends Command
      */
     public function handle()
     {
-        $users = User::query()->select(['id', 'staff_code', 'name'])->whereNotNull('staff_code')->get();
+        $status = Status::query()->where('name', Constant::STATUS_COMPLETED)->first();
+        $jobs = Job::query()->where('status_id', '!=', $status->id)->get();
 
-        foreach ($users as $user) {
-            dispatch(new CrawlerTimetableJob($user));
+        foreach ($jobs as $job) {
+            dispatch(new CheckAndUpdateStatusJob($job));
         }
         return true;
     }

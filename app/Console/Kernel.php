@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CommandCheckAndUpdateStatusJob;
 use App\Console\Commands\PermissionsRefresh;
+use App\Console\Commands\SyncTimeatable;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -14,7 +16,8 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        PermissionsRefresh::class
+        SyncTimeatable::class,
+        CommandCheckAndUpdateStatusJob::class
     ];
 
     /**
@@ -25,7 +28,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+         $schedule->command('user:sync-timeatabel')->monthly();
+         $schedule->command('job:check-deadline-status')->daily();
     }
 
     /**

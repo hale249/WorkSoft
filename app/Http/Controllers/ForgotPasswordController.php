@@ -83,9 +83,9 @@ class ForgotPasswordController extends Controller
             ->delete();
 
         if (!empty($user)) {
-            return redirect()->route('login')->with('success', 'Forgot password success.');
+            return redirect()->route('auth.login')->with('success', 'Forgot password success.');
         }
 
-        return redirect('login')->with('errors', 'Your password has been changed!');
+        return redirect('auth.login')->with('errors', 'Your password has been changed!');
     }
 }
