@@ -17,11 +17,7 @@
         "laravel/telescope": "^4.4",
         "laravel/tinker": "^2.0",
         "league/flysystem-aws-s3-v3": "~1",
-        "maatwebsite/excel": "^3.1",
-        "microsoft/microsoft-graph": "^1.29",
-        "nao-pon/flysystem-google-drive": "~1.1",
         "spatie/crawler": "^6.0",
-        "spatie/laravel-permission": "^3.13",
         "sunra/php-simple-html-dom-parser": "^1.5",
         "voku/portable-utf8": "^5.4",
         "voku/simple_html_dom": "^4.7"
