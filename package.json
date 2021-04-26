@@ -9,7 +9,12 @@
         "prod": "npm run production",
         "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
         "heroku-postbuild": "npm run prod",
-        "postinstall": "npm run production"
+        "postinstall": "npm run production",
+        "start": "npm run prod"
+    },
+    "engines": {
+        "node": "14.3.0",
+        "npm": "6.14.8"
     },
     "devDependencies": {
         "axios": "^0.19",
