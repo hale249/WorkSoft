@@ -21,7 +21,7 @@ class DashboardController extends ProtectedController
         $queryJob = Job::query();
 
         // lấy năm tạo job
-        $createdYearJobs = $queryJob->select(DB::raw('YEAR(created_at) as years'))->get();
+        $createdYearJobs = $queryJob->select(DB::raw('extract(years from created_at)  as years'))->get();
 
         $yearJob = [];
         foreach ($createdYearJobs as $job) {
