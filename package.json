@@ -12,10 +12,6 @@
         "postinstall": "npm run production",
         "start": "npm run prod"
     },
-    "engines": {
-        "node": "14.3.0",
-        "npm": "6.14.8"
-    },
     "devDependencies": {
         "axios": "^0.19",
         "cross-env": "^7.0",
