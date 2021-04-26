@@ -31,12 +31,12 @@ class DashboardController extends ProtectedController
 
         $statuses = Status::query()->get()->pluck('name', 'id')->toArray();
 
-
+        $statusApprovalId = Status::query()->where('name', Constant::STATUS_APPROVAL)->first()->id;
         if ($this->currentUser->role === 1) {
 
             // thống kê
             $countJob = $queryJob->whereYear('created_at', $requestYear)->count();
-            $countJobCompleted = $queryJob->where('status_id', Constant::STATUS_APPROVAL)
+            $countJobCompleted = $queryJob->where('status_id', $statusApprovalId)
                 ->whereYear('created_at', $requestYear)
                 ->count();
 
