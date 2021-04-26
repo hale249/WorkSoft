@@ -50,7 +50,7 @@ class DashboardController extends ProtectedController
             $sidebarMeeting = $queryMeetingUpcoming->first();
             $countMeetingUpcoming = $queryMeetingUpcoming->count();
 
-            $sidebarJob = $queryJob->where('status_id', Constant::STATUS_APPROVAL)
+            $sidebarJob = $queryJob->where('status_id', $statusApprovalId)
                 ->whereYear('created_at', $requestYear)
                 ->orderBy('deadline', 'asc')->first();
 
