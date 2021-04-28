@@ -17,6 +17,7 @@ class CreateStatusesTable extends Migration
             $table->increments('id');
             $table->string('name');
             $table->string('description')->nullable();
+            $table->string('color', 10)->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

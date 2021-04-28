@@ -221,10 +221,16 @@ class JobController extends ProtectedController
             'finish_mess' => 'required',
         ]);
 
+        $statusIdApproval = Status::query()->where('name', Constant::STATUS_APPROVAL)->first()->id;
+
         $job = Job::find($id);
         $job->update([
-            'finish_mess' => $request->finish_mess
+            'finish_mess' => $request->finish_mess,
+            'status_id'=> $statusIdApproval
         ]);
+
+        $users = User::query()->where('id', $job->user_id)->first();
+
 
         return redirect()->back()->with('message','Gửi xác nhận nội dung công việc thành công');
     }

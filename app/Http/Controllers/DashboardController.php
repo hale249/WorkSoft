@@ -20,8 +20,9 @@ class DashboardController extends ProtectedController
 
         $queryJob = Job::query();
 
+
         // lấy năm tạo job
-        $createdYearJobs = $queryJob->select(DB::raw('extract(years from created_at)  as years'))->get();
+        $createdYearJobs = $queryJob->select(DB::raw('YEAR(created_at)  as years'))->get();
 
         $yearJob = [];
         foreach ($createdYearJobs as $job) {
@@ -42,17 +43,16 @@ class DashboardController extends ProtectedController
 
             $countUser = User::query()->whereYear('created_at', $requestYear)->count();
 
-            $queryMeetingUpcoming = Meeting::query()
+            $meetingUpcomings = Meeting::query()
                 ->whereDate('date_meeting', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)
-                ->orderBy('date_meeting', 'asc');
+                ->orderBy('date_meeting', 'asc')->get();
 
-            $sidebarMeeting = $queryMeetingUpcoming->first();
-            $countMeetingUpcoming = $queryMeetingUpcoming->count();
+            $countMeetingUpcoming = $meetingUpcomings->count();
 
-            $sidebarJob = $queryJob->where('status_id', $statusApprovalId)
+            $jobApprovals = Job::query()->where('status_id', $statusApprovalId)
                 ->whereYear('created_at', $requestYear)
-                ->orderBy('deadline', 'asc')->first();
+                ->orderBy('deadline', 'asc')->get();
 
             // Trạng thái công việc
             $statusJob = DB::table('active_jobs')
@@ -102,11 +102,6 @@ class DashboardController extends ProtectedController
                 array_push($dataSetOutOfDate, $item[Constant::STATUS_OUT_OF_DATE]);
             }
 
-            $responseStatus = [];
-            foreach ($statuses as $statusId=>$statusName) {
-                $responseStatus[] = $statusJob->where('status_id', $statusId)->count();
-            }
-
             $jobProgress = [
                 'data' => $label,
                 'label' => $labelStatus,
@@ -123,7 +118,7 @@ class DashboardController extends ProtectedController
                 'meetingUpcoming' => $countMeetingUpcoming
             ];
 
-            return view('elements.dashboard.index', compact('jobProgress', 'statistical', 'listYears', 'responseStatus', 'sidebarMeeting', 'sidebarJob'));
+            return view('elements.dashboard.index', compact('jobProgress', 'statistical', 'listYears', 'meetingUpcomings', 'jobApprovals'));
         } else {
 
             $userId = $this->currentUser->id;

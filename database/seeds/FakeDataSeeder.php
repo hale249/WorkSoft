@@ -24,22 +24,26 @@ class FakeDataSeeder extends Seeder
     {
         Status::query()->updateOrCreate([
             'name' => Constant::STATUS_START,
-            'description' => 'Công việc đang thực hiện'
+            'description' => 'Công việc đang thực hiện',
+            'color' => '#00bfff',
         ]);
 
         Status::query()->updateOrCreate([
             'name' => Constant::STATUS_COMPLETED,
-            'description' => 'Công việc đã hoàn thành'
+            'description' => 'Công việc đã hoàn thành',
+            'color' => '#00ff00',
         ]);
 
         Status::query()->updateOrCreate([
             'name' => Constant::STATUS_APPROVAL,
-            'description' => 'Công việc đang chờ phê duyệt'
+            'description' => 'Công việc đang chờ phê duyệt',
+            'color' => '#ff8000',
         ]);
 
         Status::query()->updateOrCreate([
             'name' => Constant::STATUS_OUT_OF_DATE,
-            'description' => 'Công việc quá hạn'
+            'description' => 'Công việc quá hạn',
+            'color' => '#ff0000',
         ]);
 
     }

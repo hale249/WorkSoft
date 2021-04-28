@@ -116,11 +116,15 @@ class MeetingController extends ProtectedController
 
     public function viewed($id)
     {
-        $meetings =  MeetingUser::query()
+        $meetings = MeetingUser::query()
             ->where('is_embark', 1)
             ->where('meeting_id', $id)
             ->get();
 
-        return view('elements.meeting.viewed', compact('meetings'));
+        $users =  MeetingUser::query()
+            ->where('meeting_id', $id)
+            ->get();
+
+        return view('elements.meeting.viewed', compact('meetings', 'users'));
     }
 }

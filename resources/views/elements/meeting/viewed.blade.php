@@ -23,12 +23,12 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @if(count($meetings) > 0)
-                        @foreach($meetings as $key=>$meeting)
+                        @if(count($users) > 0)
+                        @foreach($users as $key=>$user)
                             <tr>
                                 <td>{{ $key + 1 }}</td>
-                                <td>{{ $meeting->user ? $meeting->user->name : '' }}</td>
-                                <td>{{ $meeting->reply_at }}</td>
+{{--                                <td>{{ $user->user ? $user->user->name : '' }}</td>--}}
+                                <td>{{ $user->reply_at }}</td>
                             </tr>
                         @endforeach
                         @else

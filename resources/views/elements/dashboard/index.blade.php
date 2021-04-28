@@ -3,20 +3,6 @@
 @section('title', __('Tổng quan'))
 
 @section('content')
-    <div class="card">
-        <div class="card-body btn btn-block text-danger font-weight-bold">
-            <div class="">
-                <p>Cuộc họp sắp tới</p>
-                <span>Ngày: {{ $sidebarMeeting->date_meeting ?? '' }} - {{ $sidebarMeeting->name ?? '' }}</span>
-            </div>
-            @if(!empty($sidebarJob->name))
-            <div class="">
-                <p>Công việc cần kiểm duyệt</p>
-                <span><a href="{{ !empty($sidebarJob->name) ? route('jobs.show', $sidebarJob->id) : '' }}">{{ $sidebarJob->name ?? '' }}</a></span>
-            </div>
-            @endif
-        </div>
-    </div>
     <div class="card mt-3">
         <div class="card-body">
             <form action="{{ route('dashboard.index') }}" method="GET" class="form-inline my-3">
@@ -149,34 +135,57 @@
                     </div>
                 </div>
 
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Trạng thái công việc</h6>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-pie pt-4 pb-2">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="myPieChart" width="486" height="245" class="chartjs-render-monitor"
-                                        style="display: block; width: 486px; height: 245px;"></canvas>
-                            </div>
-                        </div>
+            </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Công việc</th>
+                                <th scope="col">Người thực hiện</th>
+                                <th scope="col">View</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($jobApprovals as $key=>$job)
+                            <tr>
+                                <th scope="row">{{ $key + 1 }}</th>
+                                <td>{{ $job->name }}</td>
+                                <td>{{ isset($job->user) ? $job->user->name : '' }}</td>
+                                <td><a href="{{ route('jobs.show', $job->id) }}">xem</a></td>
+                            </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="table-responsive">
+                        <table class="table">
+                            <thead class="thead-light">
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Tên cuộc họp</th>
+                                <th scope="col">Thời gian hợp</th>
+                                <th scope="col">Giờ hợp</th>
+                                <th scope="col">View</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            @foreach($meetingUpcomings as $key=>$meeting)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $meeting->name }}</td>
+                                    <td>{{ $meeting->date_meeting }}</td>
+                                    <td>{!! $meeting->time_etart_end !!}</td>
+                                    <td><a href="">xem</a></td>
+                                </tr>
+                            @endforeach
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -184,27 +193,7 @@
     </div>
 @endsection
 @section('script')
-    {{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
     <script type="text/javascript">
-        var dataStatus = '{!! json_encode($responseStatus) !!}';
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart2 = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    '{{ \App\Helpers\Constant::STATUS_START }}',
-                    '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
-                    '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
-                    '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}'
-                ],
-                datasets: [{
-                    data: dataStatus,
-                    backgroundColor: ['aqua', 'blue', 'lime', 'red'],
-                    hoverBackgroundColor: ['aqua', 'blue', 'lime', 'red'],
-                }],
-            },
-        });
-
         var dataLabels = {!! json_encode($jobProgress['data']) !!};
         var dataSetStart = {!! json_encode($jobProgress['start']) !!};
         var dataSetApproval = {!! json_encode($jobProgress['approval']) !!};
