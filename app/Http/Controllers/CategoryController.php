@@ -42,19 +42,7 @@ class CategoryController extends ProtectedController
 
     public function store(CategoryStoreRequest $request)
     {
-        $data = $request->only([
-            'name',
-            'description',
-        ]);
-        $category = Category::query()
-            ->create($data);
-        if (empty($category)) {
-            return $this->error('Thêm thất bại');
-        }
-
-        return $this->success('Thêm danh mục thành công', $category);
-    }
-
+    } 
     public function edit($id)
     {
         $category = Category::query()->findOrFail($id);
