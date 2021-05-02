@@ -32,6 +32,13 @@ class DashboardController extends ProtectedController
 
         $statuses = Status::query()->get()->pluck('name', 'id')->toArray();
 
+        $labelStatus = [
+            Constant::STATUS_START,
+            Constant::STATUS_APPROVAL,
+            Constant::STATUS_COMPLETED,
+            Constant::STATUS_OUT_OF_DATE,
+        ];
+
         $statusApprovalId = Status::query()->where('name', Constant::STATUS_APPROVAL)->first()->id;
         if ($this->currentUser->role === 1) {
 
@@ -82,12 +89,6 @@ class DashboardController extends ProtectedController
             $dataSetCompleted = [];
             $dataSetApproval = [];
             $dataSetOutOfDate = [];
-            $labelStatus = [
-                Constant::STATUS_START,
-                Constant::STATUS_APPROVAL,
-                Constant::STATUS_COMPLETED,
-                Constant::STATUS_OUT_OF_DATE,
-            ];
             foreach ($users as $userId => $userName) {
                 foreach ($statuses as $statusId => $statusName) {
                     $response[$userName][$statusName] = $jobUser->where('user_id', $userId)->where('status_id', $statusId)->count();
@@ -145,18 +146,6 @@ class DashboardController extends ProtectedController
                 ->whereDate('deadline', '>=', Carbon::now()->toDateString())
                 ->whereYear('created_at', $requestYear)->count();
 
-
-            // Trạng thái công việc
-            $statusJob = DB::table('active_jobs')
-                ->select([
-                    'statuses.name as name',
-                    'statuses.id as status_id',
-                ])
-                ->join('statuses', 'statuses.id', '=', 'status_id')
-                ->where('active_jobs.user_id', $userId)
-                ->whereYear('active_jobs.created_at', $requestYear)
-                ->get();
-
             // Thông kê tiến dộ công việc
             $jobUser = DB::table('active_jobs')
                 ->join('statuses', 'active_jobs.status_id', '=', 'statuses.id')
@@ -170,14 +159,8 @@ class DashboardController extends ProtectedController
                 ->get();
 
             $response = [];
-
             foreach ($statuses as $statusId => $statusName) {
                 $response[] = $jobUser->where('user_id', $userId)->where('status_id', $statusId)->count();
-            }
-
-            $responseStatus = [];
-            foreach ($statuses as $statusId=>$statusName) {
-                $responseStatus[] = $statusJob->where('status_id', $statusId)->count();
             }
 
             $statistical = [
@@ -187,7 +170,17 @@ class DashboardController extends ProtectedController
                 'meetingUpcoming' => $countMeetingUpcoming
             ];
 
-            return view('elements.dashboard.user_index', compact('listYears', 'statistical', 'response', 'responseStatus'));
+
+            $chartJobUser = [
+                'data' => [$this->currentUser->name],
+                'start' => $response[0],
+                'approval' => $response[1],
+                'completed' => $response[2],
+                'out_of_date' => $response[3],
+            ];
+
+            return view('elements.dashboard.user_index', compact('listYears', 'statistical', 'chartJobUser'));
         }
     }
+
 }

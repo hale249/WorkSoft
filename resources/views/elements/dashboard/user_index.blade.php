@@ -135,79 +135,46 @@
                     </div>
                 </div>
 
-                <!-- Pie Chart -->
-                <div class="col-xl-4 col-lg-5">
-                    <div class="card shadow mb-4">
-                        <!-- Card Header - Dropdown -->
-                        <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                            <h6 class="m-0 font-weight-bold text-primary">Trạng thái công việc</h6>
-                            <div class="dropdown no-arrow">
-                                <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <!-- Card Body -->
-                        <div class="card-body">
-                            <div class="chart-pie pt-4 pb-2">
-                                <div class="chartjs-size-monitor">
-                                    <div class="chartjs-size-monitor-expand">
-                                        <div class=""></div>
-                                    </div>
-                                    <div class="chartjs-size-monitor-shrink">
-                                        <div class=""></div>
-                                    </div>
-                                </div>
-                                <canvas id="myPieChart" width="486" height="245" class="chartjs-render-monitor"
-                                        style="display: block; width: 486px; height: 245px;"></canvas>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
 @endsection
 @section('script')
-    {{--    <script src="https://startbootstrap.github.io/startbootstrap-sb-admin-2/js/demo/chart-area-demo.js"></script>--}}
     <script type="text/javascript">
-        var dataStatus = '{!! json_encode($responseStatus) !!}';
-        var jobProgress = '{!! json_encode($response) !!}';
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart2 = new Chart(ctx, {
-            type: 'doughnut',
-            data: {
-                labels: [
-                    '{{ \App\Helpers\Constant::STATUS_START }}',
-                    '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
-                    '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
-                    '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}'
-                ],
-                datasets: [{
-                    data: dataStatus,
-                    backgroundColor: ['aqua', 'blue', 'lime', 'red'],
-                    hoverBackgroundColor: ['aqua', 'blue', 'lime', 'red'],
-                }],
-            },
-        });
+        var dataLabels = {!! json_encode($chartJobUser['data']) !!};
+        var dataSetStart = {!! json_encode($chartJobUser['start']) !!};
+        var dataSetApproval = {!! json_encode($chartJobUser['approval']) !!};
+        var dataSetCompleted = {!! json_encode($chartJobUser['completed']) !!};
+        var dataSetOutOfDate = {!! json_encode($chartJobUser['out_of_date']) !!};
 
         var ctx1 = document.getElementById("myAreaChart");
         var myPieChart = new Chart(ctx1, {
             type: 'bar',
-            labels: [
-                '{{ \App\Helpers\Constant::STATUS_START }}',
-                '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
-                '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
-                '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}'
-            ],
-            datasets: [
-                {
-                    fillColor: "#79D1CF",
-                    strokeColor: "#79D1CF",
-                    data: jobProgress
-                }
-            ]
+            data: {
+                labels: dataLabels,
+                datasets: [
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_START }}',
+                        backgroundColor: "aqua",
+                        data: dataSetStart
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_APPROVAL }}',
+                        backgroundColor: "blue",
+                        data: dataSetApproval
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_COMPLETED }}',
+                        backgroundColor: "lime",
+                        data: dataSetCompleted
+                    },
+                    {
+                        label: '{{ \App\Helpers\Constant::STATUS_OUT_OF_DATE }}',
+                        backgroundColor: "red",
+                        data: dataSetOutOfDate
+                    }
+                ]
+            },
         });
     </script>
 @endsection

@@ -203,6 +203,7 @@
         var ctx1 = document.getElementById("myAreaChart");
         var myPieChart = new Chart(ctx1, {
             type: 'bar',
+            borderWidth: 1,
             data: {
                 labels: dataLabels,
                 datasets: [
