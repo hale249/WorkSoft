@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Traits\Attributes\MeetingAttribute;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -14,16 +15,16 @@ class Meeting extends Model
 
     protected $guarded = [];
 
-    public $appends = ['count_user_join', 'sent_count_meeting'];
+    protected $appends = ['count_user_join', 'count_user_attend', 'sent_count_meeting'];
 
-    public function users()
+    public function meetingUsers()
     {
-        return $this->hasMany(MeetingUser::class, 'user_id', 'id');
+        return $this->hasMany(MeetingUser::class, 'meeting_id', 'id');
     }
 
     public function getTimeStartEndAttribute()
     {
-        return $this->time_start . ' - ' . $this->time_end;
+        return Carbon::createFromFormat('H:i:s',$this->time_start)->format('h:i') . ' - ' . Carbon::createFromFormat('H:i:s',$this->time_end)->format('h:i');
     }
 
     public function auth()
@@ -42,6 +43,18 @@ class Meeting extends Model
         $dem = 0;
         foreach ($userJoins as $meeting) {
             if ($meeting->is_embark) {
+                $dem ++;
+            }
+        }
+        return $dem;
+    }
+
+    public function getCountUserAttendAttribute()
+    {
+        $userJoins = $this->meetingUser;
+        $dem = 0;
+        foreach ($userJoins as $meeting) {
+            if ($meeting->is_attend) {
                 $dem ++;
             }
         }

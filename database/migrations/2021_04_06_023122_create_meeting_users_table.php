@@ -14,6 +14,7 @@ class CreateMeetingUsersTable extends Migration
     public function up()
     {
         Schema::create('meeting_users', function (Blueprint $table) {
+            $table->id();
             $table->unsignedInteger('meeting_id');
             $table->unsignedInteger('user_id');
             $table->boolean('is_attend')->default(0)->comment('Xác nhận gửi email');

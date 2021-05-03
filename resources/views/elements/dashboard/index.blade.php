@@ -150,14 +150,22 @@
                             </tr>
                             </thead>
                             <tbody>
-                            @foreach($jobApprovals as $key=>$job)
-                            <tr>
-                                <th scope="row">{{ $key + 1 }}</th>
-                                <td>{{ $job->name }}</td>
-                                <td>{{ isset($job->user) ? $job->user->name : '' }}</td>
-                                <td><a href="{{ route('jobs.show', $job->id) }}">xem</a></td>
-                            </tr>
-                            @endforeach
+                            @if(count($jobApprovals) > 0)
+                                @foreach($jobApprovals as $key=>$job)
+                                    <tr>
+                                        <th scope="row">{{ $key + 1 }}</th>
+                                        <td>{{ $job->name }}</td>
+                                        <td>{{ isset($job->user) ? $job->user->name : '' }}</td>
+                                        <td><a href="{{ route('jobs.show', $job->id) }}">xem</a></td>
+                                    </tr>
+                                @endforeach
+                            @else
+                                <tr class="table-info">
+                                    <td colspan="4" class="text-center">
+                                        Không có công việc cần phê duyệt
+                                    </td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>
@@ -175,6 +183,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                            @if(count($meetingUpcomings) > 0)
                             @foreach($meetingUpcomings as $key=>$meeting)
                                 <tr>
                                     <th scope="row">{{ $key + 1 }}</th>
@@ -184,6 +193,13 @@
                                     <td><a href="">xem</a></td>
                                 </tr>
                             @endforeach
+                            @else
+                                <tr class="table-info">
+                                    <td colspan="5" class="text-center">
+                                        Không có cuộc họp sắp tới
+                                    </td>
+                                </tr>
+                            @endif
                             </tbody>
                         </table>
                     </div>

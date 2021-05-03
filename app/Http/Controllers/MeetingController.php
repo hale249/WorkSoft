@@ -116,15 +116,33 @@ class MeetingController extends ProtectedController
 
     public function viewed($id)
     {
-        $meetings = MeetingUser::query()
-            ->where('is_embark', 1)
-            ->where('meeting_id', $id)
-            ->get();
+        $meetings = Meeting::query()->where('id', $id)->with('meetingUsers', 'meetingUsers.user')->first();
 
-        $users =  MeetingUser::query()
-            ->where('meeting_id', $id)
-            ->get();
+        $countUserJoin = MeetingUser::query()->where('meeting_id', $id)
+            ->where('is_embark', 1)->count();
 
-        return view('elements.meeting.viewed', compact('meetings', 'users'));
+        return view('elements.meeting.viewed', compact('meetings', 'countUserJoin', 'id'));
+    }
+
+    public function attend(Request $request, $id, $userId)
+    {
+        $meetingUser = MeetingUser::query()->where('meeting_id', $id)
+            ->where('user_id', $userId)->first();
+
+        if ($request->is_attend == 'on') {
+            $isAttend = 1;
+        } else {
+            $isAttend = 0;
+        }
+
+        $meeting = MeetingUser::find($meetingUser->id);
+
+        $meeting->update([
+            'is_attend' => $isAttend
+        ]);
+
+        return response()->json([
+            'success' => 'Cap nhat thanh cong'
+        ]);
     }
 }

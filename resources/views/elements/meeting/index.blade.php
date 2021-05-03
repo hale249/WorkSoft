@@ -30,6 +30,7 @@
                             <td><strong>Ngày họp</strong></td>
                             <td><strong>Thời gian họp</strong></td>
                             <td><strong>Số lượng đã gửi</strong></td>
+                            <td><strong>Thành viên xác nhân tham gia</strong></td>
                             <td><strong>Tổng số người tham gia</strong></td>
                             <td><strong>Hành động</strong></td>
                         </tr>
@@ -42,6 +43,7 @@
                                 <td>{!! $meeting->time_start_end !!}</td>
                                 <td>{!! $meeting->sent_count_meeting !!}</td>
                                 <td>{!! $meeting->count_user_join !!}</td>
+                                <td>{!! $meeting->count_user_attend !!}</td>
                                 <td>{!! $meeting->action_buttons !!}</td>
                             </tr>
                         @endforeach

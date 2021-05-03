@@ -8,3 +8,5 @@ Route::resource('meeting', 'MeetingController')->except(['show']);
 Route::get('meeting/{id}/view', [MeetingController::class, 'viewed'])->name('meeting.viewed');
 
 Route::get('meeting/{id}/reply/{userId}', [MeetingController::class, 'reply'])->name('meeting.reply');
+
+Route::post('meeting/{id}/attend/{userId}', [MeetingController::class, 'attend'])->name('meeting.attend');
