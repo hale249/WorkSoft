@@ -1,12 +1,12 @@
 
 <div class="card-header">
-    <h5 class="text-muted">ATTACHMENTS</h5>
+    <h5 class="text-muted">File dính kèm</h5>
 </div>
 <div class="card-body">
     <div class="form-group">
         <form action="{{ route('jobs.upload-attachment', ['jobId' => $job->id]) }}" class="dropzone dz-clickable" id="job-attachments">
             <div class="dz-default dz-message">
-                <button class="dz-button" type="button">Drop files here to upload</button>
+                <button class="dz-button" type="button">Thả file vào đây để tải lên</button>
             </div>
         </form>
     </div>
@@ -32,7 +32,7 @@
                         <td>{{ $attachment->created_at->format('dd-m-Y') }}</td>
                         <td>{{ !empty($attachment->updatedBy) ? $attachment->updatedBy->name : '' }}</td>
                         <td>
-                            <a href="{{ $attachment->url }}" class="btn btn-success btn-sm" title="Open file in new tab"
+                            <a href="{{ $attachment->file_path }}" class="btn btn-success btn-sm" title="Open file in new tab"
                                target="_blank"><i class="fas fa-info-circle"></i></a>
                             <a href=""
                                data-trans-button-cancel="{{ trans('labels.general.cancel') }}"
@@ -45,7 +45,7 @@
             @else
                 <tr>
                     <td colspan="5">
-                        <p class="text-muted font-italic">There is no documents attached to this job.</p>
+                        <p class="text-muted font-italic">Không có tài liệu nào kèm theo công việc này.</p>
                     </td>
                 </tr>
             @endif

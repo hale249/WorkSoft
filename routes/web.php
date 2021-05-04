@@ -68,5 +68,8 @@ Route::get('preview/job-{uuid}', [PreviewController::class, 'job'])
 Route::get('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'reject'])
     ->name('meeting.reject');
 
+Route::post('meeting/{meetingId}/reject/{userId}', [ConfirmMeetingController::class, 'sendReject'])
+    ->name('meeting.send-reject');
+
 Route::get('meeting/{meetingId}/accept/{userId}', [ConfirmMeetingController::class, 'accept'])
     ->name('meeting.accept');

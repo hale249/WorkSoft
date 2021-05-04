@@ -24,8 +24,8 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button class="btn btn-primary" type="submit" id="btn-update-finish-save">Save</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                    <button class="btn btn-primary" type="submit" id="btn-update-finish-save">Gửi</button>
                 </div>
             </form>
         </div>

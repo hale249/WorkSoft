@@ -5,10 +5,11 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Đồng ý - HUMG</title>
+    <title>Đồng ý cuộc họp - HUMG</title>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
 </head>
 <body>
         <h3>Đồng ý cuộc họp</h3>
-        <a href="/">Quay ve trang chu</a>
+        <a href="/">Quay về trang chủ</a>
 </body>
 </html>

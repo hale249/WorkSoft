@@ -26,6 +26,7 @@
                     <table class="table">
                         <thead>
                         <tr>
+                            <td><strong>STT</strong></td>
                             <td><strong>Tên cuộc họp</strong></td>
                             <td><strong>Ngày họp</strong></td>
                             <td><strong>Thời gian họp</strong></td>
@@ -38,6 +39,7 @@
                         <tbody>
                         @foreach($meetings as $meeting)
                             <tr>
+                                <td>{{ $meeting->id }}</td>
                                 <td>{{ $meeting->name }}</td>
                                 <td>{{ $meeting->date_meeting }}</td>
                                 <td>{!! $meeting->time_start_end !!}</td>

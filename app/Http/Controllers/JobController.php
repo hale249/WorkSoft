@@ -7,9 +7,12 @@ use App\Helpers\Helper;
 use App\Helpers\ResponseTrait;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateJobRequest;
+use App\Jobs\ApprovalMessJob;
 use App\Jobs\SendMail;
+use App\Mail\ApprovalMess;
 use App\Mail\EmailAssignJob;
 use App\Mail\EmailMeeting;
+use App\Mail\SendMailApproval;
 use App\Models\Category;
 use App\Models\Job;
 use App\Models\JobAttachment;
@@ -229,8 +232,9 @@ class JobController extends ProtectedController
             'status_id'=> $statusIdApproval
         ]);
 
-        $users = User::query()->where('id', $job->user_id)->first();
+        $user = User::query()->where('id', $job->user_id)->first();
 
+        Mail::to($user->email)->send(new ApprovalMess($user->name, $job));
 
         return redirect()->back()->with('message','Gửi xác nhận nội dung công việc thành công');
     }

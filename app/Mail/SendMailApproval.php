@@ -13,9 +13,9 @@ class SendMailApproval extends Mailable
 {
     use Queueable, SerializesModels;
 
-    protected $user;
+    public $user;
 
-    protected $job;
+    public $job;
     /**
      * Create a new message instance.
      *

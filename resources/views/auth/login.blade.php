@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('title')
+    @lang('labels.general.login')
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-lg-12">

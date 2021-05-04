@@ -287,7 +287,7 @@
                                                     <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Thời gian diễn ra cuộc họp</span></strong></p>
                                                     <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Ngày {{ $meeting->date_meeting }}</span></strong></p>
                                                     <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">Thời gian</span></strong></p>
-                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">{{ $meeting->time_start }} - {{ $meeting->time_end }} </span></strong></p>
+                                                    <p style="font-size: 14px; line-height: 160%;"><strong><span style="font-size: 24px; line-height: 38.4px;">{!! $meeting->time_start_end !!} </span></strong></p>
                                                 </div>
 
                                             </td>

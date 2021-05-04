@@ -1,5 +1,9 @@
 @extends('layouts.auth')
 
+@section('title')
+    @lang('Lấy lại mật khẩu')
+@endsection
+
 @section('content')
     <div class="row w-100 mx-0 auth-page">
         <div class="auth-form-wrapper px-4 py-5">
