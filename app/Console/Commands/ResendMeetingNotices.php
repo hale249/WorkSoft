@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CronJobSendToMeeting;
 use Illuminate\Console\Command;
 
 class ResendMeetingNotices extends Command
@@ -37,6 +38,7 @@ class ResendMeetingNotices extends Command
      */
     public function handle()
     {
+        dispatch(new CronJobSendToMeeting());
         return 0;
     }
 }

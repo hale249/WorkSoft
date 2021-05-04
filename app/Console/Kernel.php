@@ -30,6 +30,8 @@ class Kernel extends ConsoleKernel
     {
          $schedule->command('user:sync-timeatabel')->monthly();
          $schedule->command('job:check-deadline-status')->daily();
+         $schedule->command('meeting:resend-notice')->hourly();
+         $schedule->command('job:resend-notice')->hourly();
     }
 
     /**

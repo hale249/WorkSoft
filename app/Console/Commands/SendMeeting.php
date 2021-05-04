@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\CronJobSendToMeeting;
 use Illuminate\Console\Command;
 
 class SendMeeting extends Command
@@ -37,6 +38,7 @@ class SendMeeting extends Command
      */
     public function handle()
     {
+        dispatch(new ($user));
         return 0;
     }
 }

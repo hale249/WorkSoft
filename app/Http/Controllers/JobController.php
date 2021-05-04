@@ -10,6 +10,7 @@ use App\Http\Requests\CreateJobRequest;
 use App\Jobs\ApprovalMessJob;
 use App\Jobs\SendMail;
 use App\Mail\ApprovalMess;
+use App\Mail\CustomerMail;
 use App\Mail\EmailAssignJob;
 use App\Mail\EmailMeeting;
 use App\Mail\SendMailApproval;
@@ -128,6 +129,11 @@ class JobController extends ProtectedController
         ]);
         $data['created_by'] = $userId;
         $job->update($data);
+
+        $status = Status::query()->where('id', $request->status_id)->first();
+        $text = 'Công việc của bạn đã đc xác minh. Trạng thái đang là : ' . $status->name;
+        $userJob = User::query()->where('id', $request->id)->first();
+        Mail::to($userJob->email)->send(new CustomerMail($userJob->name, $job, $text, 'Công việc xác minh', 200));
 
         return redirect()->back();
     }

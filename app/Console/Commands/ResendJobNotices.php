@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Jobs\DeadlineActiveJob;
 use Illuminate\Console\Command;
 
 class ResendJobNotices extends Command
@@ -37,6 +38,7 @@ class ResendJobNotices extends Command
      */
     public function handle()
     {
+        dispatch(new DeadlineActiveJob());
         return 0;
     }
 }

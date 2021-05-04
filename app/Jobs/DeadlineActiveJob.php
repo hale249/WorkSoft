@@ -3,8 +3,10 @@
 namespace App\Jobs;
 
 use App\Helpers\Constant;
+use App\Mail\CustomerMail;
 use App\Models\Job;
 use App\Models\Status;
+use App\Models\User;
 use App\Notifications\CustomSendNotify;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -14,6 +16,7 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use Ramsey\Collection\Collection;
 
 class DeadlineActiveJob implements ShouldQueue
@@ -42,8 +45,8 @@ class DeadlineActiveJob implements ShouldQueue
             foreach ($jobs as $job) {
                 try {
                     if (($job->deadline) - Carbon::now()->toDateString() == 2) {
-                        $users = $job->user_id;
-                        dispatch(new CustomSendNotify('Bạn có cuộc họp dien ra lúc'));
+                        $user = User::query()->where('id', $job->user_id)->first();
+                        Mail::to($user->email)->send(new CustomerMail($user->name, $job));
                     }
                 }  catch (\Exception $exception) {
                     Log::error($exception->getMessage());
