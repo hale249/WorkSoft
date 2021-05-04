@@ -136,6 +136,87 @@
                 </div>
 
             </div>
+
+            <div class="row">
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Công việc cần phê duyệt và công việc đang làm</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Công việc</th>
+                                        <th scope="col">Người thực hiện</th>
+                                        <th scope="col">Trạng thái</th>
+                                        <th scope="col">View</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($jobApprovals) > 0)
+                                        @foreach($jobApprovals as $key=>$job)
+                                            <tr>
+                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <td>{{ $job->name }}</td>
+                                                <td>{{ isset($job->user) ? $job->user->name : '' }}</td>
+                                                <td>{{ isset($job->status) ? $job->status->name : '' }}</td>
+                                                <td><a href="{{ route('jobs.show', $job->id) }}" class="btn btn-primary">Xem</a></td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr class="table-info">
+                                            <td colspan="4" class="text-center">
+                                                Không có công việc cần phê duyệt
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5>Cuộc họp sắp diễn ra</h5>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="thead-light">
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Tên cuộc họp</th>
+                                        <th scope="col">Thời gian họp</th>
+                                        <th scope="col">Giờ họp</th>
+                                        <th scope="col">View</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    @if(count($meetingUpcomings) > 0)
+                                        @foreach($meetingUpcomings as $key=>$meeting)
+                                            <tr>
+                                                <th scope="row">{{ $key + 1 }}</th>
+                                                <td>{{ $meeting->name }}</td>
+                                                <td>{{ $meeting->date_meeting }}</td>
+                                                <td>{!! $meeting->time_start_end !!}</td>
+                                                <td><a href="{{ route('preview.meeting', $meeting->uuid) }}" class="btn btn-primary">Xem</a></td>
+                                            </tr>
+                                        @endforeach
+                                    @else
+                                        <tr class="table-info">
+                                            <td colspan="5" class="text- font-italic">
+                                                Không có cuộc họp sắp tới
+                                            </td>
+                                        </tr>
+                                    @endif
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

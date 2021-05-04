@@ -10,6 +10,7 @@ use App\Models\Status;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class DashboardController extends ProtectedController
@@ -179,7 +180,23 @@ class DashboardController extends ProtectedController
                 'out_of_date' => $response[3],
             ];
 
-            return view('elements.dashboard.user_index', compact('listYears', 'statistical', 'chartJobUser'));
+            $meetingUserIds = MeetingUser::query()->where('user_id', Auth::id())->pluck('meeting_id', 'meeting_id')->unique();
+
+            $meetingUpcomings = Meeting::query()
+                ->whereIn('id', $meetingUserIds)
+                ->whereDate('date_meeting', '>=', Carbon::now()->toDateString())
+                ->whereYear('created_at', $requestYear)
+                ->orderBy('date_meeting', 'asc')->get();
+
+            $statusesIds = Status::query()->where('name', [Constant::STATUS_APPROVAL, Constant::STATUS_START])->pluck('id', 'id')->toArray();
+
+            $jobApprovals = Job::query()
+                ->where('user_id', Auth::id())
+                ->where('status_id', $statusesIds)
+                ->whereYear('created_at', $requestYear)
+                ->orderBy('deadline', 'asc')->get();
+
+            return view('elements.dashboard.user_index', compact('listYears', 'statistical', 'chartJobUser', 'meetingUpcomings', 'jobApprovals'));
         }
     }
 

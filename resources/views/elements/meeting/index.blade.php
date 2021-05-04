@@ -11,9 +11,12 @@
                         @lang('Quản lý cuộc họp')
                     </h4>
                 </div>
+
+                @if(\Illuminate\Support\Facades\Auth::user()->role)
                 <div class="col-4 text-right">
                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createMeetingModal"><i class="fas fa-plus"></i> @lang('Tạo cuộc họp')</button>
                 </div>
+                @endif
             </div>
             <form action="{{ route('meeting.index') }}" method="GET" class="form-inline mt-2">
                 <div class="form-group">

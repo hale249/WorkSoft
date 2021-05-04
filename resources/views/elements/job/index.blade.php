@@ -11,11 +11,13 @@
                         @lang('Quản lý công việc')
                     </h4>
                 </div>
+                @if(\Illuminate\Support\Facades\Auth::user()->role)
                 <div class="col-4 text-right">
                     <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#createJobModal"><i
                             class="fas fa-plus"></i>Tạo công việc
                     </button>
                 </div>
+                @endif
             </div>
 
             <form action="{{ route('jobs.index') }}" method="GET" class="form-inline mt-2">

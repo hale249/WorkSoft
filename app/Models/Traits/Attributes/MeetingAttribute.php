@@ -52,10 +52,14 @@ trait MeetingAttribute
      */
     public function getDeleteButtonAttribute(): string
     {
-        return  '<a href="' . route('meeting.destroy', $this->id) . '"
+        if (Auth::user()->role) {
+            return  '<a href="' . route('meeting.destroy', $this->id) . '"
                  class="btn btn-danger" title="Delete" data-id="' . $this->id . '"
                  data-action="delete" data-confirm="Are you sure you want to delete this Meeting ?">
                  <i class="fas fa-trash"></i>
                  </a>';
+        }
+       return  '';
+
     }
 }
